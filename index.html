@@ -1,0 +1,487 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+<title>DQMSLダメージ計算機prototype</title>
+    <style>
+        input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+      input[type="number"] {
+  -moz-appearance:textfield;
+}
+    .additionalsettings {
+      height: 1.4rem;
+  transition: .5s;
+}
+.additionalsettings[open] {
+      height: 4.4rem;
+  background: #c3f6ff;
+}
+          .summonselect {
+      height: 1.4rem;
+  transition: .5s;
+}
+.summonselect[open] {
+      height: 3rem;
+  background: #c3f6ff;
+}
+      
+      
+
+      
+    </style>
+</head>
+<body>
+<form>
+  <label for="attackdefault">攻撃力:</label>
+<input type="number" id="attackdefault" style="width:50px" oninput="calculateDamage()">
+  <label for="attackseed">+種</label>
+  <select id="attackseed" style="width:69px" onchange="calculateDamage()">
+    <option value="0" selected>+0</option>
+        <optgroup label="攻撃・素早さ依存">
+    <option value="24">+24  (25振り)</option>
+    <option value="34">+34  (35振り)</option>
+    <option value="40">+40  (45振り)</option>
+    <option value="46">+46  (55振り)</option>
+    <option value="52">+52  (65振り)</option>
+    <option value="56">+56  (75振り)</option>
+    <option value="60">+60  (95振り)</option>
+          </optgroup>
+        <optgroup label="防御依存">
+    <option value="48">+48  (25振り)</option>
+    <option value="68">+68  (35振り)</option>
+    <option value="80">+80  (45振り)</option>
+    <option value="112">+112  (75振り)</option>
+    <option value="120">+120  (95振り)</option>
+          </optgroup>
+  </select>
+  <label for="attackweapon">+装備</label>
+<input type="number" id="attackweapon" style="width:35px" oninput="calculateDamage()">
+<br>
+  <label for="attackLS">LS:</label>
+  <select id="attackLS" onchange="calculateDamage()">
+    <option value="1">なし</option>
+    <option value="1.05">+5%</option>
+    <option value="1.1">+10%</option>
+    <option value="1.15">+15%</option>
+    <option value="1.18">+18%</option>
+    <option value="1.2">+20%</option>
+  </select>
+  <label for="attackkeitoubuff">系統バフ:</label>
+  <select id="attackkeitoubuff" onchange="calculateDamage()">
+    <option value="1">なし</option>
+    <option value="1.1">1.1</option>
+    <option value="1.15">1.15</option>
+    <option value="1.2">1.2</option>
+    <option value="1.3">1.3</option>
+    <option value="1.4">1.4</option>
+    <option value="1.5">1.5</option>
+  </select>
+  <label for="attackanotherbuff">その他:</label>
+  <input type="number" id="attackanotherbuff" style="width:23px" oninput="calculateDamage()">
+      <br>
+  <details class="additionalsettings">
+    <summary>追加設定</summary>
+      &emsp;<label for="attackaddkasann">種や装備に加算</label>
+<input type="number" id="attackaddkasann" style="width:50px" oninput="calculateDamage()">
+      <label for="attackaddjyousann">LSに乗算</label>
+<input type="number" id="attackaddjyousann" style="width:50px" oninput="calculateDamage()">
+      <br>&emsp;現在の攻撃力:
+      <label for="displayattackhyouji">ステ欄</label>
+  <label id="displayattackhyouji"></label>
+      <label for="displayattackincludingbuff">条件込み</label>
+  <label id="displayattackincludingbuff"></label>
+  </details>
+  <details class="summonselect">
+    <summary>条件呼び出し</summary>
+  <select id="summonattackerselect">
+    <option value="supe.dark.75">キンスペ(DARKL)</option>
+    <option value="dark">DARK</option>
+    <option value="hero">ヒーロー</option>
+  </select>
+  <button type="button" id="summonattackerbtn">↑上書き</button>
+  <button type="button" id="resetattackerbtn">リセット</button>
+  </details>
+  <hr>
+  <label for="defensedefault">防御力:</label>
+<input type="number" id="defensedefault" style="width:50px" oninput="calculateDamage()">
+  <label for="defenseseed">+種</label>
+  <select id="defenseseed" style="width:69px" onchange="calculateDamage()">
+    <option value="0" selected>+0</option>
+    <option value="48">+48  (25振り)</option>
+    <option value="80">+80  (45振り)</option>
+    <option value="104">+104  (65振り)</option>
+    <option value="112">+112  (75振り)</option>
+    <option value="120">+120  (95振り)</option>
+  </select>
+  <label for="defenseweapon">+装備</label>
+  <select id="defenseweapon" style="width:69px" onchange="calculateDamage()">
+    <option value="0">+0</option>
+    <option value="15">+15</option>
+    <option value="32">+32</option>
+    <option value="68">+68</option>
+    <option value="84">+84</option>
+    <option value="105">+105</option>
+  </select>
+<br>
+  <label for="defenseLS">LS:</label>
+  <select id="defenseLS" onchange="calculateDamage()">
+    <option value="1">なし</option>
+    <option value="0.75">-25%</option>
+    <option value="1.18">+18%</option>
+  </select>
+  <label for="defensekeitoubuff">系統防御:</label>
+  <select id="defensekeitoubuff" onchange="calculateDamage()">
+    <option value="1">1</option>
+    <option value="1.2">1.2</option>
+    <option value="1.4">1.4</option>
+    <option value="1.5">1.5</option>
+    <option value="2">2</option>
+  </select>
+  <label for="sukarabuff">スカラ:</label>
+  <select id="sukarabuff" onchange="calculateDamage()">
+    <option value="1">1</option>
+    <option value="1.2">1.2</option>
+    <option value="1.4">1.4</option>
+  </select>
+  <br>
+      
+      
+  <details class="additionalsettings">
+    <summary>追加設定</summary>
+      &emsp;<label for="defenseaddkasann">種や装備に加算</label>
+<input type="number" id="defenseaddkasann" style="width:50px" oninput="calculateDamage()">
+      <label for="defenseaddjyousann">LSに乗算</label>
+<input type="number" id="defenseaddjyousann" style="width:50px" oninput="calculateDamage()">
+      <br>&emsp;現在の防御力:
+      <label for="displaydefensehyouji">ステ欄</label>
+  <label id="displaydefensehyouji"></label>
+      <label for="displaydefenseincludingbuff">条件込み</label>
+  <label id="displaydefenseincludingbuff"></label>
+  </details>
+  <details class="summonselect">
+    <summary>条件呼び出し</summary>
+  <select id="summondefenderselect">
+    <option value="hero">ヒーロー(防25)</option>
+    <option value="girl">ガール</option>
+    <option value="tyouryuu">超竜王(防75)</option>
+  </select>
+  <button type="button" id="summondefenderbtn">↑上書き</button>
+  <button type="button" id="resetdefenderbtn">リセット</button>
+  </details>
+      
+      
+      
+  <hr>
+<label for="baiki">バイキ:</label>
+<select id="baiki" onchange="calculateDamage()">
+    <option value="1">なし</option>
+    <option value="1.2">1.2</option>
+    <option value="1.4">1.4</option>
+</select>
+<br>
+<label for="damebari">ダメバリ:</label>
+<select id="damebari" onchange="calculateDamage()">
+    <option value="1">なし</option>
+    <option value="0.8">ダメバリ</option>
+    <option value="0.7">30%軽減</option>
+    <option value="0.66">精霊</option>
+    <option value="0.6">40%軽減</option>
+    <option value="0.5">50%軽減</option>
+    <option value="0.3">70%軽減</option>
+    <option value="0.1">天界</option>
+</select>
+<br>
+<label for="jyousann1">乗算条件1:</label>
+<input type="number" id="jyousann1" style="width:50px" oninput="calculateDamage()">
+<label for="jyousann2">乗算条件2:</label>
+<input type="number" id="jyousann2" style="width:50px" oninput="calculateDamage()">
+<br>
+<br>
+  <label for="bairitsu">倍率:</label>
+<input type="number" id="bairitsu" style="width:50px" oninput="calculateDamage()">
+<br>
+<label for="taisei">耐性:</label>
+<select id="taisei" onchange="calculateDamage()">
+    <option value="1.5">弱点</option>
+    <option value="1" selected>等倍</option>
+    <option value="0.75">軽減</option>
+    <option value="0.5">半減</option>
+    <option value="0.25">激減</option>
+</select>
+<br>
+<label for="jyousann3">乗算条件3:</label>
+<input type="number" id="jyousann3" style="width:50px" oninput="calculateDamage()">
+<label for="jyousann4">乗算条件4:</label>
+<input type="number" id="jyousann4" style="width:50px" oninput="calculateDamage()">
+<br>
+<hr>
+  <label for="displaynormaldamage">通常攻撃ダメージ:</label>
+  <label id="displaynormaldamage"></label>
+      <span id="alertnormaldamage"></span>
+  <br>
+  <label for="displaybairitsudamage">特技ダメージ:</label>
+  <label id="displaybairitsudamage"></label>
+  <details>
+    <summary>連打</summary>
+      あ
+  </details>
+  <br>
+<br><br><br><br><br><br>
+  <details>
+    <summary>りーどみーあんどめも</summary>
+乗算条件はそのまま乗算、未入力可
+<br>1、2はメタルボディ、力ためなど、3、4は斬撃体技防御、系統特効など
+<br>計算結果は切り上げ
+<br>実装予定：加算条件、複数発、追撃、条件呼び出し、ログ出力、種や装備によるステータス計算フォーム、通常攻撃ダメージがマイナスになる問題の修正
+<br>攻撃力の追加設定は加算は種や装備などに加算。user設定の装備や種振りを想定。乗算はLSに乗算。クエストの特別条件の攻撃力アップのようなものを想定。
+<br>計算が合わないとき:乗算に一つでも0が紛れていたら0になってしまいます。追加設定の欄に隠れていたりしませんか。ダメージがマイナスになっているときは、防御力が高いため攻撃が通らない場合かもしれません。
+      <br>条件は未記入があってもOKです。その場合、乗算系は1倍、加算系は+0されるので変化なしです。
+      <br>どこに記入してもOKです。種装備は0で、もうそれら込みのステを直接記入しても、系統防御のとこに超竜王を想定して2倍を選択しても構いません。ただし、波動付き特技のシミュレーションには影響が出ます。
+  </details>
+</form>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function(){
+      calculateDamage();
+});
+      
+function calculateDamage() {
+    const attackdefault = document.getElementById("attackdefault").value;
+    const attackseed = document.getElementById("attackseed").value;
+    const attackweapon = document.getElementById("attackweapon").value;
+    const attackaddkasann = document.getElementById("attackaddkasann").value;
+    const attackhyouji = Number(attackdefault) + Number(attackseed) + Number(attackweapon) + Number(attackaddkasann);
+    const attackLS = document.getElementById("attackLS").value;
+    const attackkeitoubuff = document.getElementById("attackkeitoubuff").value;
+    let attackanotherbuff = document.getElementById("attackanotherbuff").value;
+      if (!attackanotherbuff) {
+      attackanotherbuff = 1;
+      }
+    let attackaddjyousann = document.getElementById("attackaddjyousann").value;
+      if (!attackaddjyousann) {
+      attackaddjyousann = 1;
+      }
+    const attackwithoutbuff = attackhyouji * attackLS * attackaddjyousann;
+    const attackincludingbuff = attackwithoutbuff * attackkeitoubuff * attackanotherbuff;
+    document.getElementById("displayattackhyouji").innerHTML = Math.ceil(attackhyouji);
+    document.getElementById("displayattackincludingbuff").innerHTML = Math.ceil(attackincludingbuff);
+    const defensedefault = document.getElementById("defensedefault").value;
+    const defenseseed = document.getElementById("defenseseed").value;
+    const defenseweapon = document.getElementById("defenseweapon").value;
+    const defenseaddkasann = document.getElementById("defenseaddkasann").value;
+    const defensehyouji = Number(defensedefault) + Number(defenseseed) + Number(defenseweapon) + Number(defenseaddkasann);
+    const defenseLS = document.getElementById("defenseLS").value;
+    const defensekeitoubuff = document.getElementById("defensekeitoubuff").value;
+    const sukarabuff = document.getElementById("sukarabuff").value;
+    let defenseaddjyousann = document.getElementById("defenseaddjyousann").value;
+      if (!defenseaddjyousann) {
+      defenseaddjyousann = 1;
+      }
+    const defensewithoutbuff = defensehyouji * defenseLS * defenseaddjyousann;
+    const defenseincludingbuff = defensewithoutbuff * defensekeitoubuff * sukarabuff;
+    document.getElementById("displaydefensehyouji").innerHTML = Math.ceil(defensehyouji);
+    document.getElementById("displaydefenseincludingbuff").innerHTML = Math.ceil(defenseincludingbuff);
+      
+    const baiki = document.getElementById("baiki").value;
+    const damebari = document.getElementById("damebari").value;
+    let jyousann1 = document.getElementById("jyousann1").value;
+      if (!jyousann1) {
+      jyousann1 = 1;
+      }
+    let jyousann2 = document.getElementById("jyousann2").value;
+      if (!jyousann2) {
+      jyousann2 = 1;
+      }
+    const bairitsu = document.getElementById("bairitsu").value;
+    const taisei = document.getElementById("taisei").value;
+    let jyousann3 = document.getElementById("jyousann3").value;
+      if (!jyousann3) {
+      jyousann3 = 1;
+      }
+    let jyousann4 = document.getElementById("jyousann4").value;
+      if (!jyousann4) {
+      jyousann4 = 1;
+      }
+    const normaldamage = (attackincludingbuff / 2 - defenseincludingbuff / 4) * baiki * damebari * jyousann1 * jyousann2;
+    document.getElementById("displaynormaldamage").innerHTML = Math.ceil(normaldamage);
+      if (defenseincludingbuff > attackincludingbuff * 1.75){
+      document.getElementById("alertnormaldamage").innerHTML = "(通らない可能性あり)";
+      }else{
+      document.getElementById("alertnormaldamage").innerHTML = "";
+      }
+    const bairitsudamage = (normaldamage * bairitsu * taisei * jyousann3 * jyousann4);
+    document.getElementById("displaybairitsudamage").innerHTML = Math.ceil(bairitsudamage);
+}
+
+
+
+      const summonattackerbtn = document.getElementById("summonattackerbtn");
+summonattackerbtn.addEventListener("click", function() {
+      const summonattackerselect = document.getElementById("summonattackerselect").value;
+      //reset処理
+      document.getElementById("attackdefault").value = "";
+      attackseed.options[0].selected = true;
+      document.getElementById("attackweapon").value = "";
+      attackLS.options[0].selected = true;
+      attackkeitoubuff.options[0].selected = true;
+      document.getElementById("attackanotherbuff").value = "";
+      document.getElementById("attackaddkasann").value = "";
+      document.getElementById("attackaddjyousann").value = "";
+      
+      if (summonattackerselect == "supe.dark.75"){
+      document.getElementById("attackdefault").value = "563";
+      attackseed.options[6].selected = true;
+      document.getElementById("attackweapon").value = "30";
+      attackLS.options[2].selected = true;
+      attackkeitoubuff.options[4].selected = true;
+      document.getElementById("attackanotherbuff").value = "";
+      }
+      
+      if (summonattackerselect == "dark"){
+      document.getElementById("attackdefault").value = "634";
+      attackseed.options[1].selected = true;
+      document.getElementById("attackweapon").value = "";
+      attackLS.options[2].selected = true;
+      attackkeitoubuff.options[0].selected = true;
+      document.getElementById("attackanotherbuff").value = "";
+      }
+      
+      if (summonattackerselect == "hero"){
+      document.getElementById("attackdefault").value = "649";
+      attackseed.options[8].selected = true;
+      document.getElementById("attackweapon").value = "";
+      attackLS.options[4].selected = true;
+      attackkeitoubuff.options[5].selected = true;
+      document.getElementById("attackanotherbuff").value = "1.2";
+      document.getElementById("bairitsu").value = "0.82";
+      }
+      
+      
+      calculateDamage();
+}, false);
+      
+      
+      
+      const summondefenderbtn = document.getElementById("summondefenderbtn");
+summondefenderbtn.addEventListener("click", function() {
+      const summondefenderselect = document.getElementById("summondefenderselect").value;
+      
+      //reset処理
+      document.getElementById("defensedefault").value = "";
+      defenseseed.options[0].selected = true;
+      defenseweapon.options[0].selected = true;
+      defenseLS.options[0].selected = true;
+      defensekeitoubuff.options[0].selected = true;
+      sukarabuff.options[0].selected = true;
+      document.getElementById("defenseaddkasann").value = "";
+      document.getElementById("defenseaddjyousann").value = "";
+      
+      if (summondefenderselect == "hero"){
+      document.getElementById("defensedefault").value = "649";
+      defenseseed.options[1].selected = true;
+      defenseweapon.options[0].selected = true;
+      defenseLS.options[2].selected = true;
+      defensekeitoubuff.options[2].selected = true;
+      sukarabuff.options[1].selected = true;
+      }
+      
+      if (summondefenderselect == "tyouryuu"){
+      document.getElementById("defensedefault").value = "658";
+      defenseseed.options[4].selected = true;
+      defenseweapon.options[0].selected = true;
+      defenseLS.options[0].selected = true;
+      defensekeitoubuff.options[0].selected = true;
+      sukarabuff.options[0].selected = true;
+      }
+      
+      
+      calculateDamage();
+}, false);
+      
+      
+      
+      
+      const resetattackerbtn = document.getElementById("resetattackerbtn");
+resetattackerbtn.addEventListener("click", function() {
+      document.getElementById("attackdefault").value = "";
+      attackseed.options[0].selected = true;
+      document.getElementById("attackweapon").value = "";
+      attackLS.options[0].selected = true;
+      attackkeitoubuff.options[0].selected = true;
+      document.getElementById("attackanotherbuff").value = "";
+      document.getElementById("attackaddkasann").value = "";
+      document.getElementById("attackaddjyousann").value = "";
+      document.getElementById("summonattackerselect").value = "";
+      calculateDamage();
+}, false);
+      
+      
+      const resetdefenderbtn = document.getElementById("resetdefenderbtn");
+resetdefenderbtn.addEventListener("click", function() {
+      document.getElementById("defensedefault").value = "";
+      defenseseed.options[0].selected = true;
+      defenseweapon.options[0].selected = true;
+      defenseLS.options[0].selected = true;
+      defensekeitoubuff.options[0].selected = true;
+      sukarabuff.options[0].selected = true;
+      document.getElementById("defenseaddkasann").value = "";
+      document.getElementById("defenseaddjyousann").value = "";
+      document.getElementById("summondefenderselect").value = "";
+      calculateDamage();
+}, false);
+      
+      
+      
+      
+      
+      /*
+      console.log("クリックされました！");
+      alert("した！");
+      代入して直後に計算も動かす
+      代入したら他の情報をまとめてクリア
+      変数
+      変数代入順番
+      ファンクションから引数でできる
+      入力欄ならvalueでいいかも、入力じゃないlabelとかをそのままならinnerhtmlかな
+      select初期値
+      */
+      
+      
+      
+      /*deleted
+      let newattackdefault = document.getElementById("attackdefault");
+      let newattackseed = document.getElementById("attackseed");
+      let newattackweapon = document.getElementById("attackweapon");
+      let newattackLS = document.getElementById("attackLS");
+      let newattackkeitoubuff = document.getElementById("attackkeitoubuff");
+      let newattackanotherbuff = document.getElementById("attackanotherbuff");
+      if (summonattackerselect == "supe"){
+      newattackdefault.value = "563";
+      newattackseed.options[3].selected = true;
+      newattackweapon.value = "30";
+      newattackLS.options[2].selected = true;
+      newattackkeitoubuff.options[4].selected = true;
+      }
+      newattackdefault.value = "56";
+      
+      let hogehoge = 50
+      document.getElementById("attackdefault").value = hogehoge;
+      attackseed.options[3].selected = true;
+      
+      
+      */
+      
+      
+      
+   
+
+
+
+
+</script>
+
+</body>
+</html>
