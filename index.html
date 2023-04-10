@@ -1,67 +1,232 @@
 <html>
-  <head>
-    <meta charset="UTF-8">
-<title>DQMSLダメージ計算機prototype</title>
-    <style>
-        input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+<head>
+  <meta charset="UTF-8">
+  <title>DQMSLダメージ計算機β</title>
+  <style>
+    body {
+  user-select: none;
+  /* CSS3 */
+  -moz-user-select: none;
+  /* Firefox */
+  -webkit-user-select: none;
+  /* Safari、Chromeなど */
+  -ms-user-select: none;
+  /* Microsoft */
 }
-      input[type="number"] {
-  -moz-appearance:textfield;
-}
-    .additionalsettings {
-      height: 1.4rem;
-  transition: .5s;
-}
-.additionalsettings[open] {
-      height: 4.4rem;
-  background: #c3f6ff;
-}
-          .summonselect {
-      height: 1.4rem;
-  transition: .5s;
-}
-.summonselect[open] {
-      height: 3rem;
-  background: #c3f6ff;
-}
-      
-      
 
-      
-    </style>
+#displaynormaldamage, #displayskilldamage {
+  user-select: text;
+  /* CSS3 */
+  -moz-user-select: text;
+  /* Firefox */
+  -webkit-user-select: text;
+  /* Safari、Chromeなど */
+  -ms-user-select: text;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"] {
+  height: 1rem;
+}
+
+select {
+  -webkit-appearance: none;
+  /* ベンダープレフィックス(Google Chrome、Safari用) */
+  -moz-appearance: none;
+  /* ベンダープレフィックス(Firefox用) */
+  appearance: none;
+  /* 標準のスタイルを無効にする */
+  height: 1.6rem;
+  width: max-content;
+  padding: 0rem 0.5rem;
+  margin-left: 0rem;
+  margin-right: 0.3rem;
+  text-align: left;
+  border: none;
+  border-radius: 0.85rem;
+  background-color: #e9e9e9;
+  color: #0075fb;
+  font-size: 1rem;
+}
+
+button {
+  height: 1.6rem;
+  width: max-content;
+  padding: 0rem 0.6rem;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  text-align: center;
+  border: none;
+  border-radius: 0.85rem;
+  background-color: #e9e9e9;
+  color: #0075fb;
+  font-size: 1rem;
+}
+
+
+/*details*/
+
+.additionalsettings {
+  height: 1.4rem;
+  transition: .5s;
+}
+
+.additionalsettings[open] {
+  height: 5.4rem;
+  background: #c3f6ff;
+}
+
+.summonselect {
+  height: 1.4rem;
+  transition: .5s;
+}
+
+.summonselect[open] {
+  height: 4rem;
+  background: #c3f6ff;
+}
+
+details {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+
+/*4桁入力*/
+
+#attackdefault, #defensedefault, #HPdefault, #intdefault, #enemyintdefault, #minintdamage, #maxintdamage {
+  width: 2.3rem;
+}
+
+
+/*3桁入力*/
+
+#intdefault, #enemyintdefault, #attackweapon {
+  width: 1.8rem;
+}
+
+#koteidamage {
+  width: 3rem;
+}
+
+#attackaddkasann, #attackaddjyousann, #defenseaddkasann, #defenseaddjyousann {
+  width: 2rem;
+}
+
+#bairitsu {
+  width: 3rem;
+}
+
+#attackanotherbuff {
+  width: 1.5rem;
+}
+
+#intseed, #enemyintseed, #attackseed, #defenseseed, #defenseweapon, #intweapon, #enemyintweapon {
+  width: 2.8rem;
+  padding: 0rem 0.3rem;
+  margin: 0rem 0rem;
+}
+
+#intbuff, #enemyintbuff {
+  padding: 0rem 0.3rem;
+  width: 2.1rem;
+  margin-left: 0rem;
+}
+
+#attackLS, #defenseLS, #attackkeitoubuff, #defensekeitoubuff, #sukarabuff {
+  padding: 0rem 0.3rem;
+  margin: 0rem 0rem;
+}
+
+.conditions {
+  width: 2rem;
+}
+
+.tabbutton {
+  height: 1.6rem;
+  width: max-content;
+  padding: 0rem 0.2rem;
+  margin-left: 0rem;
+  margin-right: 0.1rem;
+  text-align: center;
+  border-radius: 0rem;
+  border: 1px solid #000000;
+}
+
+.tabbutton.selected {
+  border: 1px solid #000000;
+  background-color: #000000;
+  /*padding: 0rem 0rem; border 5px*/
+}
+
+.tabbutton.copied {
+  border: 1px solid #000000;
+  background-color: blue;
+}
+
+#copytab, #pastetab, #resettab {}
+
+#calculateHPskillhit, #calculateHPnormalhit {
+  margin: 0rem 0rem;
+}
+
+.spelldamagetable {
+  border-collapse: collapse;
+}
+
+button:disabled {
+  background=color: #cccccc;
+  color: #666666;
+}
+
+@media screen and (max-width:480px) {}
+  </style>
 </head>
 <body>
-<form>
-  <label for="attackdefault">攻撃力:</label>
-<input type="number" id="attackdefault" style="width:50px" oninput="calculateDamage()">
-  <label for="attackseed">+種</label>
-  <select id="attackseed" style="width:69px" onchange="calculateDamage()">
+  <form>
+    <input type="radio" name="izon" id="attizon" value="attizon" onclick="ifattizon()" checked>
+    <label for="attizon">攻撃力依存</label>
+    <input type="radio" name="izon" id="intizon" value="intizon" onclick="ifintizon()">
+    <label for="intizon">賢さ依存</label>
+    <input type="radio" name="izon" id="koteiizon" value="koteiizon" onclick="ifkoteiizon()">
+    <label for="koteiizon">固定</label>
+    <div class="inaccordancewithattack" id="inaccordancewithattack">
+      <label for="attackdefault">攻撃力:</label>
+      <input type="number" id="attackdefault" oninput="calculateDamage()">
+      <label for="attackseed">種</label>
+      <select id="attackseed" onchange="calculateDamage()">
     <option value="0" selected>+0</option>
         <optgroup label="攻撃・素早さ依存">
-    <option value="24">+24  (25振り)</option>
-    <option value="34">+34  (35振り)</option>
-    <option value="40">+40  (45振り)</option>
-    <option value="46">+46  (55振り)</option>
-    <option value="52">+52  (65振り)</option>
-    <option value="56">+56  (75振り)</option>
-    <option value="60">+60  (95振り)</option>
+    <option value="24">+24  (攻25)</option>
+    <option value="34">+34  (攻35)</option>
+    <option value="40">+40  (攻45)</option>
+    <option value="46">+46  (攻55)</option>
+    <option value="52">+52  (攻65)</option>
+    <option value="56">+56  (攻75)</option>
+    <option value="58">+58  (攻85)</option>
+    <option value="60">+60  (攻95)</option>
           </optgroup>
         <optgroup label="防御依存">
-    <option value="48">+48  (25振り)</option>
-    <option value="68">+68  (35振り)</option>
-    <option value="80">+80  (45振り)</option>
-    <option value="112">+112  (75振り)</option>
-    <option value="120">+120  (95振り)</option>
+    <option value="48">+48  (防25)</option>
+    <option value="68">+68  (防35)</option>
+    <option value="80">+80  (防45)</option>
+    <option value="112">+112  (防75)</option>
+    <option value="120">+120  (防95)</option>
           </optgroup>
   </select>
-  <label for="attackweapon">+装備</label>
-<input type="number" id="attackweapon" style="width:35px" oninput="calculateDamage()">
-<br>
-  <label for="attackLS">LS:</label>
-  <select id="attackLS" onchange="calculateDamage()">
+      <label for="attackweapon">装備</label>
+      <input type="number" id="attackweapon" oninput="calculateDamage()">
+      <br>
+      <label for="attackLS">LS</label>
+      <select id="attackLS" onchange="calculateDamage()">
     <option value="1">なし</option>
     <option value="1.05">+5%</option>
     <option value="1.1">+10%</option>
@@ -69,8 +234,8 @@ input[type="number"]::-webkit-inner-spin-button {
     <option value="1.18">+18%</option>
     <option value="1.2">+20%</option>
   </select>
-  <label for="attackkeitoubuff">系統バフ:</label>
-  <select id="attackkeitoubuff" onchange="calculateDamage()">
+      <label for="attackkeitoubuff">系統バフ</label>
+      <select id="attackkeitoubuff" onchange="calculateDamage()">
     <option value="1">なし</option>
     <option value="1.1">1.1</option>
     <option value="1.15">1.15</option>
@@ -79,45 +244,52 @@ input[type="number"]::-webkit-inner-spin-button {
     <option value="1.4">1.4</option>
     <option value="1.5">1.5</option>
   </select>
-  <label for="attackanotherbuff">その他:</label>
-  <input type="number" id="attackanotherbuff" style="width:23px" oninput="calculateDamage()">
+      <label for="attackanotherbuff">その他</label>
+      <input type="number" id="attackanotherbuff" oninput="calculateDamage()">
+      <!--
       <br>
-  <details class="additionalsettings">
-    <summary>追加設定</summary>
-      &emsp;<label for="attackaddkasann">種や装備に加算</label>
-<input type="number" id="attackaddkasann" style="width:50px" oninput="calculateDamage()">
-      <label for="attackaddjyousann">LSに乗算</label>
-<input type="number" id="attackaddjyousann" style="width:50px" oninput="calculateDamage()">
-      <br>&emsp;現在の攻撃力:
-      <label for="displayattackhyouji">ステ欄</label>
-  <label id="displayattackhyouji"></label>
-      <label for="displayattackincludingbuff">条件込み</label>
-  <label id="displayattackincludingbuff"></label>
-  </details>
-  <details class="summonselect">
-    <summary>条件呼び出し</summary>
-  <select id="summonattackerselect">
+      <button type="button" id="debugbtnatt">攻撃登録</button>
+      <button type="button" id="debugbtndef">防御登録</button>
+      <br>
+      -->
+      <details class="additionalsettings">
+        <summary>追加設定</summary>
+        &emsp;<label for="attackaddkasann">装備に加算</label>
+        <input type="number" id="attackaddkasann" oninput="calculateDamage()">
+        <label for="attackaddjyousann">LSに乗算</label>
+        <input type="number" id="attackaddjyousann" oninput="calculateDamage()">
+        <br>&emsp;現在の攻撃力:
+        <span>ステ欄</span>
+        <span id="displayattackhyouji"></span>
+        <span>条件込み</span>
+        <span id="displayattackincludingbuff"></span>
+      </details>
+      <details class="summonselect">
+        <summary>条件呼び出し</summary>
+        <select id="summonattackerselect">
+    <option value="debug">デバッグ用</option>
     <option value="supe.dark.75">キンスペ(DARKL)</option>
     <option value="dark">DARK</option>
     <option value="hero">ヒーロー</option>
   </select>
-  <button type="button" id="summonattackerbtn">↑上書き</button>
-  <button type="button" id="resetattackerbtn">リセット</button>
-  </details>
-  <hr>
-  <label for="defensedefault">防御力:</label>
-<input type="number" id="defensedefault" style="width:50px" oninput="calculateDamage()">
-  <label for="defenseseed">+種</label>
-  <select id="defenseseed" style="width:69px" onchange="calculateDamage()">
+        <button type="button" id="summonattackerbtn">↑上書き</button>
+        <button type="button" id="resetattackerbtn">リセット</button>
+      </details>
+      <hr>
+      <label for="defensedefault">防御力:</label>
+      <input type="number" id="defensedefault" oninput="calculateDamage()">
+      <label for="defenseseed">種</label>
+      <select id="defenseseed" onchange="calculateDamage()">
     <option value="0" selected>+0</option>
-    <option value="48">+48  (25振り)</option>
-    <option value="80">+80  (45振り)</option>
-    <option value="104">+104  (65振り)</option>
-    <option value="112">+112  (75振り)</option>
-    <option value="120">+120  (95振り)</option>
+    <option value="48">+48  (防25)</option>
+    <option value="80">+80  (防45)</option>
+    <option value="92">+92  (防55)</option>
+    <option value="104">+104  (防65)</option>
+    <option value="112">+112  (防75)</option>
+    <option value="120">+120  (防95)</option>
   </select>
-  <label for="defenseweapon">+装備</label>
-  <select id="defenseweapon" style="width:69px" onchange="calculateDamage()">
+      <label for="defenseweapon">装備</label>
+      <select id="defenseweapon" onchange="calculateDamage()">
     <option value="0">+0</option>
     <option value="15">+15</option>
     <option value="32">+32</option>
@@ -125,65 +297,238 @@ input[type="number"]::-webkit-inner-spin-button {
     <option value="84">+84</option>
     <option value="105">+105</option>
   </select>
-<br>
-  <label for="defenseLS">LS:</label>
-  <select id="defenseLS" onchange="calculateDamage()">
+      <br>
+      <label for="defenseLS">LS</label>
+      <select id="defenseLS" onchange="calculateDamage()">
     <option value="1">なし</option>
     <option value="0.75">-25%</option>
     <option value="1.18">+18%</option>
   </select>
-  <label for="defensekeitoubuff">系統防御:</label>
-  <select id="defensekeitoubuff" onchange="calculateDamage()">
+      <label for="defensekeitoubuff">系統防御</label>
+      <select id="defensekeitoubuff" onchange="calculateDamage()">
     <option value="1">1</option>
     <option value="1.2">1.2</option>
     <option value="1.4">1.4</option>
     <option value="1.5">1.5</option>
     <option value="2">2</option>
+    <option value="3">3</option>
   </select>
-  <label for="sukarabuff">スカラ:</label>
-  <select id="sukarabuff" onchange="calculateDamage()">
-    <option value="1">1</option>
+      <label for="sukarabuff">スカラ</label>
+      <select id="sukarabuff" onchange="calculateDamage()">
+    <option value="0.6">0.6</option>
+    <option value="0.8">0.8</option>
+    <option value="1" selected>1</option>
     <option value="1.2">1.2</option>
     <option value="1.4">1.4</option>
   </select>
-  <br>
-      
-      
-  <details class="additionalsettings">
-    <summary>追加設定</summary>
-      &emsp;<label for="defenseaddkasann">種や装備に加算</label>
-<input type="number" id="defenseaddkasann" style="width:50px" oninput="calculateDamage()">
-      <label for="defenseaddjyousann">LSに乗算</label>
-<input type="number" id="defenseaddjyousann" style="width:50px" oninput="calculateDamage()">
-      <br>&emsp;現在の防御力:
-      <label for="displaydefensehyouji">ステ欄</label>
-  <label id="displaydefensehyouji"></label>
-      <label for="displaydefenseincludingbuff">条件込み</label>
-  <label id="displaydefenseincludingbuff"></label>
-  </details>
-  <details class="summonselect">
-    <summary>条件呼び出し</summary>
-  <select id="summondefenderselect">
+      <br>
+
+
+      <details class="additionalsettings">
+        <summary>追加設定</summary>
+        &emsp;<label for="defenseaddkasann">装備に加算</label>
+        <input type="number" id="defenseaddkasann" oninput="calculateDamage()">
+        <label for="defenseaddjyousann">LSに乗算</label>
+        <input type="number" id="defenseaddjyousann" oninput="calculateDamage()">
+        <br>&emsp;現在の防御力:
+        <span>ステ欄</span>
+        <span id="displaydefensehyouji"></span>
+        <span>条件込み</span>
+        <span id="displaydefenseincludingbuff"></span>
+      </details>
+    </div>
+    <!--finish inaccordancewithattack-->
+
+
+
+
+
+
+
+
+
+    <!--start inaccordancewithint-->
+    <div class="inaccordancewithint" id="inaccordancewithint">
+      <label for="intdefault">賢さ:</label>
+      <input type="number" id="intdefault" oninput="calculateint()">
+      <label for="intseed">種</label>
+      <select id="intseed" onchange="calculateint()">
+    <option value="0" selected>+0</option>
+    <option value="48">+48  (賢25)</option>
+    <option value="68">+68  (賢35)</option>
+    <option value="80">+80  (賢45)</option>
+    <option value="92">+92  (賢55)</option>
+    <option value="104">+104  (賢65)</option>
+    <option value="112">+112  (賢75)</option>
+    <option value="120">+120  (賢95)</option>
+  </select>
+      <label for="intweapon">装備</label>
+      <select id="intweapon" onchange="calculateint()">
+    <option value="0" selected>+0</option>
+    <option value="18">+18  (昇天ヤリ)</option>
+    <option value="24">+24  (ガルハート、日輪棍)</option>
+    <option value="30">+30  (ノグ爪)</option>
+    <option value="53">+53  (ミルドラローブ)</option>
+    <option value="62">+62  (A杖+7)</option>
+    <option value="68">+68  (A杖+10)</option>
+    <option value="78">+78  (S杖+7)</option>
+    <option value="84">+84  (S杖+10)</option>
+    <option value="100">+100  (SS杖+7)</option>
+    <option value="106">+106  (SS杖+10)</option>
+    <option value="116">+116  (竜王杖)</option>
+  </select>
+      <label for="intbuff">インテ</label>
+      <select id="intbuff" onchange="calculateint()">
+    <option value="1">なし</option>
+    <option value="1.5">1.5</option>
+    <option value="2">2</option>
+  </select>
+      <br>
+      <label for="enemyintdefault">敵賢さ:</label>
+      <input type="number" id="enemyintdefault" oninput="calculateint()">
+      <label for="enemyintseed">種</label>
+      <select id="enemyintseed" onchange="calculateint()">
+    <option value="0" selected>+0</option>
+    <option value="48">+48  (賢25)</option>
+    <option value="68">+68  (賢35)</option>
+    <option value="80">+80  (賢45)</option>
+    <option value="92">+92  (賢55)</option>
+    <option value="104">+104  (賢65)</option>
+    <option value="112">+112  (賢75)</option>
+    <option value="120">+120  (賢95)</option>
+  </select>
+      <label for="enemyintweapon">装備</label>
+      <select id="enemyintweapon" onchange="calculateint()">
+    <option value="0" selected>+0</option>
+    <option value="18">+18  (昇天ヤリ)</option>
+    <option value="24">+24  (ガルハート、日輪棍)</option>
+    <option value="30">+30  (ノグ爪)</option>
+    <option value="53">+53  (ミルドラローブ)</option>
+    <option value="62">+62  (A杖+7)</option>
+    <option value="68">+68  (A杖+10)</option>
+    <option value="78">+78  (S杖+7)</option>
+    <option value="84">+84  (S杖+10)</option>
+    <option value="100">+100  (SS杖+7)</option>
+    <option value="106">+106  (SS杖+10)</option>
+    <option value="116">+116  (竜王杖)</option>
+  </select>
+      <label for="enemyintbuff">インテ</label>
+      <select id="enemyintbuff" onchange="calculateint()">
+    <option value="1">なし</option>
+    <option value="1.5">1.5</option>
+    <option value="2">2</option>
+  </select>
+      <br>
+      <span>賢さ値</span>
+      <span id="displayintincludingbuff">0</span>
+      <span>賢さ差</span>
+      <select id="intdifferencebonus" onchange="calculateDamage()">
+    <option value="1">なし</option>
+    <option value="1.1">1.10</option>
+    <option value="1.11">1.11</option>
+    <option value="1.12">1.12</option>
+    <option value="1.13">1.13</option>
+    <option value="1.14">1.14</option>
+    <option value="1.15">1.15</option>
+    <option value="1.16">1.16</option>
+    <option value="1.17">1.17</option>
+    <option value="1.18">1.18</option>
+    <option value="1.19">1.19</option>
+    <option value="1.2">1.20</option>
+    <option value="1.21">1.21</option>
+    <option value="1.22">1.22</option>
+    <option value="1.23">1.23</option>
+    <option value="1.24">1.24</option>
+    <option value="1.25" selected>1.25</option>
+    </select>
+      <span>特技+</span>
+      <select id="intskillplus" onchange="calculateDamage()">
+    <option value="1">なし</option>
+    <option value="1.05">1.05</option>
+    <option value="1.1">1.1</option>
+    <option value="1.15" selected>1.15</option>
+    <option value="1.09">1.09</option>
+    </select>
+      <br>
+      <span>呪文選択:</span>
+      <select id="intskillselect" onchange="intskillselecter()">
+    <option value="none" selected>選択する</option>
+    <option value="almagest">アルマゲスト</option>
+    <option value="mata">マータ系</option>
+    </select>
+      <button type="button" id="resetspellbtn">リセット</button>
+      <br>
+      <table class＝ "spelldamagetable" border="1">
+        <tr>
+          <td>
+            <select id="minint" onchange="calculateDamage()">
+          <option value="100">100</option>
+          <option value="200" selected>200</option>
+          <option value="300">300</option>
+        </select>
+          </td>
+          <td>
+            <input type="number" id="minintdamage" oninput="calculateDamage()">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <select id="maxint" onchange="calculateDamage()">
+    <option value="400">400</option>
+    <option value="500">500</option>
+    <option value="600" selected>600</option>
+    <option value="700">700</option>
+    <option value="800">800</option>
+    <option value="900">900</option>
+    <option value="1000">1000</option>
+  </select>
+          </td>
+          <td>
+            <input type="number" id="maxintdamage" oninput="calculateDamage()">
+          </td>
+        </tr>
+      </table>
+
+
+
+
+
+
+
+
+
+    </div>
+    <!--finish inaccordancewithint-->
+    <div id="inaccordancewithkotei">
+      <input type="number" id="koteidamage" oninput="calculateint()">
+    </div>
+
+
+    <details class="summonselect">
+      <summary>条件呼び出し</summary>
+      <select id="summondefenderselect">
+    <option value="debug">デバッグ用防御</option>
     <option value="hero">ヒーロー(防25)</option>
     <option value="girl">ガール</option>
     <option value="tyouryuu">超竜王(防75)</option>
   </select>
-  <button type="button" id="summondefenderbtn">↑上書き</button>
-  <button type="button" id="resetdefenderbtn">リセット</button>
-  </details>
-      
-      
-      
-  <hr>
-<label for="baiki">バイキ:</label>
-<select id="baiki" onchange="calculateDamage()">
+      <button type="button" id="summondefenderbtn">↑上書き</button>
+      <button type="button" id="resetdefenderbtn">リセット</button>
+    </details>
+
+
+
+    <hr>
+    <label id="baikilabel" for="baiki">バイキ:</label>
+    <select id="baiki" onchange="calculateDamage()">
     <option value="1">なし</option>
     <option value="1.2">1.2</option>
     <option value="1.4">1.4</option>
 </select>
-<br>
-<label for="damebari">ダメバリ:</label>
-<select id="damebari" onchange="calculateDamage()">
+    <button type="button" id="resetnormalconditionsbtn">リセット</button>
+    <br>
+    <label for="damebari">ダメバリ:</label>
+    <select id="damebari" onchange="calculateDamage()">
     <option value="1">なし</option>
     <option value="0.8">ダメバリ</option>
     <option value="0.7">30%軽減</option>
@@ -193,295 +538,1673 @@ input[type="number"]::-webkit-inner-spin-button {
     <option value="0.3">70%軽減</option>
     <option value="0.1">天界</option>
 </select>
-<br>
-<label for="jyousann1">乗算条件1:</label>
-<input type="number" id="jyousann1" style="width:50px" oninput="calculateDamage()">
-<label for="jyousann2">乗算条件2:</label>
-<input type="number" id="jyousann2" style="width:50px" oninput="calculateDamage()">
-<br>
-<br>
-  <label for="bairitsu">倍率:</label>
-<input type="number" id="bairitsu" style="width:50px" oninput="calculateDamage()">
-<br>
-<label for="taisei">耐性:</label>
-<select id="taisei" onchange="calculateDamage()">
-    <option value="1.5">弱点</option>
-    <option value="1" selected>等倍</option>
-    <option value="0.75">軽減</option>
-    <option value="0.5">半減</option>
+    <br>
+    <label for="jyousannnormal1">乗算:</label>
+    <input type="number" class="conditions" id="jyousannnormal1" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="jyousannnormal2" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="jyousannnormal3" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="jyousannnormal4" oninput="calculateDamage()">
+    <br>
+    <label for="kasannnormal1">加算:</label>
+    <span> 1+ </span>
+    <input type="number" class="conditions" id="kasannnormal1" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="kasannnormal2" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="kasannnormal3" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="kasannnormal4" oninput="calculateDamage()">
+    <br>
+    <div style="margin-left: 3.2rem;">
+      <span> - </span>
+      <input type="number" class="conditions" id="gennsannnormal1" oninput="calculateDamage()">
+      <input type="number" class="conditions" id="gennsannnormal2" oninput="calculateDamage()">
+      <input type="number" class="conditions" id="gennsannnormal3" oninput="calculateDamage()">
+      <input type="number" class="conditions" id="gennsannnormal4" oninput="calculateDamage()">
+    </div>
+    <br>
+    <label id="bairitsulabel" for="bairitsu">倍率:</label>
+    <input type="number" id="bairitsu" oninput="calculateDamage()">
+    <button type="button" id="resetskillconditionsbtn">リセット</button>
+    <br>
+    <label for="taisei">耐性:</label>
+    <select id="taisei" onchange="calculateDamage()">
     <option value="0.25">激減</option>
+    <option value="0.5">半減</option>
+    <option value="0.75">軽減</option>
+    <option value="1" selected>等倍</option>
+    <option value="1.5">弱点</option>
+    <option value="1.8">弱点1.8</option>
+    <option value="2">大弱点</option>
+    <option value="2.5">超弱点</option>
 </select>
-<br>
-<label for="jyousann3">乗算条件3:</label>
-<input type="number" id="jyousann3" style="width:50px" oninput="calculateDamage()">
-<label for="jyousann4">乗算条件4:</label>
-<input type="number" id="jyousann4" style="width:50px" oninput="calculateDamage()">
-<br>
-<hr>
-  <label for="displaynormaldamage">通常攻撃ダメージ:</label>
-  <label id="displaynormaldamage"></label>
-      <span id="alertnormaldamage"></span>
-  <br>
-  <label for="displaybairitsudamage">特技ダメージ:</label>
-  <label id="displaybairitsudamage"></label>
-  <details>
-    <summary>連打</summary>
-      あ
-  </details>
-  <br>
-<br><br><br><br><br><br>
-  <details>
-    <summary>りーどみーあんどめも</summary>
-乗算条件はそのまま乗算、未入力可
-<br>1、2はメタルボディ、力ためなど、3、4は斬撃体技防御、系統特効など
-<br>計算結果は切り上げ
-<br>実装予定：加算条件、複数発、追撃、条件呼び出し、ログ出力、種や装備によるステータス計算フォーム、通常攻撃ダメージがマイナスになる問題の修正
-<br>攻撃力の追加設定は加算は種や装備などに加算。user設定の装備や種振りを想定。乗算はLSに乗算。クエストの特別条件の攻撃力アップのようなものを想定。
-<br>計算が合わないとき:乗算に一つでも0が紛れていたら0になってしまいます。追加設定の欄に隠れていたりしませんか。ダメージがマイナスになっているときは、防御力が高いため攻撃が通らない場合かもしれません。
-      <br>条件は未記入があってもOKです。その場合、乗算系は1倍、加算系は+0されるので変化なしです。
-      <br>どこに記入してもOKです。種装備は0で、もうそれら込みのステを直接記入しても、系統防御のとこに超竜王を想定して2倍を選択しても構いません。ただし、波動付き特技のシミュレーションには影響が出ます。
-  </details>
-</form>
+    <label for="rennkei">連携:</label>
+    <select id="rennkei" onchange="calculateDamage()">
+    <option value="1">なし</option>
+    <option value="1.2">2連携</option>
+    <option value="1.3">3連携</option>
+    <option value="1.4">4連携</option>
+    <option value="1.5">5連携</option>
+</select>
+    <br>
+    <label for="jyousannskill1">乗算:</label>
+    <input type="number" class="conditions" id="jyousannskill1" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="jyousannskill2" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="jyousannskill3" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="jyousannskill4" oninput="calculateDamage()">
+    <br>
+    <label for="kasannskill1">加算:</label>
+    <span> 1+ </span>
+    <input type="number" class="conditions" id="kasannskill1" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="kasannskill2" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="kasannskill3" oninput="calculateDamage()">
+    <input type="number" class="conditions" id="kasannskill4" oninput="calculateDamage()">
+    <br>
+    <div style="margin-left: 3.2rem;">
+      <span> - </span>
+      <input type="number" class="conditions" id="gennsannskill1" oninput="calculateDamage()">
+      <input type="number" class="conditions" id="gennsannskill2" oninput="calculateDamage()">
+      <input type="number" class="conditions" id="gennsannskill3" oninput="calculateDamage()">
+      <input type="number" class="conditions" id="gennsannskill4" oninput="calculateDamage()">
+    </div>
+    <br>
+    <hr>
+    <span id="labelfordisplaynormaldamage">通常攻撃ダメージ:</span>
+    <span id="displaynormaldamage"></span>
+    <span id="alertnormaldamage"></span>
+    <br>
+    <span id="labelfordisplayskilldamage">特技ダメージ:</span>
+    <span id="displayskilldamage"></span>
+    <br>
+    <button type="button" id="tab1" class="tabbutton selected" onclick="switchTab(1)">tab1</button>
+    <button type="button" id="tab2" class="tabbutton" onclick="switchTab(2)">tab2</button>
+    <button type="button" id="tab3" class="tabbutton" onclick="switchTab(3)">tab3</button>
+    <button type="button" id="tab4" class="tabbutton" onclick="switchTab(4)">tab4</button>
+    <button type="button" id="tab5" class="tabbutton" onclick="switchTab(5)">tab5</button>
+    <button type="button" id="tab6" class="tabbutton" onclick="switchTab(6)">tab6</button>
+    <br>
+    <button type="button" id="copytab">記憶</button>
+    <button type="button" id="pastetab" disabled>貼り付け</button>
+    <button type="button" id="resettab" onclick="tabresetbtn()">tabをクリア</button>
+    <br>
+    <details open>
+      <summary>残りHP計算</summary>
+      <select id="calculateHPskillhit" onchange="calculateDamage()">
+    <option value="0">なし</option>
+    <option value="1" selected>ヒット数1発</option>
+    <option value="2">ヒット数2発</option>
+    <option value="3">ヒット数3発</option>
+    <option value="4">ヒット数4発</option>
+    <option value="5">ヒット数5発</option>
+    <option value="6">ヒット数6発</option>
+  </select>
+      <span id="plusofremainingHP">+</span>
+      <select id="calculateHPnormalhit" onchange="calculateDamage()">
+    <option value="0">追撃なし</option>
+    <option value="1">追撃1発</option>
+    <option value="2">追撃2発</option>
+    <option value="3">追撃3発</option>
+  </select>
+      <span>合計ダメ:</span>
+      <span id="totaldamage"></span>
+      <br> 防御側HP
 
-<script>
-    window.addEventListener("DOMContentLoaded", function(){
-      calculateDamage();
+
+      <input type="number" id="HPdefault" oninput="calculateDamage()">
+      <br>
+      <span>+種</span>
+      <select id="HPseedselect" onchange="calculateDamage()">
+    <option value="0">なし</option>
+    <option value="22">種22</option>
+    </select>
+
+      <span>)×LS</span>
+      <select id="HPLSselect" onchange="calculateDamage()">
+    <option value="1">補正なし(1)</option>
+    <option value="1.04" selected>HP0(1.04)</option>
+    <option value="1.14">HP10(1.14)</option>
+    <option value="1.17">HP13(1.17)</option>
+    <option value="1.19">HP15(1.19)</option>
+    <option value="1.24">HP20(1.24)</option>
+    <option value="1.29">HP25(1.29)</option>
+    <option value="1.34">HP30(1.34)</option>
+    <option value="1.44">HP40(1.44)</option>
+    <option value="1.54">HP50(1.54)</option>
+  </select> =
+      <span id="HPincludingLS"></span>
+      <br>
+      <span>残りHP:</span>
+      <span id="remainingHP"></span>
+    </details>
+    <br>
+    <details>
+      <summary>連打・AI追撃表</summary>
+      <table border="1">
+        <tr>
+          <th></th>
+          <th>1発</th>
+          <th>2発</th>
+          <th>3発</th>
+          <th>4発</th>
+          <th>5発</th>
+          <th>6発</th>
+        </tr>
+        <tr>
+          <td>特技のみ</td>
+          <td id="tableonlyskill1"></td>
+          <td id="tableonlyskill2"></td>
+          <td id="tableonlyskill3"></td>
+          <td id="tableonlyskill4"></td>
+          <td id="tableonlyskill5"></td>
+          <td id="tableonlyskill6"></td>
+        </tr>
+        <tr>
+          <td>+追撃1発</td>
+          <td id="tablenormal1skill1"></td>
+          <td id="tablenormal1skill2"></td>
+          <td id="tablenormal1skill3"></td>
+          <td id="tablenormal1skill4"></td>
+          <td id="tablenormal1skill5"></td>
+          <td id="tablenormal1skill6"></td>
+        </tr>
+        <tr>
+          <td>+追撃2発</td>
+          <td id="tablenormal2skill1"></td>
+          <td id="tablenormal2skill2"></td>
+          <td id="tablenormal2skill3"></td>
+          <td id="tablenormal2skill4"></td>
+          <td id="tablenormal2skill5"></td>
+          <td id="tablenormal2skill6"></td>
+        </tr>
+        <tr>
+          <td>+追撃3発</td>
+          <td id="tablenormal3skill1"></td>
+          <td id="tablenormal3skill2"></td>
+          <td id="tablenormal3skill3"></td>
+          <td id="tablenormal3skill4"></td>
+          <td id="tablenormal3skill5"></td>
+          <td id="tablenormal3skill6"></td>
+        </tr>
+      </table>
+    </details>
+
+
+    <details>
+      <summary>はじめての方へ・使い方</summary>
+      <p>
+        できること<br> ・数値を入力して計算
+        <br> ・条件呼び出しから、攻撃側と防御側のモンスターを選択して簡単に計算
+        <br> ・tabコピー機能による、条件を変化させたときのダメージの比較、同じ敵に複数回攻撃して倒し切れるかどうかの計算
+        <br><br> 以下それぞれの機能を軽く説明します。
+      </p>
+      <p>
+        ・全体として<br> 未入力OKです。むしろ、掛け算されるところに0とか記入してしまうと全て0になってしまうので気をつけてね。
+        <br> バグなどがあれば報告していただけると非常に助かります。@jigokunoakaneまで。
+        <br>
+      </p>
+      <p>
+        ・攻撃/防御力の入力<br> (攻撃力+種+装備)
+        <br> ×LS ×系統バフ ×その他<br> 種や装備込みでのステータスを直接入力欄に記入し、種や装備欄は空欄にするのもOKです。
+        <br>
+      </p>
+      <p>
+        ・賢さ依存のとき<br> 入力された情報に応じて、賢さ差を自動計算します。賢さ差は手動で設定することも可能ですが、自分/敵の賢さ関係の部分をいじると自動計算された値に戻ってしまうのでご注意ください。
+        <br> 表の部分には賢さの範囲と、その時のダメージの範囲を記入してください。サーチさんにのってます。(データパクるのはよろしくないかなと思ったため選択肢は例のみ)
+        <br>
+      </p>
+      <p>
+        ・条件呼び出しについて<br> モンスターを選択して上書きを押すと、自動でフォームが埋まります。
+        <br> 攻撃側の選択では、攻撃力と条件の左側が
+        <br> 攻撃側の選択では、防御力と条件の右側が
+        <br> それぞれ埋まります。
+        <br>
+      </p>
+      <p>
+        ・条件について<br> 上は通常攻撃にもかかる条件(例えば力溜め)
+        <br> 下は特技にのみかかる条件(例えば斬撃防御)
+        <br> 次のセクションで詳しく説明します。
+        <br> 賢さ依存選択時は上に記入しても下に記入してもどちらでも構いません。
+        <br> また、攻撃側の条件を左2枠に、防御側の条件を右2枠に記入すれば、新たに条件呼び出しをするときに上書きされずに済みます。
+      </p>
+      <p>
+        ・加算/乗算の違いについて<br><br> 乗算(上): 通常攻撃に乗算されるもの。<br> e.g. ライトメタルボディ(0.75)、力ため(2)<br><br> 加算(上): 通常攻撃に加減算されるもの<br> e.g. 竜神爪(10%)、?系相手のケトス(-50%)<br><br> 乗算(下): 特技限定で乗算されるもの。<br> e.g. 体技防御一段階アップ(0.5)<br> 魔壊裂きの?系にダメージ2倍(2)
+        <br><br> 加算(下): 特技限定で加減算されるもの<br> e.g. LS斬撃ダメージアップ(30%)<br> 必殺の双撃錬金(30%)
+        <br> ゴッデスLSの属性ダメ30%軽減(-30%)
+        <br><br> 通常攻撃の計算では上の加算/乗算のみを、特技の計算では両方の加算/乗算を反映しています。
+      </p>
+      <p>
+        ・tabについて<br> 黒くなっているところが現在表示されているタブで、押すと切り替わります。
+        <br> 記憶ボタンを押すと、現在のタブの情報が記憶されます。その状態で他のタブに遷移して貼り付けボタンを押すと、コピーしていた情報が、そのタブに上書きされます。
+        <br> タブには、何依存かや残りHP計算も含めた全ての情報がそれぞれ保持されます。
+      </p>
+      <p>
+        使用時のコツ<br> ・計算にあたっては、条件の見落としにご注意ください。 ゴッデスの属性30%軽減とライメタ付与、一族のつるぎなど、他モンスターに効果を及ぼす特性は特に忘れやすいです。また、ケトスの?系相手の50%軽減や竜神爪も見落としやすいポイントです。
+        <br> ・LSサンドして攻撃力40%とかの時は、その他の欄にぶち込んでください。
+        <br> ・本当は超竜王の防御内部アップは系統防御とは違いますが、系統防御のところで2倍を選択していただいて何も問題ありません。
+        <br> ・タブをコピーした後にそのタブの内容を変更しても、それはコピーには反映されません。
+      </p>
+    </details>
+    <details>
+      <summary>細かい仕様とか(マニア向け)</summary>
+      <p>
+        ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージが通るかどうか説明を出しています。
+      </p>
+    </details>
+
+    <!--
+<details>
+   <summary>もーどちぇんじ!</summary>
+   <div>逆算したい値を選択(未実装)<br>
+<input type="radio" name="gyakusann" value="攻撃力"> 攻撃力
+<input type="radio" name="gyakusann" value="防御力"> 防御力
+<input type="radio" name="gyakusann" value="倍率"> 倍率
+</div>
+<button type="button" id="debug1">debug1</button>
+  </details>
+  -->
+  </form>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+  Tabassignment();
 });
-      
+
 function calculateDamage() {
-    const attackdefault = document.getElementById("attackdefault").value;
-    const attackseed = document.getElementById("attackseed").value;
-    const attackweapon = document.getElementById("attackweapon").value;
-    const attackaddkasann = document.getElementById("attackaddkasann").value;
-    const attackhyouji = Number(attackdefault) + Number(attackseed) + Number(attackweapon) + Number(attackaddkasann);
-    const attackLS = document.getElementById("attackLS").value;
-    const attackkeitoubuff = document.getElementById("attackkeitoubuff").value;
-    let attackanotherbuff = document.getElementById("attackanotherbuff").value;
-      if (!attackanotherbuff) {
-      attackanotherbuff = 1;
-      }
-    let attackaddjyousann = document.getElementById("attackaddjyousann").value;
-      if (!attackaddjyousann) {
-      attackaddjyousann = 1;
-      }
-    const attackwithoutbuff = attackhyouji * attackLS * attackaddjyousann;
-    const attackincludingbuff = attackwithoutbuff * attackkeitoubuff * attackanotherbuff;
-    document.getElementById("displayattackhyouji").innerHTML = Math.ceil(attackhyouji);
-    document.getElementById("displayattackincludingbuff").innerHTML = Math.ceil(attackincludingbuff);
-    const defensedefault = document.getElementById("defensedefault").value;
-    const defenseseed = document.getElementById("defenseseed").value;
-    const defenseweapon = document.getElementById("defenseweapon").value;
-    const defenseaddkasann = document.getElementById("defenseaddkasann").value;
-    const defensehyouji = Number(defensedefault) + Number(defenseseed) + Number(defenseweapon) + Number(defenseaddkasann);
-    const defenseLS = document.getElementById("defenseLS").value;
-    const defensekeitoubuff = document.getElementById("defensekeitoubuff").value;
-    const sukarabuff = document.getElementById("sukarabuff").value;
-    let defenseaddjyousann = document.getElementById("defenseaddjyousann").value;
-      if (!defenseaddjyousann) {
-      defenseaddjyousann = 1;
-      }
-    const defensewithoutbuff = defensehyouji * defenseLS * defenseaddjyousann;
-    const defenseincludingbuff = defensewithoutbuff * defensekeitoubuff * sukarabuff;
-    document.getElementById("displaydefensehyouji").innerHTML = Math.ceil(defensehyouji);
-    document.getElementById("displaydefenseincludingbuff").innerHTML = Math.ceil(defenseincludingbuff);
+  const attackdefault = document.getElementById("attackdefault").value;
+  const attackseed = document.getElementById("attackseed").value;
+  const attackweapon = document.getElementById("attackweapon").value;
+  const attackaddkasann = document.getElementById("attackaddkasann").value;
+  const attackhyouji = Number(attackdefault) + Number(attackseed) + Number(attackweapon) + Number(attackaddkasann);
+  const attackLS = document.getElementById("attackLS").value;
+  const attackkeitoubuff = document.getElementById("attackkeitoubuff").value;
+  let attackanotherbuff = document.getElementById("attackanotherbuff").value;
+  if (!attackanotherbuff) {
+    attackanotherbuff = 1;
+  }
+  let attackaddjyousann = document.getElementById("attackaddjyousann").value;
+  if (!attackaddjyousann) {
+    attackaddjyousann = 1;
+  }
+  const attackwithoutbuff = attackhyouji * attackLS * attackaddjyousann;
+  const attackincludingbuff = attackwithoutbuff * attackkeitoubuff * attackanotherbuff;
+  document.getElementById("displayattackhyouji").innerHTML = Math.ceil(attackhyouji);
+  document.getElementById("displayattackincludingbuff").innerHTML = Math.ceil(attackincludingbuff);
+  const defensedefault = document.getElementById("defensedefault").value;
+  const defenseseed = document.getElementById("defenseseed").value;
+  const defenseweapon = document.getElementById("defenseweapon").value;
+  const defenseaddkasann = document.getElementById("defenseaddkasann").value;
+  const defensehyouji = Number(defensedefault) + Number(defenseseed) + Number(defenseweapon) + Number(defenseaddkasann);
+  const defenseLS = document.getElementById("defenseLS").value;
+  const defensekeitoubuff = document.getElementById("defensekeitoubuff").value;
+  const sukarabuff = document.getElementById("sukarabuff").value;
+  let defenseaddjyousann = document.getElementById("defenseaddjyousann").value;
+  if (!defenseaddjyousann) {
+    defenseaddjyousann = 1;
+  }
+  const defensewithoutbuff = defensehyouji * defenseLS * defenseaddjyousann;
+  const defenseincludingbuff = defensewithoutbuff * defensekeitoubuff * sukarabuff;
+  document.getElementById("displaydefensehyouji").innerHTML = Math.ceil(defensehyouji);
+  document.getElementById("displaydefenseincludingbuff").innerHTML = Math.ceil(defenseincludingbuff);
+
+  const baiki = document.getElementById("baiki").value;
+  const damebari = document.getElementById("damebari").value;
+
+  let jyousannnormal1 = document.getElementById("jyousannnormal1").value;
+  if (!jyousannnormal1) {
+    jyousannnormal1 = 1;
+  }
+  let jyousannnormal2 = document.getElementById("jyousannnormal2").value;
+  if (!jyousannnormal2) {
+    jyousannnormal2 = 1;
+  }
+  let jyousannnormal3 = document.getElementById("jyousannnormal3").value;
+  if (!jyousannnormal3) {
+    jyousannnormal3 = 1;
+  }
+  let jyousannnormal4 = document.getElementById("jyousannnormal4").value;
+  if (!jyousannnormal4) {
+    jyousannnormal4 = 1;
+  }
+  const kasannnormal1 = document.getElementById("kasannnormal1").value;
+  const kasannnormal2 = document.getElementById("kasannnormal2").value;
+  const kasannnormal3 = document.getElementById("kasannnormal3").value;
+  const kasannnormal4 = document.getElementById("kasannnormal4").value;
+  const gennsannnormal1 = document.getElementById("gennsannnormal1").value;
+  const gennsannnormal2 = document.getElementById("gennsannnormal2").value;
+  const gennsannnormal3 = document.getElementById("gennsannnormal3").value;
+  const gennsannnormal4 = document.getElementById("gennsannnormal4").value;
+
+
+
+  const bairitsu = document.getElementById("bairitsu").value;
+  const taisei = document.getElementById("taisei").value;
+  const rennkei = document.getElementById("rennkei").value;
+  let jyousannskill1 = document.getElementById("jyousannskill1").value;
+  if (!jyousannskill1) {
+    jyousannskill1 = 1;
+  }
+  let jyousannskill2 = document.getElementById("jyousannskill2").value;
+  if (!jyousannskill2) {
+    jyousannskill2 = 1;
+  }
+  let jyousannskill3 = document.getElementById("jyousannskill3").value;
+  if (!jyousannskill3) {
+    jyousannskill3 = 1;
+  }
+  let jyousannskill4 = document.getElementById("jyousannskill4").value;
+  if (!jyousannskill4) {
+    jyousannskill4 = 1;
+  }
+  const kasannskill1 = document.getElementById("kasannskill1").value;
+  const kasannskill2 = document.getElementById("kasannskill2").value;
+  const kasannskill3 = document.getElementById("kasannskill3").value;
+  const kasannskill4 = document.getElementById("kasannskill4").value;
+  const gennsannskill1 = document.getElementById("gennsannskill1").value;
+  const gennsannskill2 = document.getElementById("gennsannskill2").value;
+  const gennsannskill3 = document.getElementById("gennsannskill3").value;
+  const gennsannskill4 = document.getElementById("gennsannskill4").value;
+
+
+
+  //attizon
+  const normaldamagebeforekagennsann = (attackincludingbuff / 2 - defenseincludingbuff / 4) * baiki * damebari * jyousannnormal1 * jyousannnormal2 * jyousannnormal3 * jyousannnormal4;
+  const normaltotalkagennsann = (1 + Number(kasannnormal1) + Number(kasannnormal2) + Number(kasannnormal3) + Number(kasannnormal4) - Number(gennsannnormal1) - Number(gennsannnormal2) - Number(gennsannnormal3) - Number(gennsannnormal4));
+  const skilltotalkagennsann = (1 + Number(kasannskill1) + Number(kasannskill2) + Number(kasannskill3) + Number(kasannskill4) - Number(gennsannskill1) - Number(gennsannskill2) - Number(gennsannskill3) - Number(gennsannskill4));
+  const normaldamage = normaldamagebeforekagennsann * normaltotalkagennsann;
+  document.getElementById("displaynormaldamage").innerHTML = Math.ceil(normaldamage);
+  if (defenseincludingbuff >= attackincludingbuff * 2) {
+    document.getElementById("alertnormaldamage").innerHTML = "(ミスか1桁ダメージ)";
+  } else if (defenseincludingbuff > attackincludingbuff * 1.75) {
+    document.getElementById("alertnormaldamage").innerHTML = "(ダメージ非常に不安定)";
+  } else {
+    document.getElementById("alertnormaldamage").innerHTML = "";
+  }
+  const attskilldamage = (normaldamagebeforekagennsann * bairitsu * taisei * rennkei * jyousannskill1 * jyousannskill2 * jyousannskill3 * jyousannskill4 * (normaltotalkagennsann + skilltotalkagennsann - 1));
+
+  //intizon
+  const intdefault = document.getElementById("intdefault").value;
+  const intseed = document.getElementById("intseed").value;
+  const intweapon = document.getElementById("intweapon").value;
+  const inthyouji = Number(intdefault) + Number(intseed) + Number(intweapon);
+  const intbuff = document.getElementById("intbuff").value;
+  const intincludingbuff = inthyouji * intbuff;
+  const intdifferencebonus = document.getElementById("intdifferencebonus").value;
+  const intskillplus = document.getElementById("intskillplus").value;
+  const minint = document.getElementById("minint").value;
+  const minintdamage = document.getElementById("minintdamage").value;
+  const maxint = document.getElementById("maxint").value;
+  const maxintdamage = document.getElementById("maxintdamage").value;
+  let spellkisodamage;
+  if (!intdefault) {
+    spellkisodamage = 0;
+  } else {
+    if (intincludingbuff <= minint) {
+      spellkisodamage = minintdamage;
+    } else if (intincludingbuff < maxint) {
+      spellkisodamage = (intincludingbuff - minint) * (maxintdamage - minintdamage) / (maxint - minint) + Number(minintdamage);
+    } else {
+      spellkisodamage = maxintdamage;
+    }
+  }
+  //未記入の場合を後から補足的に上書き
+  if (!minintdamage && intincludingbuff < maxint) {
+    spellkisodamage = 0;
+  }
+  if (!maxintdamage && intincludingbuff > minint) {
+    spellkisodamage = 0;
+  }
+
+
+  const spellskilldamage = (spellkisodamage * intdifferencebonus * intskillplus * damebari * jyousannnormal1 * jyousannnormal2 * jyousannnormal3 * jyousannnormal4 * taisei * rennkei * jyousannskill1 * jyousannskill2 * jyousannskill3 * jyousannskill4 * (normaltotalkagennsann + skilltotalkagennsann - 1));
+  //koteiizon
+  const koteikisodamage = document.getElementById("koteidamage").value;
+  const koteiskilldamage = (koteikisodamage * damebari * jyousannnormal1 * jyousannnormal2 * jyousannnormal3 * jyousannnormal4 * taisei * rennkei * jyousannskill1 * jyousannskill2 * jyousannskill3 * jyousannskill4 * (normaltotalkagennsann + skilltotalkagennsann - 1));
+
+  //display,izonbunnki
+  const selectedizon = askizon();
+  let resultdamage;
+  if (selectedizon == "attizon") {
+    resultdamage = attskilldamage;
+
+  } else if (selectedizon == "intizon") {
+    resultdamage = spellskilldamage;
+
+  } else {
+    resultdamage = koteiskilldamage;
+
+  }
+
+  document.getElementById("displayskilldamage").innerHTML = Math.ceil(resultdamage);
+
+
+  //table処理
+  document.getElementById("tableonlyskill1").innerHTML = Math.ceil(attskilldamage * 1);
+  document.getElementById("tableonlyskill2").innerHTML = Math.ceil(attskilldamage * 2);
+  document.getElementById("tableonlyskill3").innerHTML = Math.ceil(attskilldamage * 3);
+  document.getElementById("tableonlyskill4").innerHTML = Math.ceil(attskilldamage * 4);
+  document.getElementById("tableonlyskill5").innerHTML = Math.ceil(attskilldamage * 5);
+  document.getElementById("tableonlyskill6").innerHTML = Math.ceil(attskilldamage * 6);
+  //追撃1発
+  document.getElementById("tablenormal1skill1").innerHTML = Math.ceil(normaldamage + attskilldamage * 1);
+  document.getElementById("tablenormal1skill2").innerHTML = Math.ceil(normaldamage + attskilldamage * 2);
+  document.getElementById("tablenormal1skill3").innerHTML = Math.ceil(normaldamage + attskilldamage * 3);
+  document.getElementById("tablenormal1skill4").innerHTML = Math.ceil(normaldamage + attskilldamage * 4);
+  document.getElementById("tablenormal1skill5").innerHTML = Math.ceil(normaldamage + attskilldamage * 5);
+  document.getElementById("tablenormal1skill6").innerHTML = Math.ceil(normaldamage + attskilldamage * 6);
+  //追撃2発
+  document.getElementById("tablenormal2skill1").innerHTML = Math.ceil(normaldamage * 2 + attskilldamage * 1);
+  document.getElementById("tablenormal2skill2").innerHTML = Math.ceil(normaldamage * 2 + attskilldamage * 2);
+  document.getElementById("tablenormal2skill3").innerHTML = Math.ceil(normaldamage * 2 + attskilldamage * 3);
+  document.getElementById("tablenormal2skill4").innerHTML = Math.ceil(normaldamage * 2 + attskilldamage * 4);
+  document.getElementById("tablenormal2skill5").innerHTML = Math.ceil(normaldamage * 2 + attskilldamage * 5);
+  document.getElementById("tablenormal2skill6").innerHTML = Math.ceil(normaldamage * 2 + attskilldamage * 6);
+  //追撃3発
+  document.getElementById("tablenormal3skill1").innerHTML = Math.ceil(normaldamage * 3 + attskilldamage * 1);
+  document.getElementById("tablenormal3skill2").innerHTML = Math.ceil(normaldamage * 3 + attskilldamage * 2);
+  document.getElementById("tablenormal3skill3").innerHTML = Math.ceil(normaldamage * 3 + attskilldamage * 3);
+  document.getElementById("tablenormal3skill4").innerHTML = Math.ceil(normaldamage * 3 + attskilldamage * 4);
+  document.getElementById("tablenormal3skill5").innerHTML = Math.ceil(normaldamage * 3 + attskilldamage * 5);
+  document.getElementById("tablenormal3skill6").innerHTML = Math.ceil(normaldamage * 3 + attskilldamage * 6);
+
+
+
+  function calculateremainingHP() {
+    const HPdefault = document.getElementById("HPdefault").value;
+    const HPseedselect = document.getElementById("HPseedselect").value;
+    const HPLSselect = document.getElementById("HPLSselect").value;
+
+
+    const HPincludingLS = Math.ceil((Number(HPdefault) + Number(HPseedselect)) * HPLSselect);
+    document.getElementById("HPincludingLS").innerHTML = HPincludingLS;
+
+    const calculateHPskillhit = document.getElementById("calculateHPskillhit").value;
+    const calculateHPnormalhit = document.getElementById("calculateHPnormalhit").value;
+    let totaldamage;
+    if (selectedizon == attizon) {
+      totaldamage = Math.ceil(Number(calculateHPskillhit * attskilldamage) + Number(calculateHPnormalhit * normaldamage));
+    } else {
+      totaldamage = Math.ceil(calculateHPskillhit * resultdamage);
+    }
+    document.getElementById("totaldamage").innerHTML = totaldamage;
+    const remainingHP = HPincludingLS - totaldamage;
+    document.getElementById("remainingHP").innerHTML = remainingHP;
+
+  }
+  calculateremainingHP();
+}
+
+function calculateint() {
+  const intdefault = document.getElementById("intdefault").value;
+  const intseed = document.getElementById("intseed").value;
+  const intweapon = document.getElementById("intweapon").value;
+  const inthyouji = Number(intdefault) + Number(intseed) + Number(intweapon);
+  const intbuff = document.getElementById("intbuff").value;
+  const intincludingbuff = inthyouji * intbuff;
+  const enemyintdefault = document.getElementById("enemyintdefault").value;
+  const enemyintseed = document.getElementById("enemyintseed").value;
+  const enemyintweapon = document.getElementById("enemyintweapon").value;
+  const enemyinthyouji = Number(enemyintdefault) + Number(enemyintseed) + Number(enemyintweapon);
+  const enemyintbuff = document.getElementById("enemyintbuff").value;
+  const enemyintincludingbuff = enemyinthyouji * enemyintbuff;
+  const intdifference = intincludingbuff - enemyintincludingbuff;
+  document.getElementById("displayintincludingbuff").innerHTML = Math.ceil(intincludingbuff);
+  const displayintdifference = Math.floor(intdifference);
+  
+  if (displayintdifference >= 150) {
+    expectedintdifferencebonus = 1.25;
+  } else if (displayintdifference >= 140) {
+    expectedintdifferencebonus = 1.24;
+  } else if (displayintdifference >= 130) {
+    expectedintdifferencebonus = 1.23;
+  } else if (displayintdifference >= 120) {
+    expectedintdifferencebonus = 1.22;
+  } else if (displayintdifference >= 110) {
+    expectedintdifferencebonus = 1.21;
+  } else if (displayintdifference >= 100) {
+    expectedintdifferencebonus = 1.2;
+  } else if (displayintdifference >= 90) {
+    expectedintdifferencebonus = 1.19;
+  } else if (displayintdifference >= 80) {
+    expectedintdifferencebonus = 1.18;
+  } else if (displayintdifference >= 70) {
+    expectedintdifferencebonus = 1.17;
+  } else if (displayintdifference >= 60) {
+    expectedintdifferencebonus = 1.16;
+  } else if (displayintdifference >= 50) {
+    expectedintdifferencebonus = 1.15;
+  } else if (displayintdifference >= 40) {
+    expectedintdifferencebonus = 1.14;
+  } else if (displayintdifference >= 30) {
+    expectedintdifferencebonus = 1.13;
+  } else if (displayintdifference >= 20) {
+    expectedintdifferencebonus = 1.12;
+  } else if (displayintdifference >= 10) {
+    expectedintdifferencebonus = 1.11;
+  } else if (displayintdifference >= 1) {
+    expectedintdifferencebonus = 1.1;
+  } else {
+    expectedintdifferencebonus = 1;
+  }
+  document.getElementById("intdifferencebonus").value = expectedintdifferencebonus;
+  calculateDamage();
+//賢さいじるとint起動、賢さ差上書き.特技+いじるとcalc起動.
+}
+
+function intskillselecter() {
+  const intskillselect = document.getElementById("intskillselect").value;
+  if (intskillselect == "almagest") {
+    document.getElementById("minint").value = 200;
+    document.getElementById("minintdamage").value = 178;
+    document.getElementById("maxint").value = 600;
+    document.getElementById("maxintdamage").value = 410;
+  } else if (intskillselect == "mata") {
+    document.getElementById("minint").value = 100;
+    document.getElementById("minintdamage").value = 50;
+    document.getElementById("maxint").value = 600;
+    document.getElementById("maxintdamage").value = 160;
+  }
+}
+
+//攻撃側選択
+
+const summonattackerbtn = document.getElementById("summonattackerbtn");
+summonattackerbtn.addEventListener("click", function () {
+  const summonattackerselect = document.getElementById("summonattackerselect").value;
+  //攻撃側選択、統合・引数化
+  function setattacker(setattackdefault, setattackseed, setattackweapon, setattackLS, setattackkeitoubuff, setattackanotherbuff, setattackaddkasann, setattackaddjyousann, setbaiki, setjyousannnormal1, setjyousannnormal2, setkasannnormal1, setkasannnormal2, setgennsannnormal1, setgennsannnormal2, setbairitsu, setjyousannskill1, setjyousannskill2, setkasannskill1, setkasannskill2, setgennsannskill1, setgennsannskill2) {
+    document.getElementById("attackdefault").value = setattackdefault;
+    attackseed.options[setattackseed].selected = true;
+    document.getElementById("attackweapon").value = setattackweapon;
+    document.getElementById("attackLS").value = setattackLS;
+    document.getElementById("attackkeitoubuff").value = setattackkeitoubuff;
+    document.getElementById("attackanotherbuff").value = setattackanotherbuff;
+    document.getElementById("attackaddkasann").value = setattackaddkasann;
+    document.getElementById("attackaddjyousann").value = setattackaddjyousann;
+
+    document.getElementById("baiki").value = setbaiki;
+    document.getElementById("jyousannnormal1").value = setjyousannnormal1;
+    document.getElementById("jyousannnormal2").value = setjyousannnormal2;
+    document.getElementById("kasannnormal1").value = setkasannnormal1;
+    document.getElementById("kasannnormal2").value = setkasannnormal2;
+    document.getElementById("gennsannnormal1").value = setgennsannnormal1;
+    document.getElementById("gennsannnormal2").value = setgennsannnormal2;
+    document.getElementById("bairitsu").value = setbairitsu;
+    document.getElementById("jyousannskill1").value = setjyousannskill1;
+    document.getElementById("jyousannskill2").value = setjyousannskill2;
+    document.getElementById("kasannskill1").value = setkasannskill1;
+    document.getElementById("kasannskill2").value = setkasannskill2;
+    document.getElementById("gennsannskill1").value = setgennsannskill1;
+    document.getElementById("gennsannskill2").value = setgennsannskill2;
+  }
+
+  //attacker data list
+  if (summonattackerselect == "debug") {
+    setattacker(500, 2, 30, 1.18, 1.5, "", 30, 1.5, 1.4, 1.1, 1.2, 0.2, 0.3, 0.1, 0.2, 2.11, 2, 1.5, 0.1, 0.2, "", 0.2);
+  }
+  
+  
+  
+  
+  
+  calculateDamage();
+}, false);
+
+
+
+//防御側選択
+
+
+const summondefenderbtn = document.getElementById("summondefenderbtn");
+summondefenderbtn.addEventListener("click", function () {
+  const summondefenderselect = document.getElementById("summondefenderselect").value;
+
+  //統合・引数化
+  function setdefender(setdefensedefault, setdefenseseed, setdefenseweapon, setdefenseLS, setdefensekeitoubuff, setsukarabuff, setdefenseaddkasann, setdefenseaddjyousann, setdamebari, setjyousannnormal3, setjyousannnormal4, setkasannnormal3, setkasannnormal4, setgennsannnormal3, setgennsannnormal4, setjyousannskill3, setjyousannskill4, setkasannskill3, setkasannskill4, setgennsannskill3, setgennsannskill4, setHPdefault, setHPseedselect, setHPLSselect) {
+
+    document.getElementById("defensedefault").value = setdefensedefault;
+    document.getElementById("defenseseed").value = setdefenseseed;
+    document.getElementById("defenseweapon").value = setdefenseweapon;
+    document.getElementById("defenseLS").value = setdefenseLS;
+    document.getElementById("defensekeitoubuff").value = setdefensekeitoubuff;
+    document.getElementById("sukarabuff").value = setsukarabuff;
+    document.getElementById("defenseaddkasann").value = setdefenseaddkasann;
+    document.getElementById("defenseaddjyousann").value = setdefenseaddjyousann;
+    document.getElementById("damebari").value = setdamebari;
+    document.getElementById("jyousannnormal3").value = setjyousannnormal3;
+    document.getElementById("jyousannnormal4").value = setjyousannnormal4;
+    document.getElementById("kasannnormal3").value = setkasannnormal3;
+    document.getElementById("kasannnormal4").value = setkasannnormal4;
+    document.getElementById("gennsannnormal3").value = setgennsannnormal3;
+    document.getElementById("gennsannnormal4").value = setgennsannnormal4;
+    document.getElementById("jyousannskill3").value = setjyousannskill3;
+    document.getElementById("jyousannskill4").value = setjyousannskill4;
+    document.getElementById("kasannskill3").value = setkasannskill3;
+    document.getElementById("kasannskill4").value = setkasannskill4;
+    document.getElementById("gennsannskill3").value = setgennsannskill3;
+    document.getElementById("gennsannskill4").value = setgennsannskill4;
+    document.getElementById("HPdefault").value = setHPdefault;
+    document.getElementById("HPseedselect").value = setHPseedselect;
+    document.getElementById("HPLSselect").value = setHPLSselect;
+  }
+
+
+  //defender data list
+  if (summondefenderselect == "debug") {
+    setdefender(567, 48, 15, 1.18, 2, 1.4, 1.5, 0.1, 0.5, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, "", 0.9, 1, 1.1, "", 0, 1.04);
+  }
+  
+  
+  
+  
+  
+  
+  calculateDamage();
+}, false);
+
+
+
+
+/*
+      //debugbtnatt出力用 攻撃側データリスト作成用
+      const debugbtnatt = document.getElementById("debugbtnatt");
+debugbtnatt.addEventListener("click", function() {
       
-    const baiki = document.getElementById("baiki").value;
-    const damebari = document.getElementById("damebari").value;
-    let jyousann1 = document.getElementById("jyousann1").value;
-      if (!jyousann1) {
-      jyousann1 = 1;
-      }
-    let jyousann2 = document.getElementById("jyousann2").value;
-      if (!jyousann2) {
-      jyousann2 = 1;
-      }
-    const bairitsu = document.getElementById("bairitsu").value;
-    const taisei = document.getElementById("taisei").value;
-    let jyousann3 = document.getElementById("jyousann3").value;
-      if (!jyousann3) {
-      jyousann3 = 1;
-      }
-    let jyousann4 = document.getElementById("jyousann4").value;
-      if (!jyousann4) {
-      jyousann4 = 1;
-      }
-    const normaldamage = (attackincludingbuff / 2 - defenseincludingbuff / 4) * baiki * damebari * jyousann1 * jyousann2;
-    document.getElementById("displaynormaldamage").innerHTML = Math.ceil(normaldamage);
-      if (defenseincludingbuff > attackincludingbuff * 1.75){
-      document.getElementById("alertnormaldamage").innerHTML = "(通らない可能性あり)";
-      }else{
-      document.getElementById("alertnormaldamage").innerHTML = "";
-      }
-    const bairitsudamage = (normaldamage * bairitsu * taisei * jyousann3 * jyousann4);
-    document.getElementById("displaybairitsudamage").innerHTML = Math.ceil(bairitsudamage);
+      //const selectseed = document.getElementById("attackseed");
+      //const selectedseed = selectseed.selectedIndex;
+      const selectedseed = document.getElementById("attackseed").selectedIndex;
+      let getatt = 
+      "if (summonattackerselect == \"hoge\"){\n"+
+      "setattacker("+
+      document.getElementById("attackdefault").value+","+
+      selectedseed+","+
+      document.getElementById("attackweapon").value+","+
+      document.getElementById("attackLS").value+","+
+      document.getElementById("attackkeitoubuff").value+","+
+      document.getElementById("attackanotherbuff").value+","+
+      document.getElementById("attackaddkasann").value+","+
+      document.getElementById("attackaddjyousann").value+","+
+      document.getElementById("baiki").value+","+
+      document.getElementById("jyousannnormal1").value+","+
+      document.getElementById("jyousannnormal2").value+","+
+      document.getElementById("kasannnormal1").value+","+
+      document.getElementById("kasannnormal2").value+","+
+      document.getElementById("gennsannnormal1").value+","+
+      document.getElementById("gennsannnormal2").value+","+
+      document.getElementById("bairitsu").value+","+
+      document.getElementById("jyousannskill1").value+","+
+      document.getElementById("jyousannskill2").value+","+
+      document.getElementById("kasannskill1").value+","+
+      document.getElementById("kasannskill2").value+","+
+      document.getElementById("gennsannskill1").value+","+
+      document.getElementById("gennsannskill2").value
+      +");\n}"
+      ;
+      
+      getatt = getatt.replace(/,,/g, "\,\"\"\,");
+      getatt = getatt.replace(/,,/g, "\,\"\"\,");
+      //2回必要
+      getatt = getatt.replace("(,", "\(\"\"\,");
+      getatt = getatt.replace(",)", "\,\"\")");
+      console.log(getatt);
+      //copy
+      navigator.clipboard.writeText(getatt);
+      }, false);
+      
+      
+      //debugbtn防御側出力用 防御側データリスト作成用
+      const debugbtndef = document.getElementById("debugbtndef");
+debugbtndef.addEventListener("click", function() {
+      
+      let getdef = 
+      "if (summondefenderselect == \"hoge\"){\n"+
+      "setdefender("+
+      document.getElementById("defensedefault").value+","+
+      document.getElementById("defenseseed").value+","+
+      document.getElementById("defenseweapon").value+","+
+      document.getElementById("defenseLS").value+","+
+      document.getElementById("defensekeitoubuff").value+","+
+      document.getElementById("sukarabuff").value+","+
+      document.getElementById("defenseaddkasann").value+","+
+      document.getElementById("defenseaddjyousann").value+","+
+      document.getElementById("damebari").value+","+
+      document.getElementById("jyousannnormal3").value+","+
+      document.getElementById("jyousannnormal4").value+","+
+      document.getElementById("kasannnormal3").value+","+
+      document.getElementById("kasannnormal4").value+","+
+      document.getElementById("gennsannnormal3").value+","+
+      document.getElementById("gennsannnormal4").value+","+
+      document.getElementById("jyousannskill3").value+","+
+      document.getElementById("jyousannskill4").value+","+
+      document.getElementById("kasannskill3").value+","+
+      document.getElementById("kasannskill4").value+","+
+      document.getElementById("gennsannskill3").value+","+
+      document.getElementById("gennsannskill4").value+","+
+      document.getElementById("HPdefault").value+","+
+      document.getElementById("HPseedselect").value+","+
+      document.getElementById("HPLSselect").value
+      +");\n}"
+      ;
+      
+      getdef = getdef.replace(/,,/g, "\,\"\"\,");
+      getdef = getdef.replace(/,,/g, "\,\"\"\,");
+      getdef = getdef.replace("(,", "\(\"\"\,");
+      getdef = getdef.replace(",)", "\,\"\")");
+      console.log(getdef);
+      //copy
+      navigator.clipboard.writeText(getdef);
+      }, false);
+      
+      
+      */
+
+
+
+
+//各reset button
+function resetattack() {
+  document.getElementById("attackdefault").value = "";
+  document.getElementById("attackseed").value = 0;
+  document.getElementById("attackweapon").value = "";
+  document.getElementById("attackLS").value = 1;
+  document.getElementById("attackkeitoubuff").value = 1;
+  document.getElementById("attackanotherbuff").value = "";
+  document.getElementById("attackaddkasann").value = "";
+  document.getElementById("attackaddjyousann").value = "";
+  document.getElementById("summonattackerselect").value = "";
+}
+const resetattackerbtn = document.getElementById("resetattackerbtn");
+resetattackerbtn.addEventListener("click", function () {
+  resetattack();
+  calculateDamage();
+}, false);
+
+function resetdefense() {
+  document.getElementById("defensedefault").value = "";
+  document.getElementById("defenseseed").value = 0;
+  document.getElementById("defenseweapon").value = 0;
+  document.getElementById("defenseLS").value = 1;
+  document.getElementById("defensekeitoubuff").value = 1;
+  document.getElementById("sukarabuff").value = 1;
+  document.getElementById("defenseaddkasann").value = "";
+  document.getElementById("defenseaddjyousann").value = "";
+  document.getElementById("summondefenderselect").value = "";
+}
+const resetdefenderbtn = document.getElementById("resetdefenderbtn");
+resetdefenderbtn.addEventListener("click", function () {
+  resetdefense();
+  calculateDamage();
+}, false);
+
+function resetnormalconditions() {
+  document.getElementById("baiki").value = 1;
+  document.getElementById("damebari").value = 1;
+  document.getElementById("jyousannnormal1").value = "";
+  document.getElementById("jyousannnormal2").value = "";
+  document.getElementById("jyousannnormal3").value = "";
+  document.getElementById("jyousannnormal4").value = "";
+  document.getElementById("kasannnormal1").value = "";
+  document.getElementById("kasannnormal2").value = "";
+  document.getElementById("kasannnormal3").value = "";
+  document.getElementById("kasannnormal4").value = "";
+  document.getElementById("gennsannnormal1").value = "";
+  document.getElementById("gennsannnormal2").value = "";
+  document.getElementById("gennsannnormal3").value = "";
+  document.getElementById("gennsannnormal4").value = "";
+}
+const resetnormalconditionsbtn = document.getElementById("resetnormalconditionsbtn");
+resetnormalconditionsbtn.addEventListener("click", function () {
+  resetnormalconditions();
+  calculateDamage();
+}, false);
+
+function resetskillconditions() {
+  document.getElementById("bairitsu").value = "";
+  document.getElementById("taisei").value = 1;
+  document.getElementById("rennkei").value = 1;
+  document.getElementById("jyousannskill1").value = "";
+  document.getElementById("jyousannskill2").value = "";
+  document.getElementById("jyousannskill3").value = "";
+  document.getElementById("jyousannskill4").value = "";
+  document.getElementById("kasannskill1").value = "";
+  document.getElementById("kasannskill2").value = "";
+  document.getElementById("kasannskill3").value = "";
+  document.getElementById("kasannskill4").value = "";
+  document.getElementById("gennsannskill1").value = "";
+  document.getElementById("gennsannskill2").value = "";
+  document.getElementById("gennsannskill3").value = "";
+  document.getElementById("gennsannskill4").value = "";
+}
+const resetskillconditionsbtn = document.getElementById("resetskillconditionsbtn");
+resetskillconditionsbtn.addEventListener("click", function () {
+  resetskillconditions();
+  calculateDamage();
+}, false);
+
+
+function resetspell() {
+  document.getElementById("intdefault").value = "";
+  document.getElementById("intseed").value = 0;
+  document.getElementById("intweapon").value = 0;
+  document.getElementById("intbuff").value = 1;
+  document.getElementById("intdifferencebonus").value = 1.25;
+  document.getElementById("intskillplus").value = 1.15;
+  document.getElementById("minint").value = 200;
+  document.getElementById("minintdamage").value = "";
+  document.getElementById("maxint").value = 600;
+  document.getElementById("maxintdamage").value = "";
+  document.getElementById("enemyintdefault").value = "";
+  document.getElementById("enemyintseed").value = 0;
+  document.getElementById("enemyintweapon").value = 0;
+  document.getElementById("enemyintbuff").value = 1;
+  document.getElementById("intskillselect").value = "none";
+}
+const resetspellbtn = document.getElementById("resetspellbtn");
+resetspellbtn.addEventListener("click", function () {
+  resetspell();
+  calculateint();
+  document.getElementById("intdifferencebonus").value = 1.25;
+}, false);
+
+function resetall() {
+  resetattack();
+  resetdefense();
+  resetnormalconditions();
+  resetskillconditions();
+  resetspell();
+  document.getElementById("HPdefault").value = "";
+  document.getElementById("HPseedselect").value = 0;
+  document.getElementById("HPLSselect").value = 1.04;
+  document.getElementById("calculateHPskillhit").value = 1;
+  document.getElementById("calculateHPnormalhit").value = 0;
+  document.getElementById("koteidamage").value = "";
+  calculateint();
+  document.getElementById("intdifferencebonus").value = 1.25;
+}
+
+//以下依存切り替えシステム、他にはinaccordancewithattackのdiv
+
+
+function ifattizon() {
+  document.getElementById("inaccordancewithattack").style.display = "block";
+  document.getElementById("baiki").style.display = "inline";
+  document.getElementById("baikilabel").style.display = "inline";
+  document.getElementById("bairitsu").style.display = "inline";
+  document.getElementById("bairitsulabel").style.display = "inline";
+  document.getElementById("labelfordisplaynormaldamage").style.display = "inline";
+  document.getElementById("displaynormaldamage").style.display = "inline";
+  document.getElementById("alertnormaldamage").style.display = "inline";
+
+  document.getElementById("inaccordancewithint").style.display = "none";
+
+  document.getElementById("plusofremainingHP").style.display = "inline";
+  document.getElementById("calculateHPnormalhit").style.display = "inline";
+
+  document.getElementById("inaccordancewithkotei").style.display = "none";
+  calculateDamage();
+}
+
+function ifintizon() {
+  document.getElementById("inaccordancewithattack").style.display = "none";
+  document.getElementById("baiki").style.display = "none";
+  document.getElementById("baikilabel").style.display = "none";
+  document.getElementById("bairitsu").style.display = "none";
+  document.getElementById("bairitsulabel").style.display = "none";
+  document.getElementById("labelfordisplaynormaldamage").style.display = "none";
+  document.getElementById("displaynormaldamage").style.display = "none";
+  document.getElementById("alertnormaldamage").style.display = "none";
+
+  document.getElementById("inaccordancewithint").style.display = "block";
+
+  document.getElementById("inaccordancewithint").style.display = "block";
+
+  document.getElementById("plusofremainingHP").style.display = "none";
+  document.getElementById("calculateHPnormalhit").style.display = "none";
+
+  document.getElementById("inaccordancewithkotei").style.display = "none";
+  calculateDamage();
+}
+
+function ifkoteiizon() {
+  document.getElementById("inaccordancewithattack").style.display = "none";
+  document.getElementById("baiki").style.display = "none";
+  document.getElementById("baikilabel").style.display = "none";
+  document.getElementById("bairitsu").style.display = "none";
+  document.getElementById("bairitsulabel").style.display = "none";
+  document.getElementById("labelfordisplaynormaldamage").style.display = "none";
+  document.getElementById("displaynormaldamage").style.display = "none";
+  document.getElementById("alertnormaldamage").style.display = "none";
+
+  document.getElementById("inaccordancewithint").style.display = "none";
+
+  document.getElementById("plusofremainingHP").style.display = "none";
+  document.getElementById("calculateHPnormalhit").style.display = "none";
+
+  document.getElementById("inaccordancewithkotei").style.display = "block";
+  calculateDamage();
+}
+
+function askizon() {
+  let elements = document.getElementsByName("izon");
+  let len = elements.length;
+  let checkValue = "";
+
+  for (let i = 0; i < len; i++) {
+    if (elements.item(i).checked) {
+      checkValue = elements.item(i).value;
+    }
+  }
+  return checkValue;
 }
 
 
 
-      const summonattackerbtn = document.getElementById("summonattackerbtn");
-summonattackerbtn.addEventListener("click", function() {
-      const summonattackerselect = document.getElementById("summonattackerselect").value;
-      //reset処理
-      document.getElementById("attackdefault").value = "";
-      attackseed.options[0].selected = true;
-      document.getElementById("attackweapon").value = "";
-      attackLS.options[0].selected = true;
-      attackkeitoubuff.options[0].selected = true;
-      document.getElementById("attackanotherbuff").value = "";
-      document.getElementById("attackaddkasann").value = "";
-      document.getElementById("attackaddjyousann").value = "";
-      
-      if (summonattackerselect == "supe.dark.75"){
-      document.getElementById("attackdefault").value = "563";
-      attackseed.options[6].selected = true;
-      document.getElementById("attackweapon").value = "30";
-      attackLS.options[2].selected = true;
-      attackkeitoubuff.options[4].selected = true;
-      document.getElementById("attackanotherbuff").value = "";
-      }
-      
-      if (summonattackerselect == "dark"){
-      document.getElementById("attackdefault").value = "634";
-      attackseed.options[1].selected = true;
-      document.getElementById("attackweapon").value = "";
-      attackLS.options[2].selected = true;
-      attackkeitoubuff.options[0].selected = true;
-      document.getElementById("attackanotherbuff").value = "";
-      }
-      
-      if (summonattackerselect == "hero"){
-      document.getElementById("attackdefault").value = "649";
-      attackseed.options[8].selected = true;
-      document.getElementById("attackweapon").value = "";
-      attackLS.options[4].selected = true;
-      attackkeitoubuff.options[5].selected = true;
-      document.getElementById("attackanotherbuff").value = "1.2";
-      document.getElementById("bairitsu").value = "0.82";
-      }
-      
-      
-      calculateDamage();
+
+const tabValues = {
+  1: {
+    attackdefault: "",
+    attackseed: "0",
+    attackweapon: "",
+    attackLS: "1",
+    attackkeitoubuff: "1",
+    attackanotherbuff: "",
+    attackaddkasann: "",
+    attackaddjyousann: "",
+    baiki: "1",
+    jyousannnormal1: "",
+    jyousannnormal2: "",
+    kasannnormal1: "",
+    kasannnormal2: "",
+    gennsannnormal1: "",
+    gennsannnormal2: "",
+    bairitsu: "",
+    jyousannskill1: "",
+    jyousannskill2: "",
+    kasannskill1: "",
+    kasannskill2: "",
+    gennsannskill1: "",
+    gennsannskill2: "",
+    defensedefault: "",
+    defenseseed: "0",
+    defenseweapon: "0",
+    defenseLS: "1",
+    defensekeitoubuff: "1",
+    sukarabuff: "1",
+    defenseaddkasann: "",
+    defenseaddjyousann: "",
+    damebari: "1",
+    jyousannnormal3: "",
+    jyousannnormal4: "",
+    kasannnormal3: "",
+    kasannnormal4: "",
+    gennsannnormal3: "",
+    gennsannnormal4: "",
+    jyousannskill3: "",
+    jyousannskill4: "",
+    kasannskill3: "",
+    kasannskill4: "",
+    gennsannskill3: "",
+    gennsannskill4: "",
+    HPdefault: "",
+    HPseedselect: "0",
+    HPLSselect: "1.04",
+    taisei: "1",
+    rennkei: "1",
+    summonattackerselect: "",
+    summondefenderselect: "",
+    calculateHPskillhit: "1",
+    calculateHPnormalhit: "0",
+    intdefault: "",
+    intseed: "0",
+    intweapon: "0",
+    intbuff: "1",
+    intdifferencebonus: "1.25",
+    intskillplus: "1.15",
+    minint: "200",
+    minintdamage: "",
+    maxint: "600",
+    maxintdamage: "",
+    enemyintdefault: "",
+    enemyintseed: "0",
+    enemyintweapon: "0",
+    enemyintbuff: "1",
+    intskillselect: "",
+    koteidamage: "",
+    izon: "attizon"
+  },
+  2: {
+    attackdefault: "",
+    attackseed: "0",
+    attackweapon: "",
+    attackLS: "1",
+    attackkeitoubuff: "1",
+    attackanotherbuff: "",
+    attackaddkasann: "",
+    attackaddjyousann: "",
+    baiki: "1",
+    jyousannnormal1: "",
+    jyousannnormal2: "",
+    kasannnormal1: "",
+    kasannnormal2: "",
+    gennsannnormal1: "",
+    gennsannnormal2: "",
+    bairitsu: "",
+    jyousannskill1: "",
+    jyousannskill2: "",
+    kasannskill1: "",
+    kasannskill2: "",
+    gennsannskill1: "",
+    gennsannskill2: "",
+    defensedefault: "",
+    defenseseed: "0",
+    defenseweapon: "0",
+    defenseLS: "1",
+    defensekeitoubuff: "1",
+    sukarabuff: "1",
+    defenseaddkasann: "",
+    defenseaddjyousann: "",
+    damebari: "1",
+    jyousannnormal3: "",
+    jyousannnormal4: "",
+    kasannnormal3: "",
+    kasannnormal4: "",
+    gennsannnormal3: "",
+    gennsannnormal4: "",
+    jyousannskill3: "",
+    jyousannskill4: "",
+    kasannskill3: "",
+    kasannskill4: "",
+    gennsannskill3: "",
+    gennsannskill4: "",
+    HPdefault: "",
+    HPseedselect: "0",
+    HPLSselect: "1.04",
+    taisei: "1",
+    rennkei: "1",
+    summonattackerselect: "",
+    summondefenderselect: "",
+    calculateHPskillhit: "1",
+    calculateHPnormalhit: "0",
+    intdefault: "",
+    intseed: "0",
+    intweapon: "0",
+    intbuff: "1",
+    intdifferencebonus: "1.25",
+    intskillplus: "1.15",
+    minint: "200",
+    minintdamage: "",
+    maxint: "600",
+    maxintdamage: "",
+    enemyintdefault: "",
+    enemyintseed: "0",
+    enemyintweapon: "0",
+    enemyintbuff: "1",
+    intskillselect: "",
+    koteidamage: "",
+    izon: "attizon"
+  },
+  3: {
+    attackdefault: "",
+    attackseed: "0",
+    attackweapon: "",
+    attackLS: "1",
+    attackkeitoubuff: "1",
+    attackanotherbuff: "",
+    attackaddkasann: "",
+    attackaddjyousann: "",
+    baiki: "1",
+    jyousannnormal1: "",
+    jyousannnormal2: "",
+    kasannnormal1: "",
+    kasannnormal2: "",
+    gennsannnormal1: "",
+    gennsannnormal2: "",
+    bairitsu: "",
+    jyousannskill1: "",
+    jyousannskill2: "",
+    kasannskill1: "",
+    kasannskill2: "",
+    gennsannskill1: "",
+    gennsannskill2: "",
+    defensedefault: "",
+    defenseseed: "0",
+    defenseweapon: "0",
+    defenseLS: "1",
+    defensekeitoubuff: "1",
+    sukarabuff: "1",
+    defenseaddkasann: "",
+    defenseaddjyousann: "",
+    damebari: "1",
+    jyousannnormal3: "",
+    jyousannnormal4: "",
+    kasannnormal3: "",
+    kasannnormal4: "",
+    gennsannnormal3: "",
+    gennsannnormal4: "",
+    jyousannskill3: "",
+    jyousannskill4: "",
+    kasannskill3: "",
+    kasannskill4: "",
+    gennsannskill3: "",
+    gennsannskill4: "",
+    HPdefault: "",
+    HPseedselect: "0",
+    HPLSselect: "1.04",
+    taisei: "1",
+    rennkei: "1",
+    summonattackerselect: "",
+    summondefenderselect: "",
+    calculateHPskillhit: "1",
+    calculateHPnormalhit: "0",
+    intdefault: "",
+    intseed: "0",
+    intweapon: "0",
+    intbuff: "1",
+    intdifferencebonus: "1.25",
+    intskillplus: "1.15",
+    minint: "200",
+    minintdamage: "",
+    maxint: "600",
+    maxintdamage: "",
+    enemyintdefault: "",
+    enemyintseed: "0",
+    enemyintweapon: "0",
+    enemyintbuff: "1",
+    intskillselect: "",
+    koteidamage: "",
+    izon: "attizon"
+  },
+  4: {
+    attackdefault: "",
+    attackseed: "0",
+    attackweapon: "",
+    attackLS: "1",
+    attackkeitoubuff: "1",
+    attackanotherbuff: "",
+    attackaddkasann: "",
+    attackaddjyousann: "",
+    baiki: "1",
+    jyousannnormal1: "",
+    jyousannnormal2: "",
+    kasannnormal1: "",
+    kasannnormal2: "",
+    gennsannnormal1: "",
+    gennsannnormal2: "",
+    bairitsu: "",
+    jyousannskill1: "",
+    jyousannskill2: "",
+    kasannskill1: "",
+    kasannskill2: "",
+    gennsannskill1: "",
+    gennsannskill2: "",
+    defensedefault: "",
+    defenseseed: "0",
+    defenseweapon: "0",
+    defenseLS: "1",
+    defensekeitoubuff: "1",
+    sukarabuff: "1",
+    defenseaddkasann: "",
+    defenseaddjyousann: "",
+    damebari: "1",
+    jyousannnormal3: "",
+    jyousannnormal4: "",
+    kasannnormal3: "",
+    kasannnormal4: "",
+    gennsannnormal3: "",
+    gennsannnormal4: "",
+    jyousannskill3: "",
+    jyousannskill4: "",
+    kasannskill3: "",
+    kasannskill4: "",
+    gennsannskill3: "",
+    gennsannskill4: "",
+    HPdefault: "",
+    HPseedselect: "0",
+    HPLSselect: "1.04",
+    taisei: "1",
+    rennkei: "1",
+    summonattackerselect: "",
+    summondefenderselect: "",
+    calculateHPskillhit: "1",
+    calculateHPnormalhit: "0",
+    intdefault: "",
+    intseed: "0",
+    intweapon: "0",
+    intbuff: "1",
+    intdifferencebonus: "1.25",
+    intskillplus: "1.15",
+    minint: "200",
+    minintdamage: "",
+    maxint: "600",
+    maxintdamage: "",
+    enemyintdefault: "",
+    enemyintseed: "0",
+    enemyintweapon: "0",
+    enemyintbuff: "1",
+    intskillselect: "",
+    koteidamage: "",
+    izon: "attizon"
+  },
+  5: {
+    attackdefault: "",
+    attackseed: "0",
+    attackweapon: "",
+    attackLS: "1",
+    attackkeitoubuff: "1",
+    attackanotherbuff: "",
+    attackaddkasann: "",
+    attackaddjyousann: "",
+    baiki: "1",
+    jyousannnormal1: "",
+    jyousannnormal2: "",
+    kasannnormal1: "",
+    kasannnormal2: "",
+    gennsannnormal1: "",
+    gennsannnormal2: "",
+    bairitsu: "",
+    jyousannskill1: "",
+    jyousannskill2: "",
+    kasannskill1: "",
+    kasannskill2: "",
+    gennsannskill1: "",
+    gennsannskill2: "",
+    defensedefault: "",
+    defenseseed: "0",
+    defenseweapon: "0",
+    defenseLS: "1",
+    defensekeitoubuff: "1",
+    sukarabuff: "1",
+    defenseaddkasann: "",
+    defenseaddjyousann: "",
+    damebari: "1",
+    jyousannnormal3: "",
+    jyousannnormal4: "",
+    kasannnormal3: "",
+    kasannnormal4: "",
+    gennsannnormal3: "",
+    gennsannnormal4: "",
+    jyousannskill3: "",
+    jyousannskill4: "",
+    kasannskill3: "",
+    kasannskill4: "",
+    gennsannskill3: "",
+    gennsannskill4: "",
+    HPdefault: "",
+    HPseedselect: "0",
+    HPLSselect: "1.04",
+    taisei: "1",
+    rennkei: "1",
+    summonattackerselect: "",
+    summondefenderselect: "",
+    calculateHPskillhit: "1",
+    calculateHPnormalhit: "0",
+    intdefault: "",
+    intseed: "0",
+    intweapon: "0",
+    intbuff: "1",
+    intdifferencebonus: "1.25",
+    intskillplus: "1.15",
+    minint: "200",
+    minintdamage: "",
+    maxint: "600",
+    maxintdamage: "",
+    enemyintdefault: "",
+    enemyintseed: "0",
+    enemyintweapon: "0",
+    enemyintbuff: "1",
+    intskillselect: "",
+    koteidamage: "",
+    izon: "attizon"
+  },
+  6: {
+    attackdefault: "",
+    attackseed: "0",
+    attackweapon: "",
+    attackLS: "1",
+    attackkeitoubuff: "1",
+    attackanotherbuff: "",
+    attackaddkasann: "",
+    attackaddjyousann: "",
+    baiki: "1",
+    jyousannnormal1: "",
+    jyousannnormal2: "",
+    kasannnormal1: "",
+    kasannnormal2: "",
+    gennsannnormal1: "",
+    gennsannnormal2: "",
+    bairitsu: "",
+    jyousannskill1: "",
+    jyousannskill2: "",
+    kasannskill1: "",
+    kasannskill2: "",
+    gennsannskill1: "",
+    gennsannskill2: "",
+    defensedefault: "",
+    defenseseed: "0",
+    defenseweapon: "0",
+    defenseLS: "1",
+    defensekeitoubuff: "1",
+    sukarabuff: "1",
+    defenseaddkasann: "",
+    defenseaddjyousann: "",
+    damebari: "1",
+    jyousannnormal3: "",
+    jyousannnormal4: "",
+    kasannnormal3: "",
+    kasannnormal4: "",
+    gennsannnormal3: "",
+    gennsannnormal4: "",
+    jyousannskill3: "",
+    jyousannskill4: "",
+    kasannskill3: "",
+    kasannskill4: "",
+    gennsannskill3: "",
+    gennsannskill4: "",
+    HPdefault: "",
+    HPseedselect: "0",
+    HPLSselect: "1.04",
+    taisei: "1",
+    rennkei: "1",
+    summonattackerselect: "",
+    summondefenderselect: "",
+    calculateHPskillhit: "1",
+    calculateHPnormalhit: "0",
+    intdefault: "",
+    intseed: "0",
+    intweapon: "0",
+    intbuff: "1",
+    intdifferencebonus: "1.25",
+    intskillplus: "1.15",
+    minint: "200",
+    minintdamage: "",
+    maxint: "600",
+    maxintdamage: "",
+    enemyintdefault: "",
+    enemyintseed: "0",
+    enemyintweapon: "0",
+    enemyintbuff: "1",
+    intskillselect: "",
+    koteidamage: "",
+    izon: "attizon"
+  }
+};
+
+let currentTab = 1;
+
+function saveTabValue() {
+  tabValues[currentTab].attackdefault = document.getElementById("attackdefault").value;
+  tabValues[currentTab].attackseed = document.getElementById("attackseed").value;
+  tabValues[currentTab].attackweapon = document.getElementById("attackweapon").value;
+  tabValues[currentTab].attackLS = document.getElementById("attackLS").value;
+  tabValues[currentTab].attackkeitoubuff = document.getElementById("attackkeitoubuff").value;
+  tabValues[currentTab].attackanotherbuff = document.getElementById("attackanotherbuff").value;
+  tabValues[currentTab].attackaddkasann = document.getElementById("attackaddkasann").value;
+  tabValues[currentTab].attackaddjyousann = document.getElementById("attackaddjyousann").value;
+  tabValues[currentTab].baiki = document.getElementById("baiki").value;
+  tabValues[currentTab].jyousannnormal1 = document.getElementById("jyousannnormal1").value;
+  tabValues[currentTab].jyousannnormal2 = document.getElementById("jyousannnormal2").value;
+  tabValues[currentTab].kasannnormal1 = document.getElementById("kasannnormal1").value;
+  tabValues[currentTab].kasannnormal2 = document.getElementById("kasannnormal2").value;
+  tabValues[currentTab].gennsannnormal1 = document.getElementById("gennsannnormal1").value;
+  tabValues[currentTab].gennsannnormal2 = document.getElementById("gennsannnormal2").value;
+  tabValues[currentTab].bairitsu = document.getElementById("bairitsu").value;
+  tabValues[currentTab].jyousannskill1 = document.getElementById("jyousannskill1").value;
+  tabValues[currentTab].jyousannskill2 = document.getElementById("jyousannskill2").value;
+  tabValues[currentTab].kasannskill1 = document.getElementById("kasannskill1").value;
+  tabValues[currentTab].kasannskill2 = document.getElementById("kasannskill2").value;
+  tabValues[currentTab].gennsannskill1 = document.getElementById("gennsannskill1").value;
+  tabValues[currentTab].gennsannskill2 = document.getElementById("gennsannskill2").value;
+
+
+  tabValues[currentTab].defensedefault = document.getElementById("defensedefault").value;
+  tabValues[currentTab].defenseseed = document.getElementById("defenseseed").value;
+  tabValues[currentTab].defenseweapon = document.getElementById("defenseweapon").value;
+  tabValues[currentTab].defenseLS = document.getElementById("defenseLS").value;
+  tabValues[currentTab].defensekeitoubuff = document.getElementById("defensekeitoubuff").value;
+  tabValues[currentTab].sukarabuff = document.getElementById("sukarabuff").value;
+  tabValues[currentTab].defenseaddkasann = document.getElementById("defenseaddkasann").value;
+  tabValues[currentTab].defenseaddjyousann = document.getElementById("defenseaddjyousann").value;
+  tabValues[currentTab].damebari = document.getElementById("damebari").value;
+  tabValues[currentTab].jyousannnormal3 = document.getElementById("jyousannnormal3").value;
+  tabValues[currentTab].jyousannnormal4 = document.getElementById("jyousannnormal4").value;
+  tabValues[currentTab].kasannnormal3 = document.getElementById("kasannnormal3").value;
+  tabValues[currentTab].kasannnormal4 = document.getElementById("kasannnormal4").value;
+  tabValues[currentTab].gennsannnormal3 = document.getElementById("gennsannnormal3").value;
+  tabValues[currentTab].gennsannnormal4 = document.getElementById("gennsannnormal4").value;
+  tabValues[currentTab].jyousannskill3 = document.getElementById("jyousannskill3").value;
+  tabValues[currentTab].jyousannskill4 = document.getElementById("jyousannskill4").value;
+  tabValues[currentTab].kasannskill3 = document.getElementById("kasannskill3").value;
+  tabValues[currentTab].kasannskill4 = document.getElementById("kasannskill4").value;
+  tabValues[currentTab].gennsannskill3 = document.getElementById("gennsannskill3").value;
+  tabValues[currentTab].gennsannskill4 = document.getElementById("gennsannskill4").value;
+  tabValues[currentTab].HPdefault = document.getElementById("HPdefault").value;
+  tabValues[currentTab].HPseedselect = document.getElementById("HPseedselect").value;
+  tabValues[currentTab].HPLSselect = document.getElementById("HPLSselect").value;
+  tabValues[currentTab].taisei = document.getElementById("taisei").value;
+  tabValues[currentTab].rennkei = document.getElementById("rennkei").value;
+  tabValues[currentTab].summonattackerselect = document.getElementById("summonattackerselect").value;
+  tabValues[currentTab].summondefenderselect = document.getElementById("summondefenderselect").value;
+  tabValues[currentTab].calculateHPskillhit = document.getElementById("calculateHPskillhit").value;
+  tabValues[currentTab].calculateHPnormalhit = document.getElementById("calculateHPnormalhit").value;
+  tabValues[currentTab].intdefault = document.getElementById("intdefault").value;
+  tabValues[currentTab].intseed = document.getElementById("intseed").value;
+  tabValues[currentTab].intweapon = document.getElementById("intweapon").value;
+  tabValues[currentTab].intbuff = document.getElementById("intbuff").value;
+  tabValues[currentTab].intdifferencebonus = document.getElementById("intdifferencebonus").value;
+  tabValues[currentTab].intskillplus = document.getElementById("intskillplus").value;
+  tabValues[currentTab].minint = document.getElementById("minint").value;
+  tabValues[currentTab].minintdamage = document.getElementById("minintdamage").value;
+  tabValues[currentTab].maxint = document.getElementById("maxint").value;
+  tabValues[currentTab].maxintdamage = document.getElementById("maxintdamage").value;
+  tabValues[currentTab].enemyintdefault = document.getElementById("enemyintdefault").value;
+  tabValues[currentTab].enemyintseed = document.getElementById("enemyintseed").value;
+  tabValues[currentTab].enemyintweapon = document.getElementById("enemyintweapon").value;
+  tabValues[currentTab].enemyintbuff = document.getElementById("enemyintbuff").value;
+  tabValues[currentTab].intskillselect = document.getElementById("intskillselect").value;
+  tabValues[currentTab].koteidamage = document.getElementById("koteidamage").value;
+  const selectedizon = askizon();
+  tabValues[currentTab].izon = selectedizon;
+}
+
+function Tabassignment() {
+  document.getElementById("attackdefault").value = tabValues[currentTab].attackdefault;
+  document.getElementById("attackseed").value = tabValues[currentTab].attackseed;
+  document.getElementById("attackweapon").value = tabValues[currentTab].attackweapon;
+  document.getElementById("attackLS").value = tabValues[currentTab].attackLS;
+  document.getElementById("attackkeitoubuff").value = tabValues[currentTab].attackkeitoubuff;
+  document.getElementById("attackanotherbuff").value = tabValues[currentTab].attackanotherbuff;
+  document.getElementById("attackaddkasann").value = tabValues[currentTab].attackaddkasann;
+  document.getElementById("attackaddjyousann").value = tabValues[currentTab].attackaddjyousann;
+  document.getElementById("baiki").value = tabValues[currentTab].baiki;
+  document.getElementById("jyousannnormal1").value = tabValues[currentTab].jyousannnormal1;
+  document.getElementById("jyousannnormal2").value = tabValues[currentTab].jyousannnormal2;
+  document.getElementById("kasannnormal1").value = tabValues[currentTab].kasannnormal1;
+  document.getElementById("kasannnormal2").value = tabValues[currentTab].kasannnormal2;
+  document.getElementById("gennsannnormal1").value = tabValues[currentTab].gennsannnormal1;
+  document.getElementById("gennsannnormal2").value = tabValues[currentTab].gennsannnormal2;
+  document.getElementById("bairitsu").value = tabValues[currentTab].bairitsu;
+  document.getElementById("jyousannskill1").value = tabValues[currentTab].jyousannskill1;
+  document.getElementById("jyousannskill2").value = tabValues[currentTab].jyousannskill2;
+  document.getElementById("kasannskill1").value = tabValues[currentTab].kasannskill1;
+  document.getElementById("kasannskill2").value = tabValues[currentTab].kasannskill2;
+  document.getElementById("gennsannskill1").value = tabValues[currentTab].gennsannskill1;
+  document.getElementById("gennsannskill2").value = tabValues[currentTab].gennsannskill2;
+
+
+  document.getElementById("defensedefault").value = tabValues[currentTab].defensedefault;
+  document.getElementById("defenseseed").value = tabValues[currentTab].defenseseed;
+  document.getElementById("defenseweapon").value = tabValues[currentTab].defenseweapon;
+  document.getElementById("defenseLS").value = tabValues[currentTab].defenseLS;
+  document.getElementById("defensekeitoubuff").value = tabValues[currentTab].defensekeitoubuff;
+  document.getElementById("sukarabuff").value = tabValues[currentTab].sukarabuff;
+  document.getElementById("defenseaddkasann").value = tabValues[currentTab].defenseaddkasann;
+  document.getElementById("defenseaddjyousann").value = tabValues[currentTab].defenseaddjyousann;
+  document.getElementById("damebari").value = tabValues[currentTab].damebari;
+  document.getElementById("jyousannnormal3").value = tabValues[currentTab].jyousannnormal3;
+  document.getElementById("jyousannnormal4").value = tabValues[currentTab].jyousannnormal4;
+  document.getElementById("kasannnormal3").value = tabValues[currentTab].kasannnormal3;
+  document.getElementById("kasannnormal4").value = tabValues[currentTab].kasannnormal4;
+  document.getElementById("gennsannnormal3").value = tabValues[currentTab].gennsannnormal3;
+  document.getElementById("gennsannnormal4").value = tabValues[currentTab].gennsannnormal4;
+  document.getElementById("jyousannskill3").value = tabValues[currentTab].jyousannskill3;
+  document.getElementById("jyousannskill4").value = tabValues[currentTab].jyousannskill4;
+  document.getElementById("kasannskill3").value = tabValues[currentTab].kasannskill3;
+  document.getElementById("kasannskill4").value = tabValues[currentTab].kasannskill4;
+  document.getElementById("gennsannskill3").value = tabValues[currentTab].gennsannskill3;
+  document.getElementById("gennsannskill4").value = tabValues[currentTab].gennsannskill4;
+  document.getElementById("HPdefault").value = tabValues[currentTab].HPdefault;
+  document.getElementById("HPseedselect").value = tabValues[currentTab].HPseedselect;
+  document.getElementById("HPLSselect").value = tabValues[currentTab].HPLSselect;
+  document.getElementById("taisei").value = tabValues[currentTab].taisei;
+  document.getElementById("rennkei").value = tabValues[currentTab].rennkei;
+  document.getElementById("summonattackerselect").value = tabValues[currentTab].summonattackerselect;
+  document.getElementById("summondefenderselect").value = tabValues[currentTab].summondefenderselect;
+  document.getElementById("calculateHPskillhit").value = tabValues[currentTab].calculateHPskillhit;
+  document.getElementById("calculateHPnormalhit").value = tabValues[currentTab].calculateHPnormalhit;
+  document.getElementById("intdefault").value = tabValues[currentTab].intdefault;
+  document.getElementById("intseed").value = tabValues[currentTab].intseed;
+  document.getElementById("intweapon").value = tabValues[currentTab].intweapon;
+  document.getElementById("intbuff").value = tabValues[currentTab].intbuff;
+  document.getElementById("intdifferencebonus").value = tabValues[currentTab].intdifferencebonus;
+  document.getElementById("intskillplus").value = tabValues[currentTab].intskillplus;
+  document.getElementById("minint").value = tabValues[currentTab].minint;
+  document.getElementById("minintdamage").value = tabValues[currentTab].minintdamage;
+  document.getElementById("maxint").value = tabValues[currentTab].maxint;
+  document.getElementById("maxintdamage").value = tabValues[currentTab].maxintdamage;
+  document.getElementById("enemyintdefault").value = tabValues[currentTab].enemyintdefault;
+  document.getElementById("enemyintseed").value = tabValues[currentTab].enemyintseed;
+  document.getElementById("enemyintweapon").value = tabValues[currentTab].enemyintweapon;
+  document.getElementById("enemyintbuff").value = tabValues[currentTab].enemyintbuff;
+  document.getElementById("intskillselect").value = tabValues[currentTab].intskillselect;
+  document.getElementById("koteidamage").value = tabValues[currentTab].koteidamage;
+  const attizonRadio = document.getElementById('attizon');
+  const intizonRadio = document.getElementById('intizon');
+  const koteiizonRadio = document.getElementById('koteiizon');
+  if (tabValues[currentTab].izon === 'attizon') {
+    attizonRadio.checked = true;
+    ifattizon();
+  } else if (tabValues[currentTab].izon === 'intizon') {
+    intizonRadio.checked = true;
+    ifintizon();
+  } else if (tabValues[currentTab].izon === 'koteiizon') {
+    koteiizonRadio.checked = true;
+    ifkoteiizon();
+  }
+}
+
+function addTabclass(targettabnum, targetclass) {
+  const tabButtons = document.querySelectorAll('.tabbutton');
+  if (targettabnum == 7) {
+    tabButtons.forEach((tabButton) => {
+      tabButton.classList.remove(targetclass);
+    });
+    return;
+  } else {
+    const targetTabButton = document.getElementById(`tab${targettabnum}`);
+    tabButtons.forEach((tabButton) => {
+      tabButton.classList.remove(targetclass);
+    });
+    targetTabButton.classList.add(targetclass);
+  }
+}
+
+function switchTab(tabNumber) {
+  saveTabValue();
+  currentTab = tabNumber;
+  Tabassignment();
+
+  calculateDamage();
+  // タブボタンに枠線を追加する
+  addTabclass(tabNumber, "selected");
+
+}
+
+/*
+let nulltab = {};
+function preparenulltab(){
+saveTabValue();//未入力tab値を取得して代入,それをnullに
+nulltab = Object.assign({}, tabValues[1]);
+tabValues[2] = Object.assign({}, nulltab);
+}
+初期値は定義時点で同時に設定.
+*/
+
+
+function tabresetbtn() {
+  //tabValues[currentTab] =  Object.assign({}, nulltab);
+  //reset起動
+  resetall();
+  const attizonRadio = document.getElementById('attizon');
+  attizonRadio.checked = true;
+  ifattizon();
+}
+
+// JavaScript
+// 現在表示中のタブの情報をコピーするための配列
+let copiedTab = {};
+// タブをコピーするボタン
+const copyTabButton = document.getElementById('copytab');
+copyTabButton.addEventListener('click', () => {
+  // 現在表示中のタブの情報をコピー
+  saveTabValue();
+  copiedTab = Object.assign({}, tabValues[currentTab]);
+  // 貼り付けボタンを有効にする
+  pasteTabButton.disabled = false;
+  // コピーと貼り付けボタンのテキストを変更
+  copyTabButton.textContent = '記憶';
+  pasteTabButton.textContent = '貼り付け';
+  //コピーしたtabにtagづけ、それ以外のtabからcopiedをremove
+  addTabclass(currentTab, "copied");
+});
+
+// タブを貼り付けるボタン
+const pasteTabButton = document.getElementById('pastetab');
+pasteTabButton.addEventListener('click', () => {
+  // コピーしたタブ情報を現在のタブに貼り付ける
+  tabValues[currentTab] = Object.assign({}, copiedTab);
+  //そのtabvaluesの値をinputに代入、上書きして表示
+  Tabassignment();
+  // コピーと貼り付けボタンのテキストを元に戻す
+  copyTabButton.textContent = '記憶';
+  pasteTabButton.textContent = '貼り付け';
+  // 貼り付けボタンを無効にする
+  pasteTabButton.disabled = true;
+  //全てのtabからcopiedをremove
+  addTabclass(7, "copied");
+  calculateDamage();
+});
+
+/*
+const debug1btn = document.getElementById("debug1");
+debug1btn.addEventListener("click", function () {
+  console.log(tabValues);
 }, false);
-      
-      
-      
-      const summondefenderbtn = document.getElementById("summondefenderbtn");
-summondefenderbtn.addEventListener("click", function() {
-      const summondefenderselect = document.getElementById("summondefenderselect").value;
-      
-      //reset処理
-      document.getElementById("defensedefault").value = "";
-      defenseseed.options[0].selected = true;
-      defenseweapon.options[0].selected = true;
-      defenseLS.options[0].selected = true;
-      defensekeitoubuff.options[0].selected = true;
-      sukarabuff.options[0].selected = true;
-      document.getElementById("defenseaddkasann").value = "";
-      document.getElementById("defenseaddjyousann").value = "";
-      
-      if (summondefenderselect == "hero"){
-      document.getElementById("defensedefault").value = "649";
-      defenseseed.options[1].selected = true;
-      defenseweapon.options[0].selected = true;
-      defenseLS.options[2].selected = true;
-      defensekeitoubuff.options[2].selected = true;
-      sukarabuff.options[1].selected = true;
-      }
-      
-      if (summondefenderselect == "tyouryuu"){
-      document.getElementById("defensedefault").value = "658";
-      defenseseed.options[4].selected = true;
-      defenseweapon.options[0].selected = true;
-      defenseLS.options[0].selected = true;
-      defensekeitoubuff.options[0].selected = true;
-      sukarabuff.options[0].selected = true;
-      }
-      
-      
-      calculateDamage();
-}, false);
-      
-      
-      
-      
-      const resetattackerbtn = document.getElementById("resetattackerbtn");
-resetattackerbtn.addEventListener("click", function() {
-      document.getElementById("attackdefault").value = "";
-      attackseed.options[0].selected = true;
-      document.getElementById("attackweapon").value = "";
-      attackLS.options[0].selected = true;
-      attackkeitoubuff.options[0].selected = true;
-      document.getElementById("attackanotherbuff").value = "";
-      document.getElementById("attackaddkasann").value = "";
-      document.getElementById("attackaddjyousann").value = "";
-      document.getElementById("summonattackerselect").value = "";
-      calculateDamage();
-}, false);
-      
-      
-      const resetdefenderbtn = document.getElementById("resetdefenderbtn");
-resetdefenderbtn.addEventListener("click", function() {
-      document.getElementById("defensedefault").value = "";
-      defenseseed.options[0].selected = true;
-      defenseweapon.options[0].selected = true;
-      defenseLS.options[0].selected = true;
-      defensekeitoubuff.options[0].selected = true;
-      sukarabuff.options[0].selected = true;
-      document.getElementById("defenseaddkasann").value = "";
-      document.getElementById("defenseaddjyousann").value = "";
-      document.getElementById("summondefenderselect").value = "";
-      calculateDamage();
-}, false);
-      
-      
-      
-      
-      
-      /*
-      console.log("クリックされました！");
-      alert("した！");
-      代入して直後に計算も動かす
-      代入したら他の情報をまとめてクリア
-      変数
-      変数代入順番
-      ファンクションから引数でできる
-      入力欄ならvalueでいいかも、入力じゃないlabelとかをそのままならinnerhtmlかな
-      select初期値
-      */
-      
-      
-      
-      /*deleted
-      let newattackdefault = document.getElementById("attackdefault");
-      let newattackseed = document.getElementById("attackseed");
-      let newattackweapon = document.getElementById("attackweapon");
-      let newattackLS = document.getElementById("attackLS");
-      let newattackkeitoubuff = document.getElementById("attackkeitoubuff");
-      let newattackanotherbuff = document.getElementById("attackanotherbuff");
-      if (summonattackerselect == "supe"){
-      newattackdefault.value = "563";
-      newattackseed.options[3].selected = true;
-      newattackweapon.value = "30";
-      newattackLS.options[2].selected = true;
-      newattackkeitoubuff.options[4].selected = true;
-      }
-      newattackdefault.value = "56";
-      
-      let hogehoge = 50
-      document.getElementById("attackdefault").value = hogehoge;
-      attackseed.options[3].selected = true;
-      
-      
-      */
-      
-      
-      
-   
 
 
 
+console.log("クリックされました！");
+alert("した！");
+input-value span-innerhtml
+onchange とoninput
+debug 11と-14
+      
+・追加
+累積ダメージ
+メゾら
+出力結果copy
+      
+・改善
+賢さ依存と攻撃依存でtabのいちが変わる問題
+tableなぜかはみ出る
+条件呼び出し detail
+青の背景の範囲
+条件呼び出しの表記どうするか、配列ないの初期値にもかかわる
+      
+      
+      
+攻撃登録にintは入っていない問題
+      
+      
 
-</script>
+      
+*/
+  </script>
 
 </body>
 </html>
