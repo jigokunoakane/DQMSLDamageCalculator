@@ -1,19 +1,16 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name=”viewport” content=”width=device-width,initial-scale=1″>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>DQMSLダメージ計算機β</title>
   <style>
-    html {
-      font-size: 1rem;
-    }
     body {
   user-select: none;
   /* CSS3 */
   -moz-user-select: none;
   /* Firefox */
   -webkit-user-select: none;
-  /* Safari、Chromeなど */
+  /* Safari、Chrome */
   -ms-user-select: none;
   /* Microsoft */
 }
@@ -24,7 +21,7 @@
   -moz-user-select: text;
   /* Firefox */
   -webkit-user-select: text;
-  /* Safari、Chromeなど */
+  /* Safari、Chrome */
   -ms-user-select: text;
 }
 
@@ -84,17 +81,7 @@ button {
 }
 
 .additionalsettings[open] {
-  height: 5.4rem;
-  background: #c3f6ff;
-}
-
-.summonselect {
-  height: 1.4rem;
-  transition: .5s;
-}
-
-.summonselect[open] {
-  height: 4rem;
+  height: 4.5rem;
   background: #c3f6ff;
 }
 
@@ -141,7 +128,7 @@ details {
 
 #intbuff, #enemyintbuff {
   padding: 0rem 0.3rem;
-  width: 2.1rem;
+  width: 4.6rem;
   margin-left: 0rem;
 }
 
@@ -190,8 +177,6 @@ button:disabled {
   background=color: #cccccc;
   color: #666666;
 }
-
-@media screen and (max-width:480px) {}
   </style>
 </head>
 <body>
@@ -268,17 +253,19 @@ button:disabled {
         <span>条件込み</span>
         <span id="displayattackincludingbuff"></span>
       </details>
-      <details class="summonselect">
-        <summary>条件呼び出し</summary>
-        <select id="summonattackerselect">
-    <option value="debug">デバッグ用</option>
-    <option value="supe.dark.75">キンスペ(DARKL)</option>
+        <select id="summonattackerselect" onchange="summonattacker()">
+    <option value="yobidasi">攻撃側条件呼び出し</option>
     <option value="dark">DARK</option>
+    <option value="world">WORLD先制</option>
     <option value="hero">ヒーロー</option>
+    <option value="girl">ガール</option>
+    <optgroup label="LSなし">
+      <option value="esta">エスタ</option>
+      <option value="dream">ドレアム</option>
+      <option value="ifshiba">イフシバ</option>
+    </optgroup>
   </select>
-        <button type="button" id="summonattackerbtn">↑上書き</button>
         <button type="button" id="resetattackerbtn">リセット</button>
-      </details>
       <hr>
       <label for="defensedefault">防御力:</label>
       <input type="number" id="defensedefault" oninput="calculateDamage()">
@@ -353,7 +340,7 @@ button:disabled {
 
     <!--start inaccordancewithint-->
     <div class="inaccordancewithint" id="inaccordancewithint">
-      <label for="intdefault">賢さ:</label>
+      <label for="intdefault">賢さ</label>
       <input type="number" id="intdefault" oninput="calculateint()">
       <label for="intseed">種</label>
       <select id="intseed" onchange="calculateint()">
@@ -381,14 +368,13 @@ button:disabled {
     <option value="106">+106  (SS杖+10)</option>
     <option value="116">+116  (竜王杖)</option>
   </select>
-      <label for="intbuff">インテ</label>
       <select id="intbuff" onchange="calculateint()">
-    <option value="1">なし</option>
-    <option value="1.5">1.5</option>
-    <option value="2">2</option>
+    <option value="1">インテなし</option>
+    <option value="1.5">インテ1.5</option>
+    <option value="2">インテ2</option>
   </select>
       <br>
-      <label for="enemyintdefault">敵賢さ:</label>
+      <label for="enemyintdefault">敵賢さ</label>
       <input type="number" id="enemyintdefault" oninput="calculateint()">
       <label for="enemyintseed">種</label>
       <select id="enemyintseed" onchange="calculateint()">
@@ -416,11 +402,10 @@ button:disabled {
     <option value="106">+106  (SS杖+10)</option>
     <option value="116">+116  (竜王杖)</option>
   </select>
-      <label for="enemyintbuff">インテ</label>
       <select id="enemyintbuff" onchange="calculateint()">
-    <option value="1">なし</option>
-    <option value="1.5">1.5</option>
-    <option value="2">2</option>
+    <option value="1">インテなし</option>
+    <option value="1.5">インテ1.5</option>
+    <option value="2">インテ2</option>
   </select>
       <br>
       <span>賢さ値</span>
@@ -506,19 +491,41 @@ button:disabled {
     <div id="inaccordancewithkotei">
       <input type="number" id="koteidamage" oninput="calculateint()">
     </div>
-
-
-    <details class="summonselect">
-      <summary>条件呼び出し</summary>
-      <select id="summondefenderselect">
-    <option value="debug">デバッグ用防御</option>
-    <option value="hero">ヒーロー(防25)</option>
+    
+    
+      <select id="summondefenderselect" onchange="summondefender()">
+    <option value="yobidasi">防御側条件呼び出し</option>
+    <optgroup label="ケトスL">
+    <option value="ketosu">ケトス</option>
+    <option value="tyoryu">超竜王(防55)</option>
+    </optgroup>
+    <optgroup label="オムド">
+    <option value="omudo4">オムド4</option>
+    <option value="omudo44">オムド44</option>
+    <option value="yoiyami">宵闇44</option>
+    <option value="ni-su">ニース</option>
+    </optgroup>
+    <optgroup label="ルビス">
+    <option value="rubisu">ルビス</option>
+    <option value="logos">ロゴス</option>
+    <option value="shinryu">しんりゅう44</option>
+    <option value="golem">ゴーレム</option>
+    </optgroup>
+    <optgroup label="神獣王">
+    <option value="dark">DARK</option>
+    <option value="world">WORLD</option>
+    </optgroup>
+    <optgroup label="その他LSなし">
+    <option value="esta">エスタ最速</option>
+    <option value="dream">ドレアム44</option>
+    </optgroup>
+    <optgroup label="スライム">
+    <option value="hero">ヒーロー</option>
     <option value="girl">ガール</option>
-    <option value="tyouryuu">超竜王(防75)</option>
+    </optgroup>
   </select>
-      <button type="button" id="summondefenderbtn">↑上書き</button>
       <button type="button" id="resetdefenderbtn">リセット</button>
-    </details>
+
 
 
 
@@ -656,7 +663,22 @@ button:disabled {
       <span>+種</span>
       <select id="HPseedselect" onchange="calculateDamage()">
     <option value="0">なし</option>
-    <option value="22">種22</option>
+    <option value="8">8</option>
+    <option value="10">10</option>
+    <option value="12">12</option>
+    <option value="14">14</option>
+    <option value="16">16</option>
+    <option value="18">18</option>
+    <option value="20">20</option>
+    <option value="22">22</option>
+    <option value="24">24</option>
+    <option value="26">26</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
+    <option value="32">32</option>
+    <option value="33">33</option>
     </select>
 
       <span>)×LS</span>
@@ -741,6 +763,7 @@ button:disabled {
       <p>
         ・全体として<br> 未入力OKです。むしろ、掛け算されるところに0とか記入してしまうと全て0になってしまうので気をつけてね。
         <br> バグなどがあれば報告していただけると非常に助かります。@jigokunoakaneまで。
+        <br> 加算のところは、例えば竜神爪なら0.1って記入してください。
         <br>
       </p>
       <p>
@@ -750,7 +773,7 @@ button:disabled {
       </p>
       <p>
         ・賢さ依存のとき<br> 入力された情報に応じて、賢さ差を自動計算します。賢さ差は手動で設定することも可能ですが、自分/敵の賢さ関係の部分をいじると自動計算された値に戻ってしまうのでご注意ください。
-        <br> 表の部分には賢さの範囲と、その時のダメージの範囲を記入してください。サーチさんにのってます。(データパクるのはよろしくないかなと思ったため選択肢は例のみ)
+        <br> 表の部分には賢さの範囲と、その時のダメージの範囲を記入してください。サーチさんにのってます。
         <br>
       </p>
       <p>
@@ -768,9 +791,9 @@ button:disabled {
         <br> また、攻撃側の条件を左2枠に、防御側の条件を右2枠に記入すれば、新たに条件呼び出しをするときに上書きされずに済みます。
       </p>
       <p>
-        ・加算/乗算の違いについて<br><br> 乗算(上): 通常攻撃に乗算されるもの。<br> e.g. ライトメタルボディ(0.75)、力ため(2)<br><br> 加算(上): 通常攻撃に加減算されるもの<br> e.g. 竜神爪(10%)、?系相手のケトス(-50%)<br><br> 乗算(下): 特技限定で乗算されるもの。<br> e.g. 体技防御一段階アップ(0.5)<br> 魔壊裂きの?系にダメージ2倍(2)
-        <br><br> 加算(下): 特技限定で加減算されるもの<br> e.g. LS斬撃ダメージアップ(30%)<br> 必殺の双撃錬金(30%)
-        <br> ゴッデスLSの属性ダメ30%軽減(-30%)
+        ・加算/乗算の違いについて<br><br> 乗算(上): 通常攻撃に乗算されるもの。<br> e.g. ライトメタルボディ(0.75)、力ため(2)<br><br> 加算(上): 通常攻撃に加減算されるもの<br> e.g. 竜神爪(0.1)、?系相手のケトス(-0.5)<br><br> 乗算(下): 特技限定で乗算されるもの。<br> e.g. 体技防御一段階アップ(0.5)<br> 魔壊裂きの?系にダメージ2倍(2)
+        <br><br> 加算(下): 特技限定で加減算されるもの<br> e.g. LS斬撃ダメージアップ(0.3)<br> 必殺の双撃錬金(0.3)
+        <br> ゴッデスLSの属性ダメ30%軽減(-0.3)
         <br><br> 通常攻撃の計算では上の加算/乗算のみを、特技の計算では両方の加算/乗算を反映しています。
       </p>
       <p>
@@ -779,16 +802,16 @@ button:disabled {
         <br> タブには、何依存かや残りHP計算も含めた全ての情報がそれぞれ保持されます。
       </p>
       <p>
-        使用時のコツ<br> ・計算にあたっては、条件の見落としにご注意ください。 ゴッデスの属性30%軽減とライメタ付与、一族のつるぎなど、他モンスターに効果を及ぼす特性は特に忘れやすいです。また、ケトスの?系相手の50%軽減や竜神爪も見落としやすいポイントです。
-        <br> ・LSサンドして攻撃力40%とかの時は、その他の欄にぶち込んでください。
+        使用時のコツ<br> ・条件の見落としにご注意ください。 ゴッデスの属性30%軽減とライメタ付与、一族のつるぎなど、他モンスターに効果を及ぼす特性は特に忘れやすいです。また、ケトスの?系相手の50%軽減や竜神爪も見落としやすいです。
+        <br> ・LSサンドして攻撃力+40%とかの時は、その他の欄にぶち込んでください。
         <br> ・本当は超竜王の防御内部アップは系統防御とは違いますが、系統防御のところで2倍を選択していただいて何も問題ありません。
         <br> ・タブをコピーした後にそのタブの内容を変更しても、それはコピーには反映されません。
       </p>
     </details>
     <details>
-      <summary>細かい仕様とか(マニア向け)</summary>
+      <summary>細かい仕様とか(マニア向け、執筆中)</summary>
       <p>
-        ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージが通るかどうか説明を出しています。
+        ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージの通りがどうなるか説明を出しています。もしかしたら解説記事書くかも。
       </p>
     </details>
 
@@ -1108,13 +1131,12 @@ function intskillselecter() {
 
 //攻撃側選択
 
-const summonattackerbtn = document.getElementById("summonattackerbtn");
-summonattackerbtn.addEventListener("click", function () {
+function summonattacker(){
   const summonattackerselect = document.getElementById("summonattackerselect").value;
   //攻撃側選択、統合・引数化
-  function setattacker(setattackdefault, setattackseed, setattackweapon, setattackLS, setattackkeitoubuff, setattackanotherbuff, setattackaddkasann, setattackaddjyousann, setbaiki, setjyousannnormal1, setjyousannnormal2, setkasannnormal1, setkasannnormal2, setgennsannnormal1, setgennsannnormal2, setbairitsu, setjyousannskill1, setjyousannskill2, setkasannskill1, setkasannskill2, setgennsannskill1, setgennsannskill2) {
+  function setattacker(setattackdefault, setattackseed, setattackweapon, setattackLS, setattackkeitoubuff, setattackanotherbuff, setattackaddkasann, setattackaddjyousann, setbaiki, setjyousannnormal1, setjyousannnormal2, setkasannnormal1, setkasannnormal2, setgennsannnormal1, setgennsannnormal2, setbairitsu, setjyousannskill1, setjyousannskill2, setkasannskill1, setkasannskill2, setgennsannskill1, setgennsannskill2, settaisei) {
     document.getElementById("attackdefault").value = setattackdefault;
-    attackseed.options[setattackseed].selected = true;
+    document.getElementById("attackseed").value = setattackseed;
     document.getElementById("attackweapon").value = setattackweapon;
     document.getElementById("attackLS").value = setattackLS;
     document.getElementById("attackkeitoubuff").value = setattackkeitoubuff;
@@ -1136,27 +1158,49 @@ summonattackerbtn.addEventListener("click", function () {
     document.getElementById("kasannskill2").value = setkasannskill2;
     document.getElementById("gennsannskill1").value = setgennsannskill1;
     document.getElementById("gennsannskill2").value = setgennsannskill2;
+    document.getElementById("taisei").value = settaisei;
   }
 
   //attacker data list
   if (summonattackerselect == "debug") {
     setattacker(500, 2, 30, 1.18, 1.5, "", 30, 1.5, 1.4, 1.1, 1.2, 0.2, 0.3, 0.1, 0.2, 2.11, 2, 1.5, 0.1, 0.2, "", 0.2);
   }
-  
-  
-  
-  
+  if (summonattackerselect == "esta"){
+    setattacker(653,24,"",1,1,"","","",1,"","","","","","",9.2,"","","","","","",1);
+  }
+  if (summonattackerselect == "dream"){
+    setattacker(742,24,"",1,1,"","","",1,1.1,"",0.15,"","","",1.21,"","","","","","",1);
+  }
+  if (summonattackerselect == "dark"){
+    setattacker(634,24,"",1.1,1,"","","",1,"","",0.2,"","","",2,3,"","","","","",1);
+  }
+  if (summonattackerselect == "world"){
+    setattacker(659,24,22,1.05,1,"","","",1,"","","","","","",0.91,"","","","","","",1.5);
+  }
+  if (summonattackerselect == "ifshiba"){
+    setattacker(547,24,45,1,1,"","","",1,"","","","","","",2.15,"","",0.05,"","","",1);
+  }
+  if (summonattackerselect == "neru4"){
+    setattacker(646,24,22,1,1,"","","",1,"","","","","","",3.6,"","","","","","",1.5);
+  }
+  if (summonattackerselect == "neru44"){
+    setattacker(666,24,22,1,1,"","","",1,"","","","","","",3.6,"","","","","","",1.5);
+  }
+  if (summonattackerselect == "hero"){
+    setattacker(649,48,"",1.18,1.4,1.2,"","",1,"","","","","","",0.82,"","","","","","",1);
+  }
+  if (summonattackerselect == "girl"){
+    setattacker(615,48,"",1.18,1.4,1.2,"","",1,"","","","","","",0.82,"","","","","","",1.5);
+  }
   
   calculateDamage();
-}, false);
+}
 
 
 
 //防御側選択
 
-
-const summondefenderbtn = document.getElementById("summondefenderbtn");
-summondefenderbtn.addEventListener("click", function () {
+function summondefender(){
   const summondefenderselect = document.getElementById("summondefenderselect").value;
 
   //統合・引数化
@@ -1193,31 +1237,68 @@ summondefenderbtn.addEventListener("click", function () {
   if (summondefenderselect == "debug") {
     setdefender(567, 48, 15, 1.18, 2, 1.4, 1.5, 0.1, 0.5, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, "", 0.9, 1, 1.1, "", 0, 1.04);
   }
-  
-  
-  
-  
-  
-  
+  if (summondefenderselect == "ketosu"){
+    setdefender(637,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",961,24,1.34);
+  }
+  if (summondefenderselect == "tyoryu"){
+    setdefender(658,92,0,1,1,1,"","",0.5,"","","","","","","","","","","","",935,16,1.34);
+  }
+  if (summondefenderselect == "omudo4"){
+    setdefender(663,112,0,1,1,1,"","",0.5,"","","","","","","","","","","","",937,24,1.44);
+  }
+  if (summondefenderselect == "omudo44"){
+    setdefender(684,112,0,1,1,1,"","",0.5,"","","","","","","","","","","","",965,24,1.44);
+  }
+  if (summondefenderselect == "yoiyami"){
+    setdefender(589,112,0,1,1,1,"","",1,"","","","","","","","","","","","",864,24,1.44);
+  }
+  if (summondefenderselect == "ni-su"){
+    setdefender(485,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",837,24,1.44);
+  }
+  if (summondefenderselect == "rubisu"){
+    setdefender(484,0,0,1,1,1,"","",0.7,"","","","","","","","","","","","",840,0,1.54);
+  }
+  if (summondefenderselect == "logos"){
+    setdefender(383,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",823,16,1.54);
+  }
+  if (summondefenderselect == "shinryu"){
+    setdefender(482,0,0,1,1,1,"","",0.7,"","","","","","","","","","","","",842,16,1.54);
+  }
+  if (summondefenderselect == "golem"){
+    setdefender(677,92,0,1,1,1.4,"","",0.7,"","","","","","","","","","","","",1130,16,1.54);
+  }
+  if (summondefenderselect == "dark"){
+    setdefender(480,0,0,0.75,1,1,"","",0.6,"","","","","","","","","","","","",774,24,1.04);
+  }
+  if (summondefenderselect == "world"){
+    setdefender(470,0,0,1,1,1,"","",1,"","","","","","","","","","","","",806,24,1.17);
+  }
+  if (summondefenderselect == "esta"){
+    setdefender(609,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",862,24,1.04);
+  }
+  if (summondefenderselect == "dream"){
+    setdefender(525,0,0,1,1,1,"","",1,"","","","","","","","","","","","",909,24,1.04);
+  }
+  if (summondefenderselect == "hero"){
+    setdefender(649,48,0,1.18,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",721,18,1.04);
+  }
+  if (summondefenderselect == "girl"){
+    setdefender(615,48,0,1.18,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",758,18,1.04);
+  }
   calculateDamage();
-}, false);
-
-
-
+}
 
 /*
       //debugbtnatt出力用 攻撃側データリスト作成用
       const debugbtnatt = document.getElementById("debugbtnatt");
 debugbtnatt.addEventListener("click", function() {
       
-      //const selectseed = document.getElementById("attackseed");
-      //const selectedseed = selectseed.selectedIndex;
-      const selectedseed = document.getElementById("attackseed").selectedIndex;
+      //const selectedseed = document.getElementById("attackseed").selectedIndex;
       let getatt = 
       "if (summonattackerselect == \"hoge\"){\n"+
       "setattacker("+
       document.getElementById("attackdefault").value+","+
-      selectedseed+","+
+      document.getElementById("attackseed").value+","+
       document.getElementById("attackweapon").value+","+
       document.getElementById("attackLS").value+","+
       document.getElementById("attackkeitoubuff").value+","+
@@ -1237,7 +1318,8 @@ debugbtnatt.addEventListener("click", function() {
       document.getElementById("kasannskill1").value+","+
       document.getElementById("kasannskill2").value+","+
       document.getElementById("gennsannskill1").value+","+
-      document.getElementById("gennsannskill2").value
+      document.getElementById("gennsannskill2").value+","+
+      document.getElementById("taisei").value
       +");\n}"
       ;
       
@@ -1295,9 +1377,7 @@ debugbtndef.addEventListener("click", function() {
       navigator.clipboard.writeText(getdef);
       }, false);
       
-      
-      */
-
+*/
 
 
 
@@ -1311,7 +1391,7 @@ function resetattack() {
   document.getElementById("attackanotherbuff").value = "";
   document.getElementById("attackaddkasann").value = "";
   document.getElementById("attackaddjyousann").value = "";
-  document.getElementById("summonattackerselect").value = "";
+  document.getElementById("summonattackerselect").value = "yobidasi";
 }
 const resetattackerbtn = document.getElementById("resetattackerbtn");
 resetattackerbtn.addEventListener("click", function () {
@@ -1328,7 +1408,7 @@ function resetdefense() {
   document.getElementById("sukarabuff").value = 1;
   document.getElementById("defenseaddkasann").value = "";
   document.getElementById("defenseaddjyousann").value = "";
-  document.getElementById("summondefenderselect").value = "";
+  document.getElementById("summondefenderselect").value = "yobidasi";
 }
 const resetdefenderbtn = document.getElementById("resetdefenderbtn");
 resetdefenderbtn.addEventListener("click", function () {
@@ -1497,436 +1577,86 @@ function askizon() {
   return checkValue;
 }
 
-
+const defaulttabValues = {
+    attackdefault: "",
+    attackseed: "0",
+    attackweapon: "",
+    attackLS: "1",
+    attackkeitoubuff: "1",
+    attackanotherbuff: "",
+    attackaddkasann: "",
+    attackaddjyousann: "",
+    baiki: "1",
+    jyousannnormal1: "",
+    jyousannnormal2: "",
+    kasannnormal1: "",
+    kasannnormal2: "",
+    gennsannnormal1: "",
+    gennsannnormal2: "",
+    bairitsu: "",
+    jyousannskill1: "",
+    jyousannskill2: "",
+    kasannskill1: "",
+    kasannskill2: "",
+    gennsannskill1: "",
+    gennsannskill2: "",
+    defensedefault: "",
+    defenseseed: "0",
+    defenseweapon: "0",
+    defenseLS: "1",
+    defensekeitoubuff: "1",
+    sukarabuff: "1",
+    defenseaddkasann: "",
+    defenseaddjyousann: "",
+    damebari: "1",
+    jyousannnormal3: "",
+    jyousannnormal4: "",
+    kasannnormal3: "",
+    kasannnormal4: "",
+    gennsannnormal3: "",
+    gennsannnormal4: "",
+    jyousannskill3: "",
+    jyousannskill4: "",
+    kasannskill3: "",
+    kasannskill4: "",
+    gennsannskill3: "",
+    gennsannskill4: "",
+    HPdefault: "",
+    HPseedselect: "0",
+    HPLSselect: "1.04",
+    taisei: "1",
+    rennkei: "1",
+    summonattackerselect: "yobidasi",
+    summondefenderselect: "yobidasi",
+    calculateHPskillhit: "1",
+    calculateHPnormalhit: "0",
+    intdefault: "",
+    intseed: "0",
+    intweapon: "0",
+    intbuff: "1",
+    intdifferencebonus: "1.25",
+    intskillplus: "1.15",
+    minint: "200",
+    minintdamage: "",
+    maxint: "600",
+    maxintdamage: "",
+    enemyintdefault: "",
+    enemyintseed: "0",
+    enemyintweapon: "0",
+    enemyintbuff: "1",
+    intskillselect: "none",
+    koteidamage: "",
+    izon: "attizon"
+};
 
 
 const tabValues = {
-  1: {
-    attackdefault: "",
-    attackseed: "0",
-    attackweapon: "",
-    attackLS: "1",
-    attackkeitoubuff: "1",
-    attackanotherbuff: "",
-    attackaddkasann: "",
-    attackaddjyousann: "",
-    baiki: "1",
-    jyousannnormal1: "",
-    jyousannnormal2: "",
-    kasannnormal1: "",
-    kasannnormal2: "",
-    gennsannnormal1: "",
-    gennsannnormal2: "",
-    bairitsu: "",
-    jyousannskill1: "",
-    jyousannskill2: "",
-    kasannskill1: "",
-    kasannskill2: "",
-    gennsannskill1: "",
-    gennsannskill2: "",
-    defensedefault: "",
-    defenseseed: "0",
-    defenseweapon: "0",
-    defenseLS: "1",
-    defensekeitoubuff: "1",
-    sukarabuff: "1",
-    defenseaddkasann: "",
-    defenseaddjyousann: "",
-    damebari: "1",
-    jyousannnormal3: "",
-    jyousannnormal4: "",
-    kasannnormal3: "",
-    kasannnormal4: "",
-    gennsannnormal3: "",
-    gennsannnormal4: "",
-    jyousannskill3: "",
-    jyousannskill4: "",
-    kasannskill3: "",
-    kasannskill4: "",
-    gennsannskill3: "",
-    gennsannskill4: "",
-    HPdefault: "",
-    HPseedselect: "0",
-    HPLSselect: "1.04",
-    taisei: "1",
-    rennkei: "1",
-    summonattackerselect: "",
-    summondefenderselect: "",
-    calculateHPskillhit: "1",
-    calculateHPnormalhit: "0",
-    intdefault: "",
-    intseed: "0",
-    intweapon: "0",
-    intbuff: "1",
-    intdifferencebonus: "1.25",
-    intskillplus: "1.15",
-    minint: "200",
-    minintdamage: "",
-    maxint: "600",
-    maxintdamage: "",
-    enemyintdefault: "",
-    enemyintseed: "0",
-    enemyintweapon: "0",
-    enemyintbuff: "1",
-    intskillselect: "",
-    koteidamage: "",
-    izon: "attizon"
-  },
-  2: {
-    attackdefault: "",
-    attackseed: "0",
-    attackweapon: "",
-    attackLS: "1",
-    attackkeitoubuff: "1",
-    attackanotherbuff: "",
-    attackaddkasann: "",
-    attackaddjyousann: "",
-    baiki: "1",
-    jyousannnormal1: "",
-    jyousannnormal2: "",
-    kasannnormal1: "",
-    kasannnormal2: "",
-    gennsannnormal1: "",
-    gennsannnormal2: "",
-    bairitsu: "",
-    jyousannskill1: "",
-    jyousannskill2: "",
-    kasannskill1: "",
-    kasannskill2: "",
-    gennsannskill1: "",
-    gennsannskill2: "",
-    defensedefault: "",
-    defenseseed: "0",
-    defenseweapon: "0",
-    defenseLS: "1",
-    defensekeitoubuff: "1",
-    sukarabuff: "1",
-    defenseaddkasann: "",
-    defenseaddjyousann: "",
-    damebari: "1",
-    jyousannnormal3: "",
-    jyousannnormal4: "",
-    kasannnormal3: "",
-    kasannnormal4: "",
-    gennsannnormal3: "",
-    gennsannnormal4: "",
-    jyousannskill3: "",
-    jyousannskill4: "",
-    kasannskill3: "",
-    kasannskill4: "",
-    gennsannskill3: "",
-    gennsannskill4: "",
-    HPdefault: "",
-    HPseedselect: "0",
-    HPLSselect: "1.04",
-    taisei: "1",
-    rennkei: "1",
-    summonattackerselect: "",
-    summondefenderselect: "",
-    calculateHPskillhit: "1",
-    calculateHPnormalhit: "0",
-    intdefault: "",
-    intseed: "0",
-    intweapon: "0",
-    intbuff: "1",
-    intdifferencebonus: "1.25",
-    intskillplus: "1.15",
-    minint: "200",
-    minintdamage: "",
-    maxint: "600",
-    maxintdamage: "",
-    enemyintdefault: "",
-    enemyintseed: "0",
-    enemyintweapon: "0",
-    enemyintbuff: "1",
-    intskillselect: "",
-    koteidamage: "",
-    izon: "attizon"
-  },
-  3: {
-    attackdefault: "",
-    attackseed: "0",
-    attackweapon: "",
-    attackLS: "1",
-    attackkeitoubuff: "1",
-    attackanotherbuff: "",
-    attackaddkasann: "",
-    attackaddjyousann: "",
-    baiki: "1",
-    jyousannnormal1: "",
-    jyousannnormal2: "",
-    kasannnormal1: "",
-    kasannnormal2: "",
-    gennsannnormal1: "",
-    gennsannnormal2: "",
-    bairitsu: "",
-    jyousannskill1: "",
-    jyousannskill2: "",
-    kasannskill1: "",
-    kasannskill2: "",
-    gennsannskill1: "",
-    gennsannskill2: "",
-    defensedefault: "",
-    defenseseed: "0",
-    defenseweapon: "0",
-    defenseLS: "1",
-    defensekeitoubuff: "1",
-    sukarabuff: "1",
-    defenseaddkasann: "",
-    defenseaddjyousann: "",
-    damebari: "1",
-    jyousannnormal3: "",
-    jyousannnormal4: "",
-    kasannnormal3: "",
-    kasannnormal4: "",
-    gennsannnormal3: "",
-    gennsannnormal4: "",
-    jyousannskill3: "",
-    jyousannskill4: "",
-    kasannskill3: "",
-    kasannskill4: "",
-    gennsannskill3: "",
-    gennsannskill4: "",
-    HPdefault: "",
-    HPseedselect: "0",
-    HPLSselect: "1.04",
-    taisei: "1",
-    rennkei: "1",
-    summonattackerselect: "",
-    summondefenderselect: "",
-    calculateHPskillhit: "1",
-    calculateHPnormalhit: "0",
-    intdefault: "",
-    intseed: "0",
-    intweapon: "0",
-    intbuff: "1",
-    intdifferencebonus: "1.25",
-    intskillplus: "1.15",
-    minint: "200",
-    minintdamage: "",
-    maxint: "600",
-    maxintdamage: "",
-    enemyintdefault: "",
-    enemyintseed: "0",
-    enemyintweapon: "0",
-    enemyintbuff: "1",
-    intskillselect: "",
-    koteidamage: "",
-    izon: "attizon"
-  },
-  4: {
-    attackdefault: "",
-    attackseed: "0",
-    attackweapon: "",
-    attackLS: "1",
-    attackkeitoubuff: "1",
-    attackanotherbuff: "",
-    attackaddkasann: "",
-    attackaddjyousann: "",
-    baiki: "1",
-    jyousannnormal1: "",
-    jyousannnormal2: "",
-    kasannnormal1: "",
-    kasannnormal2: "",
-    gennsannnormal1: "",
-    gennsannnormal2: "",
-    bairitsu: "",
-    jyousannskill1: "",
-    jyousannskill2: "",
-    kasannskill1: "",
-    kasannskill2: "",
-    gennsannskill1: "",
-    gennsannskill2: "",
-    defensedefault: "",
-    defenseseed: "0",
-    defenseweapon: "0",
-    defenseLS: "1",
-    defensekeitoubuff: "1",
-    sukarabuff: "1",
-    defenseaddkasann: "",
-    defenseaddjyousann: "",
-    damebari: "1",
-    jyousannnormal3: "",
-    jyousannnormal4: "",
-    kasannnormal3: "",
-    kasannnormal4: "",
-    gennsannnormal3: "",
-    gennsannnormal4: "",
-    jyousannskill3: "",
-    jyousannskill4: "",
-    kasannskill3: "",
-    kasannskill4: "",
-    gennsannskill3: "",
-    gennsannskill4: "",
-    HPdefault: "",
-    HPseedselect: "0",
-    HPLSselect: "1.04",
-    taisei: "1",
-    rennkei: "1",
-    summonattackerselect: "",
-    summondefenderselect: "",
-    calculateHPskillhit: "1",
-    calculateHPnormalhit: "0",
-    intdefault: "",
-    intseed: "0",
-    intweapon: "0",
-    intbuff: "1",
-    intdifferencebonus: "1.25",
-    intskillplus: "1.15",
-    minint: "200",
-    minintdamage: "",
-    maxint: "600",
-    maxintdamage: "",
-    enemyintdefault: "",
-    enemyintseed: "0",
-    enemyintweapon: "0",
-    enemyintbuff: "1",
-    intskillselect: "",
-    koteidamage: "",
-    izon: "attizon"
-  },
-  5: {
-    attackdefault: "",
-    attackseed: "0",
-    attackweapon: "",
-    attackLS: "1",
-    attackkeitoubuff: "1",
-    attackanotherbuff: "",
-    attackaddkasann: "",
-    attackaddjyousann: "",
-    baiki: "1",
-    jyousannnormal1: "",
-    jyousannnormal2: "",
-    kasannnormal1: "",
-    kasannnormal2: "",
-    gennsannnormal1: "",
-    gennsannnormal2: "",
-    bairitsu: "",
-    jyousannskill1: "",
-    jyousannskill2: "",
-    kasannskill1: "",
-    kasannskill2: "",
-    gennsannskill1: "",
-    gennsannskill2: "",
-    defensedefault: "",
-    defenseseed: "0",
-    defenseweapon: "0",
-    defenseLS: "1",
-    defensekeitoubuff: "1",
-    sukarabuff: "1",
-    defenseaddkasann: "",
-    defenseaddjyousann: "",
-    damebari: "1",
-    jyousannnormal3: "",
-    jyousannnormal4: "",
-    kasannnormal3: "",
-    kasannnormal4: "",
-    gennsannnormal3: "",
-    gennsannnormal4: "",
-    jyousannskill3: "",
-    jyousannskill4: "",
-    kasannskill3: "",
-    kasannskill4: "",
-    gennsannskill3: "",
-    gennsannskill4: "",
-    HPdefault: "",
-    HPseedselect: "0",
-    HPLSselect: "1.04",
-    taisei: "1",
-    rennkei: "1",
-    summonattackerselect: "",
-    summondefenderselect: "",
-    calculateHPskillhit: "1",
-    calculateHPnormalhit: "0",
-    intdefault: "",
-    intseed: "0",
-    intweapon: "0",
-    intbuff: "1",
-    intdifferencebonus: "1.25",
-    intskillplus: "1.15",
-    minint: "200",
-    minintdamage: "",
-    maxint: "600",
-    maxintdamage: "",
-    enemyintdefault: "",
-    enemyintseed: "0",
-    enemyintweapon: "0",
-    enemyintbuff: "1",
-    intskillselect: "",
-    koteidamage: "",
-    izon: "attizon"
-  },
-  6: {
-    attackdefault: "",
-    attackseed: "0",
-    attackweapon: "",
-    attackLS: "1",
-    attackkeitoubuff: "1",
-    attackanotherbuff: "",
-    attackaddkasann: "",
-    attackaddjyousann: "",
-    baiki: "1",
-    jyousannnormal1: "",
-    jyousannnormal2: "",
-    kasannnormal1: "",
-    kasannnormal2: "",
-    gennsannnormal1: "",
-    gennsannnormal2: "",
-    bairitsu: "",
-    jyousannskill1: "",
-    jyousannskill2: "",
-    kasannskill1: "",
-    kasannskill2: "",
-    gennsannskill1: "",
-    gennsannskill2: "",
-    defensedefault: "",
-    defenseseed: "0",
-    defenseweapon: "0",
-    defenseLS: "1",
-    defensekeitoubuff: "1",
-    sukarabuff: "1",
-    defenseaddkasann: "",
-    defenseaddjyousann: "",
-    damebari: "1",
-    jyousannnormal3: "",
-    jyousannnormal4: "",
-    kasannnormal3: "",
-    kasannnormal4: "",
-    gennsannnormal3: "",
-    gennsannnormal4: "",
-    jyousannskill3: "",
-    jyousannskill4: "",
-    kasannskill3: "",
-    kasannskill4: "",
-    gennsannskill3: "",
-    gennsannskill4: "",
-    HPdefault: "",
-    HPseedselect: "0",
-    HPLSselect: "1.04",
-    taisei: "1",
-    rennkei: "1",
-    summonattackerselect: "",
-    summondefenderselect: "",
-    calculateHPskillhit: "1",
-    calculateHPnormalhit: "0",
-    intdefault: "",
-    intseed: "0",
-    intweapon: "0",
-    intbuff: "1",
-    intdifferencebonus: "1.25",
-    intskillplus: "1.15",
-    minint: "200",
-    minintdamage: "",
-    maxint: "600",
-    maxintdamage: "",
-    enemyintdefault: "",
-    enemyintseed: "0",
-    enemyintweapon: "0",
-    enemyintbuff: "1",
-    intskillselect: "",
-    koteidamage: "",
-    izon: "attizon"
-  }
+  1: { ...defaulttabValues },
+  2: { ...defaulttabValues },
+  3: { ...defaulttabValues },
+  4: { ...defaulttabValues },
+  5: { ...defaulttabValues },
+  6: { ...defaulttabValues }
 };
 
 let currentTab = 1;
@@ -2182,31 +1912,21 @@ debug1btn.addEventListener("click", function () {
 
 
 
-console.log("クリックされました！");
-alert("した！");
+console.log("hoge");
+alert("hoge");
 input-value span-innerhtml
-onchange とoninput
+onchangeとoninput
 debug 11と-14
-      
-・追加
-累積ダメージ
-メゾら
-出力結果copy
-      
-・改善
-賢さ依存と攻撃依存でtabのいちが変わる問題
-tableなぜかはみ出る
-条件呼び出し detail
-青の背景の範囲
-条件呼び出しの表記どうするか、配列ないの初期値にもかかわる
-      
-      
-      
-攻撃登録にintは入っていない問題
-      
-      
 
-      
+・追加
+累積ダメージtabごと。savetabvalueして、あとかくtabでresultdamageを保存かな。
+メゾら
+
+・改善
+賢さ依存と攻撃依存でtabの高さが変わる問題
+tableなぜかはみ出る
+seed選択肢増加
+
 */
   </script>
 
