@@ -13,6 +13,9 @@
   /* Safari、Chrome */
   -ms-user-select: none;
   /* Microsoft */
+  font-family:  sans-serif;
+  font-weight:400;
+  font-size: 100%;
 }
 
 #displaynormaldamage, #displayskilldamage {
@@ -35,7 +38,8 @@ input[type="number"] {
 }
 
 input[type="number"] {
-  height: 1rem;
+  height: 1.2rem;
+  font-size:100%;
 }
 
 select {
@@ -97,7 +101,6 @@ details {
   width: 2.3rem;
 }
 
-
 /*3桁入力*/
 
 #intdefault, #enemyintdefault, #attackweapon {
@@ -121,7 +124,7 @@ details {
 }
 
 #intseed, #enemyintseed, #attackseed, #defenseseed, #defenseweapon, #intweapon, #enemyintweapon {
-  width: 2.8rem;
+  width: 2.77rem;
   padding: 0rem 0.3rem;
   margin: 0rem 0rem;
 }
@@ -177,6 +180,51 @@ button:disabled {
   background=color: #cccccc;
   color: #666666;
 }
+
+
+  body {
+    font-size: 16px;
+  }
+  input[type="number"] {
+  height:1.5rem;
+  }
+  /*4桁入力*/
+
+#attackdefault, #defensedefault, #HPdefault, #intdefault, #enemyintdefault, #minintdamage, #maxintdamage {
+  width: 3.45rem;
+}
+
+/*3桁入力*/
+
+#intdefault, #enemyintdefault, #attackweapon {
+  width: 2.7rem;
+}
+
+#koteidamage {
+  width: 4.5rem;
+}
+
+#attackaddkasann, #attackaddjyousann, #defenseaddkasann, #defenseaddjyousann {
+  width: 3rem;
+}
+
+#bairitsu {
+  width: 4.5rem;
+}
+
+#attackanotherbuff {
+  width: 2.25rem;
+}
+
+.conditions {
+  width: 3rem;
+}
+
+  
+  
+  
+  
+
   </style>
 </head>
 <body>
@@ -812,6 +860,12 @@ button:disabled {
       <summary>細かい仕様とか(マニア向け、執筆中)</summary>
       <p>
         ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージの通りがどうなるか説明を出しています。もしかしたら解説記事書くかも。
+      </p>
+    </details>
+    <details>
+      <summary>レイアウト崩壊と今後について</summary>
+      <p>
+        ・更新の反映が早いので今ははてなブログにしていますが、その関係で、このページはPCから見たら多分レイアウト崩壊します。しばらく経ったらGithubに移植します。<br>
       </p>
     </details>
 
