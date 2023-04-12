@@ -115,6 +115,8 @@ details {
 
 #koteidamage {
   width: 3rem;
+  margin-top: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 #attackaddkasann, #attackaddjyousann, #defenseaddkasann, #defenseaddjyousann {
@@ -172,8 +174,6 @@ details {
   background-color: blue;
 }
 
-#copytab, #pastetab, #resettab {}
-
 #calculateHPskillhit, #calculateHPnormalhit {
   margin: 0rem 0rem;
 }
@@ -189,6 +189,14 @@ details {
 button:disabled {
   background=color: #cccccc;
   color: #666666;
+}
+
+#copytab, #pastetab, #resettab {
+  margin-top: 0.2rem;
+}
+
+.defselect.margin {
+  margin-top: 0.5rem;
 }
 
 
@@ -493,23 +501,20 @@ button:disabled {
           </td>
         </tr>
       </table>
-
-
-
-
-
-
-
-
-
+      <hr>
     </div>
     <!--finish inaccordancewithint-->
+
+
+
+
     <div id="inaccordancewithkotei">
       <input type="number" id="koteidamage" oninput="calculateint()">
+      <hr>
     </div>
     
     
-      <select id="summondefenderselect" onchange="summondefender()">
+      <select class="defselect" id="summondefenderselect" onchange="summondefender()">
     <option value="yobidasi">防御側条件呼び出し</option>
     <optgroup label="ケトスL">
     <option value="ketosu">ケトス</option>
@@ -540,7 +545,7 @@ button:disabled {
     <option value="girl">ガール</option>
     </optgroup>
   </select>
-      <button type="button" id="resetdefenderbtn">リセット</button>
+      <button type="button" class="defselect" id="resetdefenderbtn">リセット</button>
 
 
 
@@ -651,8 +656,8 @@ button:disabled {
     <button type="button" id="pastetab" disabled>貼り付け</button>
     <button type="button" id="resettab" onclick="tabresetbtn()">tabをクリア</button>
     <br>
-    <details open>
-      <summary>残りHP計算</summary>
+    <span>・残りHP計算</span>
+    <br>
       <select id="calculateHPskillhit" onchange="calculateDamage()">
     <option value="0">なし</option>
     <option value="1" selected>ヒット数1発</option>
@@ -672,8 +677,6 @@ button:disabled {
       <span>=</span>
       <span id="totaldamage"></span>
       <br> 防御側HP
-
-
       <input type="number" id="HPdefault" oninput="calculateDamage()">
       <br>
       <span>+種</span>
@@ -714,8 +717,7 @@ button:disabled {
       <br>
       <span>残りHP:</span>
       <span id="remainingHP"></span>
-    </details>
-    <br>
+    <br><br>
     <details>
       <summary>連打・AI追撃表</summary>
       <table border="1">
@@ -1537,6 +1539,10 @@ function ifattizon() {
   document.getElementById("calculateHPnormalhit").style.display = "inline";
 
   document.getElementById("inaccordancewithkotei").style.display = "none";
+  const summondefenderselect = document.getElementById('summondefenderselect');
+  summondefenderselect.classList.remove('margin');
+  const resetdefenderbtn = document.getElementById('resetdefenderbtn');
+  resetdefenderbtn.classList.remove('margin');
   calculateDamage();
 }
 
@@ -1558,6 +1564,11 @@ function ifintizon() {
   document.getElementById("calculateHPnormalhit").style.display = "none";
 
   document.getElementById("inaccordancewithkotei").style.display = "none";
+  
+  const summondefenderselect = document.getElementById('summondefenderselect');
+  summondefenderselect.classList.add('margin');
+  const resetdefenderbtn = document.getElementById('resetdefenderbtn');
+  resetdefenderbtn.classList.add('margin');
   calculateDamage();
 }
 
@@ -1577,6 +1588,10 @@ function ifkoteiizon() {
   document.getElementById("calculateHPnormalhit").style.display = "none";
 
   document.getElementById("inaccordancewithkotei").style.display = "block";
+  const summondefenderselect = document.getElementById('summondefenderselect');
+  summondefenderselect.classList.remove('margin');
+  const resetdefenderbtn = document.getElementById('resetdefenderbtn');
+  resetdefenderbtn.classList.remove('margin');
   calculateDamage();
 }
 
