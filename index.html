@@ -91,7 +91,7 @@ button {
 }
 
 .additionalsettings[open] {
-  height: 4.5rem;
+  height: 4.6rem;
   background: #c3f6ff;
 }
 
@@ -199,6 +199,9 @@ button:disabled {
   margin-top: 0.5rem;
 }
 
+.bottomdetails {
+  margin-top: 0.3rem;
+}
 
   </style>
 </head>
@@ -718,7 +721,7 @@ button:disabled {
       <span>残りHP:</span>
       <span id="remainingHP"></span>
     <br><br>
-    <details>
+    <details class="bottomdetails">
       <summary>連打・AI追撃表</summary>
       <table border="1">
         <tr>
@@ -770,7 +773,7 @@ button:disabled {
     </details>
 
 
-    <details>
+    <details class="bottomdetails">
       <summary>はじめての方へ・使い方</summary>
       <p>
         できること<br> ・数値を入力して計算
@@ -826,8 +829,8 @@ button:disabled {
         <br> ・タブをコピーした後にそのタブの内容を変更しても、それはコピーには反映されません。
       </p>
     </details>
-    <details>
-      <summary>細かい仕様とか(マニア向け、執筆中)</summary>
+    <details class="bottomdetails">
+      <summary>細かい仕様とか(執筆中)</summary>
       <p>
         ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージの通りがどうなるか説明を出しています。もしかしたら解説記事書くかも。<br> ・ダメージ不安定時の通常攻撃ダメージは攻撃力/16以下の整数値になるようですが、それは反映せず通常の計算方法でのダメージを出力しています。
       </p>
