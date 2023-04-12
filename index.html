@@ -2,8 +2,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>DQMSLダメージ計算機β</title>
+  <title>DQMSLダメージ計算機</title>
   <style>
+  
+  html {
+    -ms-touch-action:manipulation;
+    touch-action:manipulation;
+  }
     body {
   user-select: none;
   /* CSS3 */
@@ -13,7 +18,7 @@
   /* Safari、Chrome */
   -ms-user-select: none;
   /* Microsoft */
-  font-family:  sans-serif;
+  font-family: sans-serif;
   font-weight:400;
   font-size: 100%;
 }
@@ -172,6 +177,10 @@ details {
   margin: 0rem 0rem;
 }
 
+#HPseedselect, #HPLSselect {
+  margin: 0rem 0rem;
+}
+
 .spelldamagetable {
   border-collapse: collapse;
 }
@@ -182,9 +191,7 @@ button:disabled {
 }
 
 
-  body {
-    font-size: 16px;
-  }
+
   input[type="number"] {
   height:1.5rem;
   }
@@ -417,7 +424,7 @@ button:disabled {
     <option value="116">+116  (竜王杖)</option>
   </select>
       <select id="intbuff" onchange="calculateint()">
-    <option value="1">インテなし</option>
+    <option value="1">インテ無</option>
     <option value="1.5">インテ1.5</option>
     <option value="2">インテ2</option>
   </select>
@@ -451,7 +458,7 @@ button:disabled {
     <option value="116">+116  (竜王杖)</option>
   </select>
       <select id="enemyintbuff" onchange="calculateint()">
-    <option value="1">インテなし</option>
+    <option value="1">インテ無</option>
     <option value="1.5">インテ1.5</option>
     <option value="2">インテ2</option>
   </select>
@@ -611,7 +618,7 @@ button:disabled {
     <input type="number" class="conditions" id="kasannnormal3" oninput="calculateDamage()">
     <input type="number" class="conditions" id="kasannnormal4" oninput="calculateDamage()">
     <br>
-    <div style="margin-left: 3.2rem;">
+    <div style="margin-left: 3.4rem;">
       <span> - </span>
       <input type="number" class="conditions" id="gennsannnormal1" oninput="calculateDamage()">
       <input type="number" class="conditions" id="gennsannnormal2" oninput="calculateDamage()">
@@ -656,7 +663,7 @@ button:disabled {
     <input type="number" class="conditions" id="kasannskill3" oninput="calculateDamage()">
     <input type="number" class="conditions" id="kasannskill4" oninput="calculateDamage()">
     <br>
-    <div style="margin-left: 3.2rem;">
+    <div style="margin-left: 3.4rem;">
       <span> - </span>
       <input type="number" class="conditions" id="gennsannskill1" oninput="calculateDamage()">
       <input type="number" class="conditions" id="gennsannskill2" oninput="calculateDamage()">
@@ -701,7 +708,7 @@ button:disabled {
     <option value="2">追撃2発</option>
     <option value="3">追撃3発</option>
   </select>
-      <span>合計ダメ:</span>
+      <span>=</span>
       <span id="totaldamage"></span>
       <br> 防御側HP
 
@@ -710,7 +717,7 @@ button:disabled {
       <br>
       <span>+種</span>
       <select id="HPseedselect" onchange="calculateDamage()">
-    <option value="0">なし</option>
+    <option value="0">0</option>
     <option value="8">8</option>
     <option value="10">10</option>
     <option value="12">12</option>
@@ -859,11 +866,10 @@ button:disabled {
     <details>
       <summary>細かい仕様とか(マニア向け、執筆中)</summary>
       <p>
-        ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージの通りがどうなるか説明を出しています。もしかしたら解説記事書くかも。
+        ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージの通りがどうなるか説明を出しています。もしかしたら解説記事書くかも。<br> ・ダメージ不安定時の通常攻撃ダメージは攻撃力/16以下の整数値になるようですが、それは反映せず通常の計算方法でのダメージを出力しています。
       </p>
     </details>
     
-
     <!--
 <details>
    <summary>もーどちぇんじ!</summary>
@@ -1959,8 +1965,6 @@ debug1btn.addEventListener("click", function () {
   console.log(tabValues);
 }, false);
 
-
-
 console.log("hoge");
 alert("hoge");
 input-value span-innerhtml
@@ -1973,8 +1977,8 @@ debug 11と-14
 
 ・改善
 賢さ依存と攻撃依存でtabの高さが変わる問題
-tableなぜかはみ出る
 seed選択肢増加
+intbuffサイズ
 
 */
   </script>
