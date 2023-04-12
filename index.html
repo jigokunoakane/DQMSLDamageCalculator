@@ -466,7 +466,7 @@ button:disabled {
     <option value="1.09">1.09</option>
     </select>
       <br>
-      <span>呪文選択:</span>
+      <span id="intskillselectlabel">呪文選択:</span>
       <select id="intskillselect" onchange="intskillselecter()">
     <option value="none" selected>選択する</option>
     <option value="almagest">アルマゲスト</option>
@@ -1546,6 +1546,8 @@ function ifattizon() {
   summondefenderselect.classList.remove('margin');
   const resetdefenderbtn = document.getElementById('resetdefenderbtn');
   resetdefenderbtn.classList.remove('margin');
+  document.getElementById("intskillselect").style.display = "none";
+  document.getElementById("intskillselectlabel").style.display = "none";
   calculateDamage();
 }
 
