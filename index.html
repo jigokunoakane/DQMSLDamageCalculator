@@ -1077,7 +1077,7 @@ function calculateDamage() {
     const calculateHPskillhit = document.getElementById("calculateHPskillhit").value;
     const calculateHPnormalhit = document.getElementById("calculateHPnormalhit").value;
     let totaldamage;
-    if (selectedizon == attizon) {
+    if (selectedizon == "attizon") {
       totaldamage = Math.ceil(Number(calculateHPskillhit * attskilldamage) + Number(calculateHPnormalhit * normaldamage));
     } else {
       totaldamage = Math.ceil(calculateHPskillhit * resultdamage);
