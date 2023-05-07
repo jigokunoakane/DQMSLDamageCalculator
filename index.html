@@ -787,27 +787,27 @@ border-bottom: 2px solid #b3c8e0;
     <details class="bottomdetails">
       <summary>tab合計ダメージ</summary>
       <input type="checkbox" id="checktab1" onclick="calculateDamage()" checked>
-      tab1:
+      <label for="checktab1">tab1:</label>
       <span id="tab1total"></span>
       <br>
       <input type="checkbox" id="checktab2" onclick="calculateDamage()" checked>
-      tab2:
+      <label for="checktab2">tab2:</label>
       <span id="tab2total"></span>
       <br>
       <input type="checkbox" id="checktab3" onclick="calculateDamage()" checked>
-      tab3:
+      <label for="checktab3">tab3:</label>
       <span id="tab3total"></span>
       <br>
       <input type="checkbox" id="checktab4" onclick="calculateDamage()" >
-      tab4:
+      <label for="checktab4">tab4:</label>
       <span id="tab4total"></span>
       <br>
       <input type="checkbox" id="checktab5" onclick="calculateDamage()" >
-      tab5:
+      <label for="checktab5">tab5:</label>
       <span id="tab5total"></span>
       <br>
       <input type="checkbox" id="checktab6" onclick="calculateDamage()" >
-      tab6:
+      <label for="checktab6">tab6:</label>
       <span id="tab6total"></span>
       <br>
       合計ダメージ:<span id="totalalldamage"></span>
@@ -2091,15 +2091,12 @@ debug1btn.addEventListener("click", function () {
 console.log("hoge");
 alert("hoge");
 input-value span-innerhtml
-onchangeとoninput
 debug 11と-14
 
 ・追加
-累積ダメージtabごと。savetabvalueして、あと各tabでresultdamageを保存かな
 メゾラ
 
 ・改善
-賢さ依存と攻撃依存でtabの高さが変わる問題
 seed選択肢増加
 intbuffサイズ
 
