@@ -731,7 +731,8 @@ border-bottom: 2px solid #b3c8e0;
       <span>残りHP:</span>
       <span id="remainingHP"></span>
     <br><br>
-    <details class="bottomdetails">
+
+    <details class="bottomdetails" hidden>
       <summary>連打・AI追撃表</summary>
       <table border="1">
         <tr>
@@ -780,6 +781,44 @@ border-bottom: 2px solid #b3c8e0;
           <td id="tablenormal3skill6"></td>
         </tr>
       </table>
+    </details>
+
+
+    <details class="bottomdetails">
+      <summary>tab合計ダメージ</summary>
+      <input type="checkbox" id="checktab1" onclick="calculateDamage()" checked>
+      tab1:
+      <span id="tab1total"></span>
+      <br>
+      <input type="checkbox" id="checktab2" onclick="calculateDamage()" checked>
+      tab2:
+      <span id="tab2total"></span>
+      <br>
+      <input type="checkbox" id="checktab3" onclick="calculateDamage()" checked>
+      tab3:
+      <span id="tab3total"></span>
+      <br>
+      <input type="checkbox" id="checktab4" onclick="calculateDamage()" >
+      tab4:
+      <span id="tab4total"></span>
+      <br>
+      <input type="checkbox" id="checktab5" onclick="calculateDamage()" >
+      tab5:
+      <span id="tab5total"></span>
+      <br>
+      <input type="checkbox" id="checktab6" onclick="calculateDamage()" >
+      tab6:
+      <span id="tab6total"></span>
+      <br>
+      合計ダメージ:<span id="totalalldamage"></span>
+      <br>
+      防御側HP:<span id="tabHP"></span>
+      <br>
+      残りHP:<span id="tabremainingHP"></span>
+
+
+      
+      
     </details>
 
 
@@ -852,6 +891,9 @@ border-bottom: 2px solid #b3c8e0;
         ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージの通りがどうなるか説明を出しています。もしかしたら解説記事書くかも。<br> ・ダメージ不安定時の通常攻撃ダメージは攻撃力/16以下の整数値になるようですが、それは反映せず通常の計算方法でのダメージを出力しています。
       </p>
     </details>
+    <br>
+    <br>
+    <br>
     
     <!--
 <details>
@@ -870,6 +912,9 @@ border-bottom: 2px solid #b3c8e0;
     window.addEventListener("DOMContentLoaded", function () {
   Tabassignment();
 });
+
+let totaldamage;
+let HPincludingLS;
 
 function calculateDamage() {
   const attackdefault = document.getElementById("attackdefault").value;
@@ -975,7 +1020,7 @@ function calculateDamage() {
   const normaldamage = normaldamagebeforekagennsann * normaltotalkagennsann;
   document.getElementById("displaynormaldamage").innerHTML = Math.ceil(normaldamage);
   if (defenseincludingbuff >= attackincludingbuff * 2) {
-    document.getElementById("alertnormaldamage").innerHTML = "(ミスか1桁ダメージ)";
+    document.getElementById("alertnormaldamage").innerHTML = "(ミスか1桁ダメ)";
   } else if (defenseincludingbuff > attackincludingbuff * 1.75) {
     document.getElementById("alertnormaldamage").innerHTML = "(ダメージ非常に不安定)";
   } else {
@@ -1076,12 +1121,11 @@ function calculateDamage() {
     const HPLSselect = document.getElementById("HPLSselect").value;
 
 
-    const HPincludingLS = Math.ceil((Number(HPdefault) + Number(HPseedselect)) * HPLSselect);
+    HPincludingLS = Math.ceil((Number(HPdefault) + Number(HPseedselect)) * HPLSselect);
     document.getElementById("HPincludingLS").innerHTML = HPincludingLS;
 
     const calculateHPskillhit = document.getElementById("calculateHPskillhit").value;
     const calculateHPnormalhit = document.getElementById("calculateHPnormalhit").value;
-    let totaldamage;
     if (selectedizon == "attizon") {
       totaldamage = Math.ceil(Number(calculateHPskillhit * attskilldamage) + Number(calculateHPnormalhit * normaldamage));
     } else {
@@ -1093,7 +1137,77 @@ function calculateDamage() {
 
   }
   calculateremainingHP();
+  sumtabdamage();
 }
+//finish calc
+
+//tabtotal
+function sumtabdamage() {
+  //まず保存
+  tabValues[currentTab].totaldamage = totaldamage;
+  //それぞれのtabtotalを用意
+  function zerotonull(tabtotal) {
+    if (tabtotal <= 0) {
+      return null;
+    }
+    return tabtotal;
+  }
+
+  let tab1total = zerotonull(tabValues[1].totaldamage);
+  let tab2total = zerotonull(tabValues[2].totaldamage);
+  let tab3total = zerotonull(tabValues[3].totaldamage);
+  let tab4total = zerotonull(tabValues[4].totaldamage);
+  let tab5total = zerotonull(tabValues[5].totaldamage);
+  let tab6total = zerotonull(tabValues[6].totaldamage);
+  
+  document.getElementById("tab1total").innerHTML = tab1total;
+  document.getElementById("tab2total").innerHTML = tab2total;
+  document.getElementById("tab3total").innerHTML = tab3total;
+  document.getElementById("tab4total").innerHTML = tab4total;
+  document.getElementById("tab5total").innerHTML = tab5total;
+  document.getElementById("tab6total").innerHTML = tab6total;
+  //currenttabのtotalにtotaldamageを代入上書き
+  //check取得、checkのみで合計damageにするように
+  let totalalldamage = 0;
+  const checktab1 = document.getElementById('checktab1');
+  const checktab2 = document.getElementById('checktab2');
+  const checktab3 = document.getElementById('checktab3');
+  const checktab4 = document.getElementById('checktab4');
+  const checktab5 = document.getElementById('checktab5');
+  const checktab6 = document.getElementById('checktab6');
+  if(checktab1.checked) { 
+    totalalldamage = Number(totalalldamage) + Number(tab1total);
+    //hyoujihighlight
+  }
+  if(checktab2.checked) { 
+    totalalldamage = Number(totalalldamage) + Number(tab2total);
+    //hyoujihighlight
+  }
+  if(checktab3.checked) { 
+    totalalldamage = Number(totalalldamage) + Number(tab3total);
+    //hyoujihighlight
+  }
+  if(checktab4.checked) { 
+    totalalldamage = Number(totalalldamage) + Number(tab4total);
+    //hyoujihighlight
+  }
+  if(checktab5.checked) { 
+    totalalldamage = Number(totalalldamage) + Number(tab5total);
+    //hyoujihighlight
+  }
+  if(checktab6.checked) { 
+    totalalldamage = Number(totalalldamage) + Number(tab6total);
+    //hyoujihighlight
+  }
+  document.getElementById("totalalldamage").innerHTML = totalalldamage;
+  document.getElementById("tabHP").innerHTML = HPincludingLS;
+  //remainingHP-totalalltltaldamage
+  let tabremainingHP = HPincludingLS - totalalldamage;
+  //を外で定義してここで実行、またtabのcheckがいじられた時にもfuntionで動かす
+  document.getElementById("tabremainingHP").innerHTML = tabremainingHP;
+}
+
+
 
 function calculateint() {
   const intdefault = document.getElementById("intdefault").value;
@@ -1708,7 +1822,8 @@ const defaulttabValues = {
     enemyintbuff: "1",
     intskillselect: "none",
     koteidamage: "",
-    izon: "attizon"
+    izon: "attizon",
+    totaldamage: ""
 };
 
 
@@ -1796,6 +1911,7 @@ function saveTabValue() {
   tabValues[currentTab].koteidamage = document.getElementById("koteidamage").value;
   const selectedizon = askizon();
   tabValues[currentTab].izon = selectedizon;
+  tabValues[currentTab].totaldamage = totaldamage;
 }
 
 function Tabassignment() {
