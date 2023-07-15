@@ -526,32 +526,44 @@ border-bottom: 2px solid #b3c8e0;
     
       <select class="defselect" id="summondefenderselect" onchange="summondefender()">
     <option value="yobidasi">防御側条件呼び出し</option>
+    <optgroup label="S13 worldリーダー">
+    <option value="world">World4</option>
+    <option value="neru44">ネル44</option>
+    <option value="erugi44">エルギ44</option>
+    <option value="sosiden44">そし伝44</option>
+    <option value="S13tyoryu">超竜王44(防55)</option>
+    <option value="S13esta">エスタ最速</option>
+    <option value="S13dream">ドレアム44</option>
+    <option value="S13kandata">カンダタ4</option>
+    <option value="S13bogu">ボーグ4</option>
+    <option value="S13apple">リンゴ4</option>
+    </optgroup>
+    <optgroup label="S15 darkリーダー">
+    <option value="dark">DARK</option>
+    </optgroup>
+    <optgroup label="H35 ラプリーダー">
+    <option value="rapu4">ラプ4</option>
+    <option value="H35dagu44">ダグジャ44</option>
+    <option value="H35sosiden44">そし伝44</option>
+    </optgroup>
     <optgroup label="ケトスL">
     <option value="ketosu">ケトス</option>
     <option value="tyoryu">超竜王(防55)</option>
+    <option value="munbabon">ムンババ</option>
     </optgroup>
     <optgroup label="オムド">
     <option value="omudo4">オムド4</option>
     <option value="omudo44">オムド44</option>
+    <option value="nadoraga4">ナドラガ4</option>
+    <option value="god">かみさま4</option>
     <option value="yoiyami">宵闇44</option>
-    <option value="ni-su">ニース</option>
+    <option value="ni-su">ニース4</option>
     </optgroup>
     <optgroup label="ルビス">
     <option value="rubisu">ルビス</option>
     <option value="logos">ロゴス</option>
     <option value="shinryu">しんりゅう44</option>
     <option value="golem">ゴーレム</option>
-    </optgroup>
-    <optgroup label="神獣王">
-    <option value="dark">DARK</option>
-    <option value="world">WORLD</option>
-    </optgroup>
-    <optgroup label="その他LSなし">
-    <option value="esta">エスタ最速</option>
-    <option value="dream">ドレアム44</option>
-    <option value="neru44">ネル44</option>
-    <option value="erugi44">エルギ44</option>
-    <option value="sosiden44">そし伝44</option>
     </optgroup>
     <optgroup label="スライム">
     <option value="hero">ヒーロー</option>
@@ -723,6 +735,7 @@ border-bottom: 2px solid #b3c8e0;
     <option value="1.24">HP20(1.24)</option>
     <option value="1.29">HP25(1.29)</option>
     <option value="1.34">HP30(1.34)</option>
+    <option value="1.39">HP35(1.39)</option>
     <option value="1.44">HP40(1.44)</option>
     <option value="1.54">HP50(1.54)</option>
   </select> =
@@ -1389,17 +1402,76 @@ function summondefender(){
   if (summondefenderselect == "debug") {
     setdefender(567, 48, 15, 1.18, 2, 1.4, 1.5, 0.1, 0.5, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, "", 0.9, 1, 1.1, "", 0, 1.04);
   }
+  //S13
+  if (summondefenderselect == "world"){
+    setdefender(470,0,0,1,1,1,"","",1,"","","","","","","","","","","","",806,24,1.17);
+  }
+  if (summondefenderselect == "neru44"){
+    setdefender(573,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",921,24,1.17);
+  }
+  if (summondefenderselect == "erugi44"){
+    setdefender(619,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",897,24,1.17);
+  }
+  if (summondefenderselect == "sosiden44"){
+    setdefender(495,0,0,1,1,1,"","",1,"","","","","","","","","","","","",877,24,1.17);
+  }
+  if (summondefenderselect == "Vearn44"){
+    setdefender(0,0,0,1,1,1,"","",1,"","","","","","","","","","","","",80,24,1.17);
+  }
+  if (summondefenderselect == "S13tyoryu"){
+    setdefender(658,92,0,1,1,1,"","",0.5,"","","","","","","","","","","","",935,16,1.17);
+  }
+  if (summondefenderselect == "S13esta"){
+    setdefender(609,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",862,24,1.17);
+  }
+  if (summondefenderselect == "S13dream"){
+    setdefender(525,0,0,1,1,1,"","",1,"","","","","","","","","","","","",909,24,1.17);
+  }
+  if (summondefenderselect == "S13kandata"){
+    setdefender(507,0,0,1,1,1.4,"","",1,"","","","","","","","","","","","",839,24,1.17);
+  }
+  if (summondefenderselect == "S13bogu"){
+    setdefender(477,112,0,1,1,1,"","",1,"","","","","","","","","","","","",591,24,1.17);
+  }
+  if (summondefenderselect == "S13apple"){
+    setdefender(220,0,0,1,1,1,"","",1,"","","","","","","","","","","","",630,24,1.17);
+  }
+  //S15
+  if (summondefenderselect == "dark"){
+    setdefender(480,0,0,0.75,1,1,"","",0.6,"","","","","","","","","","","","",774,24,1.04);
+  }
+  //H35
+  if (summondefenderselect == "rapu4"){
+    setdefender(513,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",1075,24,1.39);
+  }
+  if (summondefenderselect == "H35dagu44"){
+    setdefender(644,80,0,1,1,1.2,"","",1,"","","","","","","","","","","","",874,18,1.39);
+  }
+  if (summondefenderselect == "H35sosiden44"){
+    setdefender(495,0,0,1,1,1,"","",1,"","","","","","","","","","","","",877,24,1.39);
+  }
+  //H30
   if (summondefenderselect == "ketosu"){
     setdefender(637,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",961,24,1.34);
   }
   if (summondefenderselect == "tyoryu"){
     setdefender(658,92,0,1,1,1,"","",0.5,"","","","","","","","","","","","",935,16,1.34);
   }
+  if (summondefenderselect == "munbabon"){
+    setdefender(550,112,0,1,1,1,"","",0.66,"","","","","","","","","","","","",848,24,1.34);
+  }
+  //H40
   if (summondefenderselect == "omudo4"){
     setdefender(663,112,0,1,1,1,"","",0.5,"","","","","","","","","","","","",937,24,1.44);
   }
   if (summondefenderselect == "omudo44"){
     setdefender(684,112,0,1,1,1,"","",0.5,"","","","","","","","","","","","",965,24,1.44);
+  }
+  if (summondefenderselect == "nadoraga4"){
+    setdefender(601,104,0,1,1,1,"","",1,"0.333","","","","","","","","","","","",880,22,1.44);
+  }
+  if (summondefenderselect == "god"){
+    setdefender(522,92,0,1,1,1,"","",0.66,"","","","","","","","","","","","",763,26,1.44);
   }
   if (summondefenderselect == "yoiyami"){
     setdefender(589,112,0,1,1,1,"","",1,"","","","","","","","","","","","",864,24,1.44);
@@ -1407,6 +1479,7 @@ function summondefender(){
   if (summondefenderselect == "ni-su"){
     setdefender(485,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",837,24,1.44);
   }
+  //rubisu
   if (summondefenderselect == "rubisu"){
     setdefender(484,0,0,1,1,1,"","",0.7,"","","","","","","","","","","","",840,0,1.54);
   }
@@ -1419,27 +1492,14 @@ function summondefender(){
   if (summondefenderselect == "golem"){
     setdefender(677,92,0,1,1,1.4,"","",0.7,"","","","","","","","","","","","",1130,16,1.54);
   }
-  if (summondefenderselect == "dark"){
-    setdefender(480,0,0,0.75,1,1,"","",0.6,"","","","","","","","","","","","",774,24,1.04);
-  }
-  if (summondefenderselect == "world"){
-    setdefender(470,0,0,1,1,1,"","",1,"","","","","","","","","","","","",806,24,1.17);
-  }
+  //mao
   if (summondefenderselect == "esta"){
     setdefender(609,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",862,24,1.04);
   }
   if (summondefenderselect == "dream"){
     setdefender(525,0,0,1,1,1,"","",1,"","","","","","","","","","","","",909,24,1.04);
   }
-  if (summondefenderselect == "neru44"){
-    setdefender(573,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",921,24,1.04);
-  }
-  if (summondefenderselect == "erugi44"){
-    setdefender(619,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",897,24,1.04);
-  }
-  if (summondefenderselect == "sosiden44"){
-    setdefender(495,0,0,1,1,1,"","",1,"","","","","","","","","","","","",877,24,1.04);
-  }
+  //slime
   if (summondefenderselect == "hero"){
     setdefender(649,48,0,1.18,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",721,18,1.04);
   }
