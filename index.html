@@ -535,6 +535,7 @@ border-bottom: 2px solid #b3c8e0;
     <option value="S13esta">エスタ最速</option>
     <option value="S13dream">ドレアム44</option>
     <option value="S13kandata">カンダタ4</option>
+    <option value="S13ni-su">ニース4</option>
     <option value="S13bogu">ボーグ4</option>
     <option value="S13apple">リンゴ4</option>
     </optgroup>
@@ -545,16 +546,21 @@ border-bottom: 2px solid #b3c8e0;
     <option value="rapu4">ラプ4</option>
     <option value="H35dagu44">ダグジャ44</option>
     <option value="H35sosiden44">そし伝44</option>
+    <option value="H35esta">エスタ最速</option>
+    <option value="H35ni-su">ニース4</option>
+    <option value="H35apple">りんご</option>
     </optgroup>
     <optgroup label="ケトスL">
     <option value="ketosu">ケトス</option>
     <option value="tyoryu">超竜王(防55)</option>
     <option value="munbabon">ムンババ</option>
+    <option value="H30ni-su">ニース4</option>
     </optgroup>
     <optgroup label="オムド">
     <option value="omudo4">オムド4</option>
     <option value="omudo44">オムド44</option>
     <option value="nadoraga4">ナドラガ4</option>
+    <option value="H40dagu44">ダグジャ44</option>
     <option value="god">かみさま4</option>
     <option value="yoiyami">宵闇44</option>
     <option value="ni-su">ニース4</option>
@@ -568,6 +574,11 @@ border-bottom: 2px solid #b3c8e0;
     <optgroup label="スライム">
     <option value="hero">ヒーロー</option>
     <option value="girl">ガール</option>
+    </optgroup>
+    </optgroup>
+    <optgroup label="ドラゴン">
+    <option value="masdora44">マスドラ44</option>
+    <option value="voruka44">ヴォルカ44</option>
     </optgroup>
   </select>
       <button type="button" class="defselect" id="resetdefenderbtn">リセット</button>
@@ -1430,6 +1441,9 @@ function summondefender(){
   if (summondefenderselect == "S13kandata"){
     setdefender(507,0,0,1,1,1.4,"","",1,"","","","","","","","","","","","",839,24,1.17);
   }
+  if (summondefenderselect == "S13ni-su"){
+    setdefender(485,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",837,24,1.17);
+  }
   if (summondefenderselect == "S13bogu"){
     setdefender(477,112,0,1,1,1,"","",1,"","","","","","","","","","","","",591,24,1.17);
   }
@@ -1450,6 +1464,15 @@ function summondefender(){
   if (summondefenderselect == "H35sosiden44"){
     setdefender(495,0,0,1,1,1,"","",1,"","","","","","","","","","","","",877,24,1.39);
   }
+  if (summondefenderselect == "H35esta"){
+    setdefender(609,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",862,24,1.39);
+  }
+  if (summondefenderselect == "H35ni-su"){
+    setdefender(485,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",837,24,1.39);
+  }
+  if (summondefenderselect == "H35apple"){
+    setdefender(220,0,0,1,1,1,"","",1,"","","","","","","","","","","","",630,24,1.39);
+  }
   //H30
   if (summondefenderselect == "ketosu"){
     setdefender(637,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",961,24,1.34);
@@ -1460,6 +1483,9 @@ function summondefender(){
   if (summondefenderselect == "munbabon"){
     setdefender(550,112,0,1,1,1,"","",0.66,"","","","","","","","","","","","",848,24,1.34);
   }
+  if (summondefenderselect == "H30ni-su"){
+    setdefender(485,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",837,24,1.34);
+  }
   //H40
   if (summondefenderselect == "omudo4"){
     setdefender(663,112,0,1,1,1,"","",0.5,"","","","","","","","","","","","",937,24,1.44);
@@ -1469,6 +1495,9 @@ function summondefender(){
   }
   if (summondefenderselect == "nadoraga4"){
     setdefender(601,104,0,1,1,1,"","",1,"0.333","","","","","","","","","","","",880,22,1.44);
+  }
+  if (summondefenderselect == "H40dagu44"){
+    setdefender(644,80,0,1,1,1.2,"","",1,"","","","","","","","","","","","",874,18,1.44);
   }
   if (summondefenderselect == "god"){
     setdefender(522,92,0,1,1,1,"","",0.66,"","","","","","","","","","","","",763,26,1.44);
@@ -1505,6 +1534,12 @@ function summondefender(){
   }
   if (summondefenderselect == "girl"){
     setdefender(615,48,0,1.18,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",758,18,1.04);
+  }
+  if (summondefenderselect == "masdora44"){
+    setdefender(521,0,0,1,1,1,"","",1,"","","","","","","","","","","","",886,24,1.19);
+  }
+  if (summondefenderselect == "voruka44"){
+    setdefender(532,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",1025,24,1.19);
   }
   calculateDamage();
 }
