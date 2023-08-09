@@ -535,6 +535,7 @@ border-bottom: 2px solid #b3c8e0;
     <option value="vearn44">バーン44</option>
     <option value="S13esta">エスタ最速</option>
     <option value="S13dream">ドレアム44</option>
+    <option value="S13rusia44">アンルシア44</option>
     <option value="S13kandata">カンダタ4</option>
     <option value="S13ni-su">ニース4</option>
     <option value="S13bogu">ボーグ4</option>
@@ -579,6 +580,8 @@ border-bottom: 2px solid #b3c8e0;
     </optgroup>
     <optgroup label="ドラゴン">
     <option value="masdora44">マスドラ44</option>
+    <option value="sinri44">シンリ44</option>
+    <option value="rusia44">アンルシア44</option>
     <option value="voruka44">ヴォルカ44</option>
     </optgroup>
   </select>
@@ -1439,6 +1442,9 @@ function summondefender(){
   if (summondefenderselect == "S13dream"){
     setdefender(525,0,0,1,1,1,"","",1,"","","","","","","","","","","","",909,24,1.17);
   }
+  if (summondefenderselect == "S13rusia44"){
+    setdefender(460,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",809,24,1.17);
+  }
   if (summondefenderselect == "S13kandata"){
     setdefender(507,0,0,1,1,1.4,"","",1,"","","","","","","","","","","","",839,24,1.17);
   }
@@ -1522,7 +1528,7 @@ function summondefender(){
   if (summondefenderselect == "golem"){
     setdefender(677,92,0,1,1,1.4,"","",0.7,"","","","","","","","","","","","",1130,16,1.54);
   }
-  //mao
+  //maou
   if (summondefenderselect == "esta"){
     setdefender(609,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",862,24,1.04);
   }
@@ -1536,11 +1542,18 @@ function summondefender(){
   if (summondefenderselect == "girl"){
     setdefender(615,48,0,1.18,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",758,18,1.04);
   }
+  //dragon
   if (summondefenderselect == "masdora44"){
     setdefender(521,0,0,1,1,1,"","",1,"","","","","","","","","","","","",886,24,1.19);
   }
+  if (summondefenderselect == "sinri44"){
+    setdefender(352,0,0,1,1,1,"","",1,"","","","","","","","","","","","",796,16,1.19);
+  }
+  if (summondefenderselect == "rusia44"){
+    setdefender(460,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",809,24,1.19);
+  }
   if (summondefenderselect == "voruka44"){
-    setdefender(532,112,0,1,1,1,"","",1,0.75,"","","","","","","","","","","",1025,24,1.19);
+    setdefender(532,112,0,1,1,1,"","",1,0.75,"","",0.3,"","","","","","","","",1025,24,1.19);
   }
   calculateDamage();
 }
