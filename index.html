@@ -288,15 +288,24 @@ border-bottom: 2px solid #b3c8e0;
       </details>
         <select id="summonattackerselect" onchange="summonattacker()">
     <option value="yobidasi">攻撃側条件呼び出し</option>
-    <option value="dark">DARK</option>
-    <option value="world">WORLD先制</option>
-    <option value="hero">ヒーロー</option>
-    <option value="girl">ガール</option>
-    <optgroup label="LSなし">
-      <option value="esta">エスタ</option>
+    <optgroup label="S13 worldリーダー">
+      <option value="world">WORLD先制</option>
+      <option value="neru44">ネルゲル44</option>
       <option value="dream">ドレアム</option>
       <option value="ifshiba">イフシバ</option>
-      <option value="neru44">ネルゲル44</option>
+    </optgroup>
+    <optgroup label="S15 darkリーダー">
+      <option value="dark">DARK</option>
+    </optgroup>
+    <optgroup label="LSなし">
+      <option value="esta">エスタ</option>
+    </optgroup>
+    <optgroup label="悪魔">
+      <option value="dyuran">デュラン</option>
+    </optgroup>
+    <optgroup label="スライム">
+      <option value="hero">ヒーロー</option>
+      <option value="girl">ガール</option>
     </optgroup>
   </select>
         <button type="button" id="resetattackerbtn">リセット</button>
@@ -327,12 +336,13 @@ border-bottom: 2px solid #b3c8e0;
       <select id="defenseLS" onchange="calculateDamage()">
     <option value="1">なし</option>
     <option value="0.75">-25%</option>
-    <option value="1.18">+18%</option>
+    <option value="1.2">+20%</option>
   </select>
       <label for="defensekeitoubuff">系統防御</label>
       <select id="defensekeitoubuff" onchange="calculateDamage()">
     <option value="1">1</option>
     <option value="1.2">1.2</option>
+    <option value="1.3">1.3</option>
     <option value="1.4">1.4</option>
     <option value="1.5">1.5</option>
     <option value="2">2</option>
@@ -577,12 +587,26 @@ border-bottom: 2px solid #b3c8e0;
     <option value="hero">ヒーロー</option>
     <option value="girl">ガール</option>
     </optgroup>
-    </optgroup>
     <optgroup label="ドラゴン">
     <option value="masdora44">マスドラ44</option>
     <option value="sinri44">シンリ44</option>
     <option value="rusia44">アンルシア44</option>
     <option value="voruka44">ヴォルカ44</option>
+    </optgroup>
+    <optgroup label="物質">
+    <option value="matter44">マター44</option>
+    <option value="weapon44">ウェポン44</option>
+    <option value="him4">ヒム4</option>
+    <option value="box44">箱44</option>
+    <option value="golem4">ゴーレム4</option>
+    <option value="siro4">城4</option>
+    </optgroup>
+    <optgroup label="悪魔">
+    <option value="tanisu44">タニス44</option>
+    <option value="logos4">ロゴス4</option>
+    <option value="dyuran4">デュラン4</option>
+    <option value="jaha4">ジャハ4</option>
+    <option value="zuishosai">ズイショウ最</option>
     </optgroup>
   </select>
       <button type="button" class="defselect" id="resetdefenderbtn">リセット</button>
@@ -753,6 +777,7 @@ border-bottom: 2px solid #b3c8e0;
     <option value="1.39">HP35(1.39)</option>
     <option value="1.44">HP40(1.44)</option>
     <option value="1.54">HP50(1.54)</option>
+    <option value="1.64">HP50(1.64)</option>
   </select> =
       <span id="HPincludingLS"></span>
       <br>
@@ -1345,32 +1370,32 @@ function summonattacker(){
   if (summonattackerselect == "debug") {
     setattacker(500, 2, 30, 1.18, 1.5, "", 30, 1.5, 1.4, 1.1, 1.2, 0.2, 0.3, 0.1, 0.2, 2.11, 2, 1.5, 0.1, 0.2, "", 0.2);
   }
-  if (summonattackerselect == "esta"){
-    setattacker(653,24,"",1,1,"","","",1,"","","","","","",9.2,"","","","","","",1);
+  if (summonattackerselect == "world"){
+    setattacker(659,24,22,1.05,1,"","","",1,"","","","","","",0.91,"","","","","","",1.5);
+  }
+  if (summonattackerselect == "neru44"){
+    setattacker(666,24,22,1.05,1,"","","",1,"","","","","","","","","","","","","",1);
   }
   if (summonattackerselect == "dream"){
-    setattacker(742,24,"",1,1,"","","",1,1.1,"","","","","",1.21,"","","0.15","","","",1);
+    setattacker(742,24,"",1.05,1,"","","",1,1.1,"","","","","",1.21,"","","0.15","","","",1);
+  }
+  if (summonattackerselect == "ifshiba"){
+    setattacker(547,24,45,1.05,1,"","","",1,"","","","","","",2.15,"","",0.05,"","","",1.5);
   }
   if (summonattackerselect == "dark"){
     setattacker(634,24,"",1.1,1,"","","",1,"","",0.2,"","","",2,3,"","","","","",1.5);
   }
-  if (summonattackerselect == "world"){
-    setattacker(659,24,22,1.05,1,"","","",1,"","","","","","",0.91,"","","","","","",1.5);
+  if (summonattackerselect == "esta"){
+    setattacker(653,24,"",1,1,"","","",1,"","","","","","",9.2,"","","","","","",1);
   }
-  if (summonattackerselect == "ifshiba"){
-    setattacker(547,24,45,1,1,"","","",1,"","","","","","",2.15,"","",0.05,"","","",1.5);
-  }
-  if (summonattackerselect == "neru4"){
-    setattacker(646,24,22,1,1,"","","",1,"","","","","","","","","","","","","",1);
-  }
-  if (summonattackerselect == "neru44"){
-    setattacker(666,24,22,1,1,"","","",1,"","","","","","","","","","","","","",1);
+  if (summonattackerselect == "dyuran"){
+    setattacker(689,24,"",1,1,"","","",1,"","","","","","",1.08,"","","","","","",1);
   }
   if (summonattackerselect == "hero"){
-    setattacker(649,48,"",1.18,1.4,1.2,"","",1,"","","","","","",0.82,"","","","","","",1);
+    setattacker(649,48,"",1.2,1.4,1.2,"","",1,"","","","","","",0.82,"","","","","","",1);
   }
   if (summonattackerselect == "girl"){
-    setattacker(615,48,"",1.18,1.4,1.2,"","",1,"","","","","","",0.82,"","","","","","",1.5);
+    setattacker(615,48,"",1.2,1.4,1.2,"","",1,"","","","","","",0.82,"","","","","","",1.5);
   }
   
   calculateDamage();
@@ -1537,10 +1562,10 @@ function summondefender(){
   }
   //slime
   if (summondefenderselect == "hero"){
-    setdefender(649,48,0,1.18,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",721,18,1.04);
+    setdefender(649,48,0,1.2,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",721,18,1.24);
   }
   if (summondefenderselect == "girl"){
-    setdefender(615,48,0,1.18,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",758,18,1.04);
+    setdefender(615,48,0,1.2,1.4,1.2,"","",1,0.75,"","","","","","","","","","","",758,18,1.24);
   }
   //dragon
   if (summondefenderselect == "masdora44"){
@@ -1554,6 +1579,41 @@ function summondefender(){
   }
   if (summondefenderselect == "voruka44"){
     setdefender(532,112,0,1,1,1,"","",1,0.75,"","","",0.3,"","","","","","","",1025,24,1.19);
+  }
+  //material
+  if (summondefenderselect == "matter44"){
+    setdefender(516,0,0,1,1,1,"","",0.8,0.2,"","","","","","","","","","","",913,24,1.64);
+  }
+  if (summondefenderselect == "weapon44"){
+    setdefender(431,0,0,1,1,1,"","",0.8,0.2,"","","","","","","","","","","",797,24,1.64);
+  }
+  if (summondefenderselect == "him4"){
+    setdefender(573,0,0,1,1,1,"","",0.8,0.2,"","","","","","","","","","","",650,24,1.64);
+  }
+  if (summondefenderselect == "box44"){
+    setdefender(621,0,0,1,1,1,"","",0.8,0.2,"","","","","","","","","","","",744,24,1.64);
+  }
+  if (summondefenderselect == "golem4"){
+    setdefender(677,80,0,1,1,1.4,"","",0.8,0.2,"","","","","","","","","","","",1130,18,1.64);
+  }
+  if (summondefenderselect == "siro4"){
+    setdefender(620,48,0,1,1.3,1,"","",0.8,0.2,"","","","","","","","","","","",864,18,1.64);
+  }
+  //demon
+  if (summondefenderselect == "tanisu44"){
+    setdefender(495,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",772,16,1.34);
+  }
+  if (summondefenderselect == "logos4"){
+    setdefender(383,0,0,1,1,1,"","",0.5,"","","","","","","","","","","","",823,16,1.34);
+  }
+  if (summondefenderselect == "dyuran4"){
+    setdefender(502,0,0,1,1,1,"","","","","","","","","","","","","","","",845,24,1.34);
+  }
+  if (summondefenderselect == "jaha4"){
+    setdefender(588,92,0,1,1,1,"","",0.66,"","","","","","","","","","","","",810,16,1.34);
+  }
+  if (summondefenderselect == "zuishosai"){
+    setdefender(613,0,0,1,1,1,"","","",0.75,"","","","","","","","","","","",844,29,1.34);
   }
   calculateDamage();
 }
