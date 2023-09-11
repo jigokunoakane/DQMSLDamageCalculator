@@ -964,6 +964,12 @@ border-bottom: 2px solid #b3c8e0;
         ・計算結果は切り上げ<br> ・通常攻撃は1.75倍、2倍を閾値としてダメージの通りがどうなるか説明を出しています。もしかしたら解説記事書くかも。<br> ・ダメージ不安定時の通常攻撃ダメージは攻撃力/16以下の整数値になるようですが、それは反映せず通常の計算方法でのダメージを出力しています。
       </p>
     </details>
+    <details class="bottomdetails">
+      <summary>管理用</summary>
+      <button type="button" id="debugforatt">att登録</button>
+      <button type="button" id="debugfordef">def登録</button>
+      <button type="button" id="activatespell">int処理</button>
+    </details>
     <br>
     <br>
     <br>
@@ -984,7 +990,7 @@ border-bottom: 2px solid #b3c8e0;
   <script>
     window.addEventListener("DOMContentLoaded", function () {
   Tabassignment();
-  document.getElementById("intskillselect").style.display = "none";
+  intskillprepare();
 });
 
 let totaldamage;
@@ -2331,6 +2337,14 @@ pasteTabButton.addEventListener('click', () => {
   calculateDamage();
 });
 
+    function intskillprepare(){
+      document.getElementById("intskillselect").style.display = "none";
+    }
+    const activatespellbtn = document.getElementById("activatespell");
+activatespellbtn.addEventListener("click", function () {
+  document.getElementById("intskillselect").style.display = "block";
+}, false);
+    
 /*
 const debug1btn = document.getElementById("debug1");
 debug1btn.addEventListener("click", function () {
