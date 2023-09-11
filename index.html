@@ -484,9 +484,8 @@ border-bottom: 2px solid #b3c8e0;
     <option value="1.09">1.09</option>
     </select>
       <br>
-      <span id="intskillselectlabel">呪文選択:</span>
       <select id="intskillselect" onchange="intskillselecter()">
-    <option value="none" selected>選択する</option>
+    <option value="none" selected>呪文を選択する</option>
     <option value="almagest">アルマゲスト</option>
     <option value="mata">マータ系</option>
     </select>
@@ -1879,7 +1878,6 @@ function ifattizon() {
   const resetdefenderbtn = document.getElementById('resetdefenderbtn');
   resetdefenderbtn.classList.remove('margin');
   document.getElementById("intskillselect").style.display = "none";
-  document.getElementById("intskillselectlabel").style.display = "none";
   calculateDamage();
 }
 
