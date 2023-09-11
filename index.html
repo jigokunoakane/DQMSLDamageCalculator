@@ -417,6 +417,9 @@ border-bottom: 2px solid #b3c8e0;
     <option value="1">インテ無</option>
     <option value="1.5">インテ1.5</option>
     <option value="2">インテ2</option>
+    <option value="1.15">LS1.15</option>
+    <option value="1.15">1.15・1.5</option>
+    <option value="1.15">LS1.15</option>
   </select>
       <br>
       <label for="enemyintdefault">敵賢さ</label>
@@ -451,6 +454,9 @@ border-bottom: 2px solid #b3c8e0;
     <option value="1">インテ無</option>
     <option value="1.5">インテ1.5</option>
     <option value="2">インテ2</option>
+    <option value="1.15">1.15</option>
+    <option value="1.725">1.15・1.5</option>
+    <option value="2.3">1.15・2</option>
   </select>
       <br>
       <span>賢さ値</span>
@@ -486,7 +492,11 @@ border-bottom: 2px solid #b3c8e0;
       <br>
       <select id="intskillselect" onchange="intskillselecter()">
     <option value="none" selected>呪文を選択する</option>
-    <option value="almagest">アルマゲスト</option>
+    <option value="reiji4">オムド4 零時</option>
+    <option value="itehyado4">ロト4 いてヒャド</option>
+    <option value="sennjigo4">ロト4 閃ジゴ</option>
+    <option value="zetsuhyo44">絶氷</option>
+    <option value="katasuto">カタストロフ</option>
     <option value="mata">マータ系</option>
     </select>
       <button type="button" id="resetspellbtn">リセット</button>
@@ -974,6 +984,7 @@ border-bottom: 2px solid #b3c8e0;
   <script>
     window.addEventListener("DOMContentLoaded", function () {
   Tabassignment();
+  document.getElementById("intskillselect").style.display = "none";
 });
 
 let totaldamage;
@@ -1326,22 +1337,71 @@ function calculateint() {
   }
   document.getElementById("intdifferencebonus").value = expectedintdifferencebonus;
   calculateDamage();
-//賢さいじるとint起動、賢さ差上書き.特技+いじるとcalc起動.
+//賢さ系いじるとonchangeでint起動、賢さ差上書き、calcへ.特技+は賢さ差手動設定時に上書き防止のため、calcのみ起動.
 }
 
 function intskillselecter() {
   const intskillselect = document.getElementById("intskillselect").value;
-  if (intskillselect == "almagest") {
-    document.getElementById("minint").value = 200;
-    document.getElementById("minintdamage").value = 178;
+  //以下reset処理
+  document.getElementById("intdefault").value = "";
+  document.getElementById("intseed").value = 0;
+  document.getElementById("intweapon").value = 0;
+  document.getElementById("intbuff").value = 1;
+  document.getElementById("minint").value = 200;
+  document.getElementById("minintdamage").value = "";
+  document.getElementById("maxint").value = 600;
+  document.getElementById("maxintdamage").value = "";
+  document.getElementById("intskillplus").value = 1.15;
+  //デフォルトで1.15化、1.09時に表の変化に連動して1.15化処理は行わない
+  if (intskillselect == "reiji4") {
+    document.getElementById("minint").value = 100;
+    document.getElementById("minintdamage").value = 150;
     document.getElementById("maxint").value = 600;
-    document.getElementById("maxintdamage").value = 410;
-  } else if (intskillselect == "mata") {
+    document.getElementById("maxintdamage").value = 330;
+    document.getElementById("intskillplus").value = 1.09;
+    document.getElementById("intdefault").value = 538;
+    document.getElementById("intweapon").value = 116;
+  }
+  if (intskillselect == "itehyado4") {
+    document.getElementById("minint").value = 200;
+    document.getElementById("minintdamage").value = 200;
+    document.getElementById("maxint").value = 400;
+    document.getElementById("maxintdamage").value = 316;
+    document.getElementById("intdefault").value = 377;
+    document.getElementById("intseed").value = 48;
+  }
+  if (intskillselect == "sennjigo4") {
+    document.getElementById("minint").value = 100;
+    document.getElementById("minintdamage").value = 717;
+    document.getElementById("maxint").value = 800;
+    document.getElementById("maxintdamage").value = 1305;
+    document.getElementById("intdefault").value = 377;
+    document.getElementById("intseed").value = 48;
+  }
+  if (intskillselect == "zetsuhyo44") {
+    document.getElementById("minint").value = 100;
+    document.getElementById("minintdamage").value = 735;
+    document.getElementById("maxint").value = 800;
+    document.getElementById("maxintdamage").value = 1302;
+    document.getElementById("intdefault").value = 501;
+    document.getElementById("intseed").value = 48;
+  }
+  if (intskillselect == "katasuto") {
+    document.getElementById("minint").value = 200;
+    document.getElementById("minintdamage").value = 162;
+    document.getElementById("maxint").value = 1000;
+    document.getElementById("maxintdamage").value = 290;
+    document.getElementById("intdefault").value = 535;
+    document.getElementById("intseed").value = 48;
+  }
+  if (intskillselect == "mata") {
     document.getElementById("minint").value = 100;
     document.getElementById("minintdamage").value = 50;
     document.getElementById("maxint").value = 600;
     document.getElementById("maxintdamage").value = 160;
   }
+  //耐性入力は要検討
+  calculateint();
 }
 
 //攻撃側選択
@@ -1877,7 +1937,6 @@ function ifattizon() {
   summondefenderselect.classList.remove('margin');
   const resetdefenderbtn = document.getElementById('resetdefenderbtn');
   resetdefenderbtn.classList.remove('margin');
-  document.getElementById("intskillselect").style.display = "none";
   calculateDamage();
 }
 
