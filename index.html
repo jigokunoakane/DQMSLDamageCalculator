@@ -498,6 +498,8 @@ border-bottom: 2px solid #b3c8e0;
     <option value="zetsuhyo44">絶氷</option>
     <option value="katasuto">カタストロフ</option>
     <option value="mata">マータ系</option>
+    <option value="mezo">メゾ</option>
+    <option value="ragon">ラゴン</option>
     </select>
       <button type="button" id="resetspellbtn">リセット</button>
       <br>
@@ -1405,6 +1407,18 @@ function intskillselecter() {
     document.getElementById("minintdamage").value = 50;
     document.getElementById("maxint").value = 600;
     document.getElementById("maxintdamage").value = 160;
+  }
+  if (intskillselect == "mezo") {
+    document.getElementById("minint").value = 100;
+    document.getElementById("minintdamage").value = 110;
+    document.getElementById("maxint").value = 500;
+    document.getElementById("maxintdamage").value = 300;
+  }
+  if (intskillselect == "ragon") {
+    document.getElementById("minint").value = 200;
+    document.getElementById("minintdamage").value = 105;
+    document.getElementById("maxint").value = 600;
+    document.getElementById("maxintdamage").value = 240;
   }
   //耐性入力は要検討
   calculateint();
