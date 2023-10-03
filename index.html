@@ -541,7 +541,17 @@ border-bottom: 2px solid #b3c8e0;
 
 
     <div id="inaccordancewithkotei">
-      <input type="number" id="koteidamage" oninput="calculateint()">
+      <input type="number" id="koteidamage" oninput="calculateDamage()">
+      <br>
+      <select id="koteiskillselect" onchange="koteiskillselecter()">
+        <option value="none" selected>特技を選択する</option>
+        <option value="rengeki">暗黒神の連撃</option>
+        <option value="frozen">フローズンシャワー 全能</option>
+        <option value="lava">ラヴァフレア 全能</option>
+        <option value="ryohuh">涼風ヒャド 全能</option>
+        <option value="ryohuz">涼風息</option>
+      </select>
+      <button type="button" id="resetkoteibtn">リセット</button>
       <hr>
     </div>
     
@@ -746,6 +756,9 @@ border-bottom: 2px solid #b3c8e0;
     <option value="4">ヒット数4発</option>
     <option value="5">ヒット数5発</option>
     <option value="6">ヒット数6発</option>
+    <option value="7">ヒット数7発</option>
+    <option value="8">ヒット数8発</option>
+    <option value="9">ヒット数9発</option>
   </select>
       <span id="plusofremainingHP">+</span>
       <select id="calculateHPnormalhit" onchange="calculateDamage()">
@@ -1349,6 +1362,8 @@ function calculateint() {
 //賢さ系いじるとonchangeでint起動、賢さ差上書き、calcへ.特技+は賢さ差手動設定時に上書き防止のため、calcのみ起動.
 }
 
+//int selecter
+
 function intskillselecter() {
   const intskillselect = document.getElementById("intskillselect").value;
   //以下reset処理
@@ -1423,6 +1438,38 @@ function intskillselecter() {
   }
   //耐性入力は要検討
   calculateint();
+}
+
+//kotei selecter
+
+function koteiskillselecter() {
+  const koteiskillselect = document.getElementById("koteiskillselect").value;
+  //固定枠reset処理
+  document.getElementById("koteidamage").value = "";
+  if (koteiskillselect == "rengeki") {
+    document.getElementById("koteidamage").value = 324;
+    document.getElementById("calculateHPskillhit").value = 3;
+    document.getElementById("jyousannskill1").value = 3;
+  }
+  if (koteiskillselect == "frozen") {
+    document.getElementById("koteidamage").value = 190;
+    document.getElementById("calculateHPskillhit").value = 7;
+    document.getElementById("jyousannskill1").value = 2;
+    document.getElementById("kasannskill1").value = 0.2;
+  }
+  if (koteiskillselect == "lava") {
+    document.getElementById("koteidamage").value = 732;
+    document.getElementById("jyousannskill1").value = 3;
+    document.getElementById("kasannskill1").value = 0.2;
+  }
+  if (koteiskillselect == "ryohuh") {
+    document.getElementById("koteidamage").value = 142;
+    document.getElementById("kasannskill1").value = 0.2;
+  }
+  if (koteiskillselect == "ryohuz") {
+    document.getElementById("koteidamage").value = 420;
+  }
+  calculateDamage();
 }
 
 //攻撃側選択
@@ -1922,18 +1969,28 @@ resetspellbtn.addEventListener("click", function () {
   document.getElementById("intdifferencebonus").value = 1.25;
 }, false);
 
+function resetkotei() {
+  document.getElementById("koteidamage").value = "";
+  document.getElementById("koteiskillselect").value = "none";
+}
+const resetkoteibtn = document.getElementById("resetkoteibtn");
+resetkoteibtn.addEventListener("click", function () {
+  resetkotei();
+  calculateDamage();
+}, false);
+
 function resetall() {
   resetattack();
   resetdefense();
   resetnormalconditions();
   resetskillconditions();
   resetspell();
+  resetkotei();
   document.getElementById("HPdefault").value = "";
   document.getElementById("HPseedselect").value = 0;
   document.getElementById("HPLSselect").value = 1.04;
   document.getElementById("calculateHPskillhit").value = 1;
   document.getElementById("calculateHPnormalhit").value = 0;
-  document.getElementById("koteidamage").value = "";
   calculateint();
   document.getElementById("intdifferencebonus").value = 1.25;
 }
@@ -2094,6 +2151,7 @@ const defaulttabValues = {
     enemyintweapon: "0",
     enemyintbuff: "1",
     intskillselect: "none",
+    koteiskillselect: "none",
     koteidamage: "",
     izon: "attizon",
     totaldamage: ""
@@ -2181,6 +2239,7 @@ function saveTabValue() {
   tabValues[currentTab].enemyintweapon = document.getElementById("enemyintweapon").value;
   tabValues[currentTab].enemyintbuff = document.getElementById("enemyintbuff").value;
   tabValues[currentTab].intskillselect = document.getElementById("intskillselect").value;
+  tabValues[currentTab].koteiskillselect = document.getElementById("koteiskillselect").value;
   tabValues[currentTab].koteidamage = document.getElementById("koteidamage").value;
   const selectedizon = askizon();
   tabValues[currentTab].izon = selectedizon;
@@ -2257,6 +2316,7 @@ function Tabassignment() {
   document.getElementById("enemyintweapon").value = tabValues[currentTab].enemyintweapon;
   document.getElementById("enemyintbuff").value = tabValues[currentTab].enemyintbuff;
   document.getElementById("intskillselect").value = tabValues[currentTab].intskillselect;
+  document.getElementById("koteiskillselect").value = tabValues[currentTab].koteiskillselect;
   document.getElementById("koteidamage").value = tabValues[currentTab].koteidamage;
   const attizonRadio = document.getElementById('attizon');
   const intizonRadio = document.getElementById('intizon');
@@ -2360,7 +2420,7 @@ pasteTabButton.addEventListener('click', () => {
     }
     const activatespellbtn = document.getElementById("activatespell");
 activatespellbtn.addEventListener("click", function () {
-  document.getElementById("intskillselect").style.display = "block";
+  document.getElementById("intskillselect").style.display = "inline";
 }, false);
     
 /*
