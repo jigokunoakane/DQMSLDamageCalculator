@@ -1444,8 +1444,27 @@ function intskillselecter() {
 
 function koteiskillselecter() {
   const koteiskillselect = document.getElementById("koteiskillselect").value;
-  //固定枠reset処理
+  //固定枠と攻撃側条件reset処理
+  //賢さ時はresetなし、固定時のみ各種条件reset
   document.getElementById("koteidamage").value = "";
+  function koteiattreset() {
+    document.getElementById("jyousannnormal1").value = "";
+    document.getElementById("jyousannnormal2").value = "";
+    document.getElementById("kasannnormal1").value = "";
+    document.getElementById("kasannnormal2").value = "";
+    document.getElementById("gennsannnormal1").value = "";
+    document.getElementById("gennsannnormal2").value = "";
+    //document.getElementById("bairitsu").value = setbairitsu;
+    document.getElementById("jyousannskill1").value = "";
+    document.getElementById("jyousannskill2").value = "";
+    document.getElementById("kasannskill1").value = "";
+    document.getElementById("kasannskill2").value = "";
+    document.getElementById("gennsannskill1").value = "";
+    document.getElementById("gennsannskill2").value = "";
+    document.getElementById("taisei").value = "";
+    document.getElementById("calculateHPskillhit").value = 1;
+  }
+  koteiattreset();
   if (koteiskillselect == "rengeki") {
     document.getElementById("koteidamage").value = 324;
     document.getElementById("calculateHPskillhit").value = 3;
