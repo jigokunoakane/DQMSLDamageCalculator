@@ -197,7 +197,15 @@ button:disabled {
 }
 
 .defselect.margin {
-  margin-top: 0.5rem;
+  margin-top: 0.55rem;
+}
+
+#koteidamage {
+  margin-top: 1.3rem;
+}
+
+.koteimargin {
+  margin-bottom: 5.9rem;
 }
 
 .bottomdetails {
@@ -547,7 +555,7 @@ border-bottom: 2px solid #b3c8e0;
     <div id="inaccordancewithkotei">
       <input type="number" id="koteidamage" oninput="calculateDamage()">
       <br>
-      <select id="koteiskillselect" onchange="koteiskillselecter()">
+      <select class="koteimargin" id="koteiskillselect" onchange="koteiskillselecter()">
         <option value="none" selected>特技を選択する</option>
         <option value="rengeki">暗黒神の連撃</option>
         <option value="frozen">フローズンシャワー 全能</option>
@@ -555,7 +563,7 @@ border-bottom: 2px solid #b3c8e0;
         <option value="ryohuh">涼風ヒャド 全能</option>
         <option value="ryohuz">涼風息</option>
       </select>
-      <button type="button" id="resetkoteibtn">リセット</button>
+      <button type="button" class="koteimargin" id="resetkoteibtn">リセット</button>
       <hr>
     </div>
     
