@@ -514,6 +514,8 @@ border-bottom: 2px solid #b3c8e0;
     <option value="mata">マータ系</option>
     <option value="mezo">メゾ</option>
     <option value="ragon">ラゴン</option>
+    <option value="bagikuro">バギクロス</option>
+    <option value="ionarune">イオナルーン</option>
     </select>
       <button type="button" id="resetspellbtn">リセット</button>
       <br>
@@ -1449,6 +1451,18 @@ function intskillselecter() {
     document.getElementById("minintdamage").value = 105;
     document.getElementById("maxint").value = 600;
     document.getElementById("maxintdamage").value = 240;
+  }
+  if (intskillselect == "bagikuro") {
+    document.getElementById("minint").value = 200;
+    document.getElementById("minintdamage").value = 90;
+    document.getElementById("maxint").value = 500;
+    document.getElementById("maxintdamage").value = 201;
+  }
+  if (intskillselect == "ionarune") {
+    document.getElementById("minint").value = 100;
+    document.getElementById("minintdamage").value = 180;
+    document.getElementById("maxint").value = 500;
+    document.getElementById("maxintdamage").value = 360;
   }
   //耐性入力は要検討
   calculateint();
